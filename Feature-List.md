@@ -19,6 +19,7 @@ Features:
         - Logged in users can mark a task as complete
         - Logged in users can delete a task
         - Logged in users can access deleted tasks in the trash (bonus?)
+            - either save to delete table or use boolean to identify it as trash or not
 
     3. Lists
         - Logged in users can create a new list
@@ -27,12 +28,15 @@ Features:
                 - Inbox(default)
                 - Personal
                 - Work
-                - Custom (bonus)
+                - Custom - think of list table as composite list of all tables
+                    - userid
+                    - string - user sets the string
+                    - user.findAll (where: user's string)
         - Logged in users can change the name of their lists
         - Logged in users can delete their lists
         - Sort by time, due date, priority, etc. (Bonus)
 
-    4. List summary (time, number of tasks, number completed)
+    4. List summary (time, number of tasks, number completed) -- needs to be CRUD
         - Logged in users can view a summary of each of their lists
             - # of tasks completed
             - # of tasks total
@@ -42,7 +46,7 @@ Features:
     5. Search
         - Logged in users can search for tasks by name in all lists
 
-    6. BONUS: Profile Page
+    6. BONUS: Profile Page / extension of the user CRUD / not feature, but fluff
         - Logged in users can look at their profile page
         - Logged in users can update their profile picture
         - Logged in users can change their background/theme (more unlocked by level)
@@ -56,7 +60,10 @@ Features:
         - Logged in users can break down tasks into smaller subtasks
         - (With exp - users only get exp from completing the larger task)
         - Lock it behind level
+        - full feature - its own table
 
 <!--
     9. BONUS: Autocomplete SmartAdd of task properties
+    10. BONUS: Autocomplete search feature?
+        - uses an array of possible/past terms
 -->
