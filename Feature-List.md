@@ -1,10 +1,18 @@
 Features:
-    1. Creating a new account (authentication)
+    1. Users (create a new account)
         - Users can sign up, log in, and log out.
         - Users can use a demo log in to try out the site.
         - Users can't use certain features without logging in.
         - Logged in users are directed to their profile page which displays their tasks/lists.
         - Logged out users are directed to a log in page.
+        - BONUS: Profile Page / extension of the user CRUD / not feature, but fluff
+            - Logged in users can look at their profile page
+            - Logged in users can update their profile picture
+            - Logged in users can change their background/theme (more unlocked by level)
+            - Logged in users can select a class and promote classes (bonus)
+        - BONUS: Create a level up window/animation
+            - Alerts the user when they level up
+            - Includes updates on what is now accessible to the user
 
     2. Tasks
         - Logged in users can create a task with the following attributes:
@@ -34,36 +42,25 @@ Features:
                     - user.findAll (where: user's string)
         - Logged in users can change the name of their lists
         - Logged in users can delete their lists
-        - Sort by time, due date, priority, etc. (Bonus)
-
-    4. List summary (time, number of tasks, number completed) -- needs to be CRUD
         - Logged in users can view a summary of each of their lists
             - # of tasks completed
             - # of tasks total
             - estimated time remaining
             - possible exp left to gain? (bonus?)
+        - Sort by time, due date, priority, etc. (Bonus)
 
-    5. Search
+
+    4. Search
         - Logged in users can search for tasks by name in all lists
 
-    6. BONUS: Profile Page / extension of the user CRUD / not feature, but fluff
-        - Logged in users can look at their profile page
-        - Logged in users can update their profile picture
-        - Logged in users can change their background/theme (more unlocked by level)
-        - Logged in users can select a class and promote classes (bonus)
 
-    7. BONUS: Create a level up window/animation
-        - Alerts the user when they level up
-        - Includes updates on what is now accessible to the user
-
-    8. BONUS: Subtasks
+    5. BONUS: Subtasks
         - Logged in users can break down tasks into smaller subtasks
         - (With exp - users only get exp from completing the larger task)
         - Lock it behind level
         - full feature - its own table
 
 <!--
-    9. BONUS: Autocomplete SmartAdd of task properties
-    10. BONUS: Autocomplete search feature?
+    6. BONUS: Autocomplete search feature?
         - uses an array of possible/past terms
 -->
