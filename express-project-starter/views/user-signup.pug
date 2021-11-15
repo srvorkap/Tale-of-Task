@@ -1,9 +1,8 @@
 extends layout.pug
 include utils.pug
 block content
-
     +validationErrorSummary(errors)
-    form(action="/user/signup" method="post")
+    form(action="/users/signup" method="post")
         +field('First Name', 'firstName', firstName)
         +field('Last Name', 'lastName', lastName)
         +field('Email Address', 'email', email, 'email')
