@@ -20,9 +20,9 @@ const userValidators = [
     .exists({ checkFalsy: true })
     .withMessage('Please provide an email address')
     .isLength({ max: 255 })
-    .withMessage('Email Address must not exceed 255 characters')
+    .withMessage('Email address must not exceed 255 characters')
     .isEmail()
-    .withMessage('Email Address is not a valid email')
+    .withMessage('Email address must be a valid email')
     .custom((value) => {
       return User.findOne({ where: { email: value } })
         .then((user) => {
@@ -49,6 +49,17 @@ const userValidators = [
       }
       return true;
     })
+]
+
+const loginValidators = [
+  check('email')
+    .exists({ checkFalsy: true })
+    .withMessage('Please enter your email address')
+    .isEmail()
+    .withMessage('Email address must be a valid email'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .withMessage('Please enter your password')
 ]
 
 router.get('/signup', csrfProtection, asyncHandler(async (req, res, next) => {
@@ -86,6 +97,45 @@ router.post('/signup', csrfProtection, userValidators, asyncHandler(async (req, 
       errors
     })
   }
+}));
+
+router.get('/login', csrfProtection, asyncHandler(async (req, res) => {
+  res.render('user-login', {
+    title: 'Login',
+    csrfToken: req.csrfToken()
+  })
+}));
+
+router.post('/login', csrfProtection, loginValidators, asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  let errors = [];
+
+  const validatorErrors = validationResult(req);
+
+  if (validatorErrors.isEmpty()) {
+    const user = await User.findOne({ where: { email } });
+    if (user !== null) {
+      const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
+
+      if (passwordMatch) {
+        // Login the user here
+        return res.redirect('/');
+      }
+    }
+
+    errors.push('Login failed with given credentials');
+
+  } else {
+    errors = validatorErrors.array().map(err => err.msg);
+  }
+
+  res.render('user-login', {
+    title: 'Login',
+    email,
+    errors,
+    csrfToken: req.csrfToken()
+  })
 }));
 
 module.exports = router;
