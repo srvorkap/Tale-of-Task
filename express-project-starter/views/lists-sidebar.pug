@@ -1,0 +1,11 @@
+div
+  ul
+    each list in listNames
+      li
+        a(href= "/lists/:id")=list
+  button Add List
+div#add-list-popup
+  +validationErrorSummary(errors)
+  form(action= "/lists" method= "post")
+    +field('List Name', 'name', '')
+    button Add
