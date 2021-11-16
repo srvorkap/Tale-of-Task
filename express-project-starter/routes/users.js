@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 
 const { csrfProtection, asyncHandler, bcrypt } = require('./utils')
-const { User } = require('../db/models');
+const { User, List } = require('../db/models');
 
 const { loginUser, logoutUser } = require('../auth');
 
@@ -85,7 +85,20 @@ router.post('/signup', csrfProtection, userValidators, asyncHandler(async (req, 
     user.level = 1;
     user.exp = 0;
 
+
     await user.save();
+    await List.create({
+      name: 'Inbox',
+      userId: user.id
+    })
+    await List.create({
+      name: 'Personal',
+      userId: user.id
+    })
+    await List.create({
+      name: 'Work',
+      userId: user.id
+    })
     loginUser(req, res, user);
     res.redirect('/');
   } else {
