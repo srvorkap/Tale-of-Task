@@ -65,8 +65,17 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
     const currentList = await List.findByPk(listId);
     res.locals.list = currentList;
 
+    const tasks = await Task.findAll({
+        where: {
+            listId
+        }
+    })
+
+    JSON.stringify(tasks);
+
     res.render('user-task-list', {
-        lists
+        lists,
+        tasks
     });
 }))
 

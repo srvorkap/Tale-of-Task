@@ -3,7 +3,7 @@ div
     each list in lists
       li
         a(href= `/lists/${list.id}`)=list.name
-        button= "Delete List"
+        button(href= `/lists/${list.id}`)= "Delete List"
   button Add List
 div#add-list-popup
   +validationErrorSummary(errors)
