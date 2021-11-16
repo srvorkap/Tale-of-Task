@@ -1,0 +1,6 @@
+include utils.pug
+
++validationErrorSummary(errors)
+form(action= "/lists" method= "post")
+    +field('List Name', 'name', '')
+    button Add

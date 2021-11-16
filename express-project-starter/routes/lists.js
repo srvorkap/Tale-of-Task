@@ -23,5 +23,16 @@ router.post('/lists', csrfProtection, userValidators, asyncHandler(async (req, r
 
     if (validatorErrors.isEmpty()) {
         await list.save()
+        res.locals.list = list;
+        res.render('lists')
+    } else {
+        const errors = validatorErrors.array().map(err => err.msg)
+        res.render('lists')
     }
 }))
+
+
+
+
+
+module.exports = router;
