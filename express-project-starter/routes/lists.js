@@ -26,7 +26,7 @@ router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
     lists.forEach(list => {
         listNames.push(list.name)
     })
-    res.render('lists', {
+    res.render('user-task-list', {
         listNames,
         csrfToken: req.csrfToken()
     })
@@ -43,10 +43,10 @@ router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, n
     if (validatorErrors.isEmpty()) {
         await list.save()
         res.locals.list = list;
-        res.render('lists')
+        res.render('user-task-list')
     } else {
         const errors = validatorErrors.array().map(err => err.msg)
-        res.render('lists', {
+        res.render('user-task-list', {
             errors,
             csrfToken: req.csrfToken()
         })
