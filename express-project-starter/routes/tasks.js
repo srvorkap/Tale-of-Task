@@ -7,8 +7,7 @@ const { User, List, Task } = require('../db/models');
 
 const { requireAuth } = require('../auth');
 
-
-// router.use(requireAuth);
+router.use(requireAuth);
 
 const taskValidator = [
     check('description')
@@ -17,7 +16,7 @@ const taskValidator = [
         .isLength({ max: 255 })
         .withMessage('Description length must not exceed 255 characters')
 ]
-//add a validator for importance
+// add a validator for importance
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     const task = await Task.findByPk(parseInt(req.params.id, 10));
@@ -25,7 +24,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
 }))
 
 router.post('/', taskValidator, asyncHandler(async (req, res) => {
-    //add csrf
+    // add csrf
     let {
         description, userId, listId, dueDate, estimatedTime, importance
     } = req.body;
@@ -68,13 +67,12 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
 }))
 
 router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
-    //add csrf
+    // add csrf
     const taskId = parseInt(req.params.id, 10)
     const task = await Task.findByPk(taskId)
     const {
         description, listId, dueDate, estimatedTime, importance, deleted, completed
     } = req.body;
-
 
     await task.update({
         description,
@@ -85,16 +83,17 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
         deleted,
         importance
     })
+
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
         await task.save()
         res.json({ task })
     } else {
+        const hours = Math.floor(estimatedTime / 60);
+        const minutes = estimatedTime % 60;
         const errors = validatorErrors.array().map((error) => error.msg);
-        res.json({errors, task})
+        res.json({ errors, task, hours, minutes })
     }
 }))
-
-
 
 module.exports = router;

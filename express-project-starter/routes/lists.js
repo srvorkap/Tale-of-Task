@@ -52,7 +52,7 @@ router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, n
 
 router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
-    const listId = req.url.slice('/')[2];
+    const listId = parseInt(req.params.id, 10);
     //For Sidebar
     let lists = await List.findAll({
         where: {
