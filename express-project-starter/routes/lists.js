@@ -1,6 +1,6 @@
 const express = require('express')
 const { csrfProtection, asyncHandler } = require('./utils')
-const { Task, List } = require('../db/models')
+const { User, List, Task } = require('../db/models')
 const { check, validationResult } = require('express-validator')
 
 const router = express.Router()
@@ -13,7 +13,26 @@ const userValidators = [
         .withMessage('List name must not exceed 50 characters')
 ]
 
-router.post('/lists', csrfProtection, userValidators, asyncHandler(async (req, res, next) => {
+router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
+    const userId = req.session.auth.userId;
+    let lists = await List.findAll({
+        where: {
+            userId
+        }
+    })
+    JSON.stringify(lists)
+
+    let listNames = [];
+    lists.forEach(list => {
+        listNames.push(list.name)
+    })
+    res.render('lists', {
+        listNames,
+        csrfToken: req.csrfToken()
+    })
+}))
+
+router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, next) => {
     const { name, userId } = req.body;
     const list = List.build({
         name,

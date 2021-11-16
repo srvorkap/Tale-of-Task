@@ -1,9 +1,11 @@
+include utils.pug
+
 doctype html
 html
   head
       block head
         title= title
-        link(rel='stylesheet' href='/stylesheets/reset.css')
+        link(rel='stylesheet' href='/stylesheets/popup.css')
   body
     nav
       a(href='/') Home
@@ -16,10 +18,18 @@ html
           span
             a(href='/users/login') Login
             a(href='/users/signup') Sign Up
-    div
-      ul
-        each list in lists
-          li= list
-      button Add List
+
 
   block content
+
+    div
+      ul
+        each list in listNames
+          li
+            a(href= "/lists/:id")=list
+      button Add List
+    div#add-list-popup
+      +validationErrorSummary(errors)
+      form(action= "/lists" method= "post")
+        +field('List Name', 'name', '')
+        button Add
