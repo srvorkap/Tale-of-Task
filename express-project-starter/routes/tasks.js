@@ -7,6 +7,7 @@ const { User, List, Task } = require('../db/models');
 
 const { requireAuth } = require('../auth');
 
+
 // router.use(requireAuth);
 
 const taskValidator = [
@@ -54,5 +55,16 @@ router.post('/', csrfProtection, taskValidator, asyncHandler(async (req, res) =>
         return res.json({ errors });
     }
 }))
+
+router.delete('/:id(\\d+)', asyncHandler(async(req, res) => {
+    const taskId = parseInt(req.params.id, 10)
+    const task = await Task.findByPk(taskId)
+
+    await task.destroy()
+
+    res.json({message: "Task successfully deleted"})
+ }))
+
+
 
 module.exports = router;

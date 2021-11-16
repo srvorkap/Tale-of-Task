@@ -17,4 +17,10 @@ html
             a(href='/users/login') Login
             a(href='/users/signup') Sign Up
 
+    div
+      ul
+        each list in lists
+          li= list.name 
+
+
   block content
