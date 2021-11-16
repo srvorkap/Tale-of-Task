@@ -82,14 +82,35 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
 router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     // Is listId in req.params already? Is it tied to the button? HOW DO WE GET THIS.
     const listId = req.params.listId
-
     const list = await List.findByPk(listId);
-
     await list.destroy();
-
     res.json({ message: "List successfully deleted" })
 }))
 
+router.put('/:id(\\d+)', userValidators, asyncHandler(async(req, res) => {
+    const listId = parseInt(req.params.id, 10);
+    const list = await List.findByPk(listId);
+    const {
+        name
+    } = req.body;
+
+    await list.update({
+        name
+    })
+
+    const validatorErrors = validationResult(req);
+    if (validatorErrors.isEmpty()) {
+        await list.save();
+        res.render('user-task-list')
+    } else {
+        const errors = validatorErrors.array().map(error => error.msg);
+        res.render('user-task-list', {
+            errors,
+            csrfToken: req.csrfToken()
+        })
+    }
+
+}))
 
 
 module.exports = router;
