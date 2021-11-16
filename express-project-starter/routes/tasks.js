@@ -7,7 +7,7 @@ const { User, List, Task } = require('../db/models');
 
 const { requireAuth } = require('../auth');
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
 const taskValidator = [
     check('description')
@@ -17,7 +17,10 @@ const taskValidator = [
         .withMessage('Description length must not exceed 255 characters')
 ]
 
-router.get()
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+    const task = await Task.findByPk(parseInt(req.params.id, 10));
+    res.json({ task });
+}))
 
 router.post('/', csrfProtection, taskValidator, asyncHandler(async (req, res) => {
     let {
@@ -39,15 +42,16 @@ router.post('/', csrfProtection, taskValidator, asyncHandler(async (req, res) =>
         return res.json({ task });
     } else {
         const errors = validatorErrors.array().map(err => err.msg);
-        const errorBox = document.getElementById('task-errors');
-        const errorsHtml = errors.map(error => {
-            return `
-            <li>${error}</li>
-            `
-        })
-        const ul = document.createElement('ul')
-        ul.innerHTML = errorsHtml.join('');
-        errorBox.appendChild(ul);
+        // const errorBox = document.getElementById('task-errors');
+        // const errorsHtml = errors.map(error => {
+        //     return `
+        //     <li>${error}</li>
+        //     `
+        // })
+        // const ul = document.createElement('ul')
+        // ul.innerHTML = errorsHtml.join('');
+        // errorBox.appendChild(ul);
+        return res.json({ errors });
     }
 }))
 
