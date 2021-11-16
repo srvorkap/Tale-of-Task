@@ -23,7 +23,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     res.json({ task });
 }))
 
-router.post('/', csrfProtection, taskValidator, asyncHandler(async (req, res) => {
+router.post('/', taskValidator, asyncHandler(async (req, res) => {
     let {
         description, userId, listId, dueDate, estimatedTime, importance
     } = req.body;
@@ -56,14 +56,41 @@ router.post('/', csrfProtection, taskValidator, asyncHandler(async (req, res) =>
     }
 }))
 
-router.delete('/:id(\\d+)', asyncHandler(async(req, res) => {
+router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
     const taskId = parseInt(req.params.id, 10)
     const task = await Task.findByPk(taskId)
 
     await task.destroy()
 
-    res.json({message: "Task successfully deleted"})
- }))
+    res.json({ message: "Task successfully deleted" })
+}))
+
+router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
+    const taskId = parseInt(req.params.id, 10)
+    const task = await Task.findByPk(taskId)
+    const {
+        description, listId, dueDate, estimatedTime, importance, deleted, completed
+    } = req.body;
+
+
+    await task.update({
+        description,
+        listId,
+        dueDate,
+        estimatedTime,
+        completed,
+        deleted,
+        importance
+    })
+    const validatorErrors = validationResult(req);
+    if (validatorErrors.isEmpty()) {
+        await task.save()
+        res.json({ task })
+    } else {
+        const errors = validatorErrors.array().map((error) => error.msg);
+        res.json({errors, task})
+    }
+}))
 
 
 
