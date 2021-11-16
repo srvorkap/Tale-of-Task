@@ -13,6 +13,7 @@ const userValidators = [
         .withMessage('List name must not exceed 50 characters')
 ]
 
+//MAY NOT USE - how do we redirect to the inbox automatically?
 router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
     let lists = await List.findAll({
@@ -21,10 +22,6 @@ router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
         }
     })
     JSON.stringify(lists)
-
-    // lists.forEach(list => {
-    //     listNames.push(list.name)
-    // })
 
     res.render('user-task-list', {
         lists,
@@ -53,12 +50,25 @@ router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, n
     }
 }))
 
-// router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
-//     const userId = req.session.auth.userId;
-//     const listId =
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+    const userId = req.session.auth.userId;
+    const listId = req.url.slice('/')[2];
+    //For Sidebar
+    let lists = await List.findAll({
+        where: {
+            userId
+        }
+    })
+    JSON.stringify(lists)
 
-//     // res.locals.list = list;
-// }))
+    //Set res.locals.list to currentList
+    const currentList = await List.findByPk(listId);
+    res.locals.list = currentList;
+
+    res.render('user-task-list', {
+        lists
+    });
+}))
 
 
 
