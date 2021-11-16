@@ -1,8 +1,8 @@
 div
   ul
-    each list in listNames
+    each list in lists
       li
-        a(href= "/lists/:id")=list
+        a(href= `/lists/${list.id}`)=list.name
   button Add List
 div#add-list-popup
   +validationErrorSummary(errors)
