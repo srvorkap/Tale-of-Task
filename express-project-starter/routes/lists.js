@@ -27,7 +27,10 @@ router.post('/lists', csrfProtection, userValidators, asyncHandler(async (req, r
         res.render('lists')
     } else {
         const errors = validatorErrors.array().map(err => err.msg)
-        res.render('lists')
+        res.render('lists', {
+            errors,
+            csrfToken: req.csrfToken()
+        })
     }
 }))
 

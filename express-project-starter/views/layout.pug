@@ -16,5 +16,10 @@ html
           span
             a(href='/users/login') Login
             a(href='/users/signup') Sign Up
+    div
+      ul
+        each list in lists
+          li= list
+      button Add List
 
   block content
