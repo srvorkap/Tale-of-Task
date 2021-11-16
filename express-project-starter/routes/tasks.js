@@ -32,7 +32,23 @@ router.post('/', csrfProtection, taskValidator, asyncHandler(async (req, res) =>
         description, userId, listId, dueDate, estimatedTime, importance, completed: false, deleted: false
     })
 
+    const validatorErrors = validationResult(req);
 
+    if (validatorErrors.isEmpty()) {
+        await task.save();
+        return res.json({ task });
+    } else {
+        const errors = validatorErrors.array().map(err => err.msg);
+        const errorBox = document.getElementById('task-errors');
+        const errorsHtml = errors.map(error => {
+            return `
+            <li>${error}</li>
+            `
+        })
+        const ul = document.createElement('ul')
+        ul.innerHTML = errorsHtml.join('');
+        errorBox.appendChild(ul);
+    }
 }))
 
 module.exports = router;
