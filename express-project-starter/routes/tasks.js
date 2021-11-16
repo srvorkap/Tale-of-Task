@@ -17,6 +17,7 @@ const taskValidator = [
         .isLength({ max: 255 })
         .withMessage('Description length must not exceed 255 characters')
 ]
+//add a validator for importance
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     const task = await Task.findByPk(parseInt(req.params.id, 10));
@@ -24,6 +25,7 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
 }))
 
 router.post('/', taskValidator, asyncHandler(async (req, res) => {
+    //add csrf
     let {
         description, userId, listId, dueDate, estimatedTime, importance
     } = req.body;
@@ -66,6 +68,7 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
 }))
 
 router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
+    //add csrf
     const taskId = parseInt(req.params.id, 10)
     const task = await Task.findByPk(taskId)
     const {
