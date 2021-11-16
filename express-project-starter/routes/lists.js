@@ -22,12 +22,12 @@ router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
     })
     JSON.stringify(lists)
 
-    let listNames = [];
-    lists.forEach(list => {
-        listNames.push(list.name)
-    })
+    // lists.forEach(list => {
+    //     listNames.push(list.name)
+    // })
+
     res.render('user-task-list', {
-        listNames,
+        lists,
         csrfToken: req.csrfToken()
     })
 }))
@@ -53,7 +53,12 @@ router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, n
     }
 }))
 
+// router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+//     const userId = req.session.auth.userId;
+//     const listId =
 
+//     // res.locals.list = list;
+// }))
 
 
 
