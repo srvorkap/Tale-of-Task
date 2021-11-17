@@ -69,6 +69,7 @@ const addTask = () => {
         `
 
     })
+
 }
 
 
@@ -82,7 +83,7 @@ const deleteTask = () => {
     buttons.forEach(button => {
         button.addEventListener('click', async (ev) => {
             const taskId = ev.target.id.split('-')[1]
-
+            console.log(ev.target.id)
 
             const res = await fetch(`/tasks/${taskId}`, {
                 method: "DELETE"
