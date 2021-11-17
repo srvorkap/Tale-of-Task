@@ -28,6 +28,7 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
     let {
         description, userId, listId, dueDate, estimatedTime, importance
     } = req.body;
+    console.log("description!!!!!!",description)
 
     if (!dueDate) dueDate = null;
     if (!estimatedTime) estimatedTime = null;
@@ -41,9 +42,11 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
 
     if (validatorErrors.isEmpty()) {
         await task.save();
+        console.log("save successful", task)
         return res.json({ task });
     } else {
         const errors = validatorErrors.array().map(err => err.msg);
+        console.log("errors", errors)
         // const errorBox = document.getElementById('task-errors');
         // const errorsHtml = errors.map(error => {
         //     return `
@@ -86,6 +89,7 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
 
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
+
         await task.save()
         res.json({ task })
     } else {
