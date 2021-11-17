@@ -1,9 +1,10 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-    addTask()
-    deleteTask()
+    addCreateFunction()
+    const buttons = document.querySelectorAll('.delete-task-btn')
+    buttons.forEach(button => addDeleteFunction(button));
 })
 
-const addTask = () => {
+const addCreateFunction = () => {
     const addTaskButton = document.getElementById('new-button')
 
     addTaskButton.addEventListener('click', async (ev) => {
@@ -64,15 +65,7 @@ const addTask = () => {
 
             console.log(ul);
 
-            newDeleteTask(deleteBtn);
-
-            //     ul.innerHTML += `
-            // <div class="task-container-${data.id}">
-            //     <li class="task-list-${data.id}">${data.description}</li>
-            //     <button id="update-${data.id}" class="update-task-btn">Update</button>
-            //     <button id="delete-${data.id}" class="delete-task-btn">Delete</button>
-            // </div>
-            // `
+            addDeleteFunction(deleteBtn);
         }
 
         textBox.value = null;
@@ -92,29 +85,7 @@ const addTask = () => {
     })
 }
 
-const deleteTask = () => {
-    const buttons = document.querySelectorAll('.delete-task-btn')
-
-    buttons.forEach(button => {
-        button.addEventListener('click', async (ev) => {
-            // console.log('Test');
-            const taskId = ev.target.id.split('-')[1]
-
-            const res = await fetch(`/tasks/${taskId}`, {
-                method: "DELETE"
-            })
-
-            const data = await res.json();
-            if (data.message === "Task successfully deleted") {
-                const container = document.getElementById(`task-container-${taskId}`)
-
-                container.remove()
-            }
-        })
-    })
-}
-
-const newDeleteTask = (button) => {
+const addDeleteFunction = (button) => {
     button.addEventListener('click', async (ev) => {
         const taskId = ev.target.id.split('-')[1]
 
