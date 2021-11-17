@@ -1,8 +1,8 @@
 extends layout.pug
 
 block content
-    script(src='/javascripts/api-task.js' type='module')
 
+    script(src='/javascripts/api-task.js' type='module')
     include lists-sidebar.pug
 
     #task-list-main
@@ -25,12 +25,11 @@ block content
                     option(value="1") Low
                 button#new-button Add Task
         #task-list-display
-            ul#task-list-render 
+            ul#task-list-render
                 if tasks.length
                     each task in tasks
-                        div
-                            li(id=task.id) #{task.description}
-                            button(id="task-update-#{task.id}") Update
-                            button(id="task-delete-#{task.id}") Delete
+                        div(class=`task-container-${task.id}`)
+                            li(class=`task-list-${task.id}`) #{task.description}
+                            button(id=`update-${task.id}` class="update-task-btn") Update
+                            button(id=`delete-${task.id}` class="delete-task-btn") Delete
                 else
-                    div Get busy son.

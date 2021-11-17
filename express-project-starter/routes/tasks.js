@@ -26,9 +26,12 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
 router.post('/', taskValidator, asyncHandler(async (req, res) => {
     // add csrf
     let {
-        description, userId, listId, dueDate, estimatedTime, importance
+        description, listId, dueDate, estimatedTime, importance
     } = req.body;
-    console.log("description!!!!!!",description)
+
+    const list = await List.findByPk(listId)
+    const userId = list.userId
+    //got user id in back end by querying db
 
     if (!dueDate) dueDate = null;
     if (!estimatedTime) estimatedTime = null;
@@ -38,15 +41,15 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
         description, userId, listId, dueDate, estimatedTime, importance, completed: false, deleted: false
     })
 
+
     const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
         await task.save();
-        console.log("save successful", task)
-        return res.json({ task });
+        return res.json(task);
     } else {
         const errors = validatorErrors.array().map(err => err.msg);
-        console.log("errors", errors)
+
         // const errorBox = document.getElementById('task-errors');
         // const errorsHtml = errors.map(error => {
         //     return `
@@ -56,7 +59,7 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
         // const ul = document.createElement('ul')
         // ul.innerHTML = errorsHtml.join('');
         // errorBox.appendChild(ul);
-        return res.json({ errors });
+        return res.json(errors);
     }
 }))
 
