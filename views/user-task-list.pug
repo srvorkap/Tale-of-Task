@@ -28,9 +28,8 @@ block content
             ul#task-list-render
                 if tasks.length
                     each task in tasks
-                        div(class=`task-container-${task.id}`)
-                            li(class=`task-list-${task.id}`) #{task.description}
+                        div(id=`task-container-${task.id}`)
+                            li(id=`task-list-${task.id}`) #{task.description}
                             button(id=`update-${task.id}` class="update-task-btn") Update
                             button(id=`delete-${task.id}` class="delete-task-btn") Delete
                 else
-

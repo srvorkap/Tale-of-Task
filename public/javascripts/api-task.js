@@ -1,9 +1,6 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-
     addTask()
     deleteTask()
-
-
 })
 
 const addTask = () => {
@@ -23,9 +20,7 @@ const addTask = () => {
         const priorityBox = document.getElementById('importance')
         const importance = priorityBox.value;
 
-
         const listId = window.location.href.split('/')[4]
-
 
         const res = await fetch('/tasks', {
             method: 'POST',
@@ -35,7 +30,6 @@ const addTask = () => {
             body: JSON.stringify({ listId, description, dueDate, estimatedTime, importance })
         })
 
-
         const data = await res.json();
 
         if (data.errors) {
@@ -44,22 +38,47 @@ const addTask = () => {
 
         } else {
 
-            const ul = document.getElementById('task-list-render')
+            const ul = document.getElementById('task-list-render');
 
-            ul.innerHTML += `
-        <div class="task-container-${data.id}">
-            <li class="task-list-${data.id}">${data.description}</li>
-            <button id="update-${data.id}" class="update-task-btn">Update</button>
-            <button id="delete-${data.id}" class="delete-task-btn">Delete</button>
-        </div>
-        `
+            const container = document.createElement('div');
+            container.id = `task-container-${data.id}`;
 
-            const newDelete = document.getElementById(`delete-${data.id}`)
+            const li = document.createElement('li');
+            li.id = `task-list-${data.id}`;
+            li.innerText = data.description;
+
+            const updateBtn = document.createElement('button');
+            updateBtn.id = `update-${data.id}`;
+            updateBtn.classList.add('update-task-btn');
+            updateBtn.innerText = 'Update';
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.id = `delete-${data.id}`;
+            deleteBtn.classList.add('delete-task-btn');
+            deleteBtn.innerText = 'Delete';
+
+            container.appendChild(li);
+            container.appendChild(updateBtn);
+            container.appendChild(deleteBtn);
+            ul.appendChild(container);
+
+            console.log(ul);
+
+            newDeleteTask(deleteBtn);
+
+            //     ul.innerHTML += `
+            // <div class="task-container-${data.id}">
+            //     <li class="task-list-${data.id}">${data.description}</li>
+            //     <button id="update-${data.id}" class="update-task-btn">Update</button>
+            //     <button id="delete-${data.id}" class="delete-task-btn">Delete</button>
+            // </div>
+            // `
         }
+
         textBox.value = null;
-        dueDateBox.value= null;
+        dueDateBox.value = null;
         minutesBox.value = null;
-        hoursBox.value= null;
+        hoursBox.value = null;
         priorityBox.innerHTML = `
         <select name=importance id=importance>
             <option value=""> -- Select Priority -- </option>
@@ -70,22 +89,15 @@ const addTask = () => {
         </select>
 
         `
-
     })
-
-
 }
-
-
-
-
 
 const deleteTask = () => {
     const buttons = document.querySelectorAll('.delete-task-btn')
 
-
     buttons.forEach(button => {
         button.addEventListener('click', async (ev) => {
+            // console.log('Test');
             const taskId = ev.target.id.split('-')[1]
 
             const res = await fetch(`/tasks/${taskId}`, {
@@ -94,7 +106,7 @@ const deleteTask = () => {
 
             const data = await res.json();
             if (data.message === "Task successfully deleted") {
-                const container = document.querySelector(`.task-container-${taskId}`)
+                const container = document.getElementById(`task-container-${taskId}`)
 
                 container.remove()
             }
@@ -103,7 +115,7 @@ const deleteTask = () => {
 }
 
 const newDeleteTask = (button) => {
-    button.addEventListener('click', async(ev) => {
+    button.addEventListener('click', async (ev) => {
         const taskId = ev.target.id.split('-')[1]
 
         const res = await fetch(`/tasks/${taskId}`, {
@@ -112,7 +124,7 @@ const newDeleteTask = (button) => {
 
         const data = await res.json();
         if (data.message === "Task successfully deleted") {
-            const container = document.querySelector(`.task-container-${taskId}`)
+            const container = document.getElementById(`task-container-${taskId}`)
 
             container.remove()
         }
