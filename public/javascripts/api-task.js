@@ -12,6 +12,13 @@ const addCreateFunction = () => {
 
     addTaskButton.addEventListener('click', async (ev) => {
         ev.preventDefault();
+
+        // Errors flicker when spamming add without proper info
+        const errorsDisplay = document.getElementById('add-errors-display');
+        if (errorsDisplay.firstChild) {
+            errorsDisplay.childNodes.forEach(c => c.remove());
+        }
+
         const textBox = document.getElementById('new-textbox');
         const dueDateBox = document.getElementById('dueDate');
         const hoursBox = document.getElementById('hours');
@@ -41,7 +48,11 @@ const addCreateFunction = () => {
 
         if (data.errors) {
 
-            //add error handling
+            data.errors.forEach(msg => {
+                const li = document.createElement('li');
+                li.innerText = msg;
+                errorsDisplay.append(li);
+            })
 
         } else {
 

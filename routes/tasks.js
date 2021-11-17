@@ -11,10 +11,17 @@ router.use(requireAuth);
 
 const taskValidator = [
     check('description')
-        .exists({ checkFalsy: true })
         .withMessage('Please enter a description for your task')
         .isLength({ max: 255 })
-        .withMessage('Description length must not exceed 255 characters')
+        .withMessage('Description length must not exceed 255 characters'),
+    // check('hours')
+    //     .optional({ checkFalsy: true })
+    //     .isNumeric({ min: 0, max: 24 })
+    //     .withMessage('Hours must be between 0 and 24'),
+    // check('minutes')
+    //     .optional({ checkFalsy: true })
+    //     .isNumeric({ min: 0, max: 60 })
+    //     .withMessage('Minutes must be between 0 and 60')
 ]
 // add a validator for importance
 
@@ -49,17 +56,7 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
         return res.json(task);
     } else {
         const errors = validatorErrors.array().map(err => err.msg);
-
-        // const errorBox = document.getElementById('task-errors');
-        // const errorsHtml = errors.map(error => {
-        //     return `
-        //     <li>${error}</li>
-        //     `
-        // })
-        // const ul = document.createElement('ul')
-        // ul.innerHTML = errorsHtml.join('');
-        // errorBox.appendChild(ul);
-        return res.json({errors});
+        return res.json({ errors });
     }
 }))
 
