@@ -13,15 +13,18 @@ const addCreateFunction = () => {
     addTaskButton.addEventListener('click', async (ev) => {
         ev.preventDefault();
         const textBox = document.getElementById('new-textbox');
-        const description = textBox.value;
         const dueDateBox = document.getElementById('dueDate');
-        const dueDate = dueDateBox.value;
-        const minutesBox = document.getElementById('minutes');
-        const minutesValue = minutesBox.value
         const hoursBox = document.getElementById('hours');
-        const hoursValue = hoursBox.value;
-        const estimatedTime = hoursValue * 60 + minutesValue;
+        const minutesBox = document.getElementById('minutes');
         const priorityBox = document.getElementById('importance')
+
+        const description = textBox.value;
+        const dueDate = dueDateBox.value;
+
+        const hoursValue = hoursBox.value;
+        const minutesValue = minutesBox.value;
+        const estimatedTime = parseInt(hoursValue, 10) * 60 + parseInt(minutesValue, 10);
+
         const importance = priorityBox.value;
 
         const listId = window.location.href.split('/')[4]
@@ -66,7 +69,7 @@ const addCreateFunction = () => {
             container.appendChild(deleteBtn);
             ul.appendChild(container);
 
-            console.log(ul);
+            // console.log(ul);
 
             addDeleteFunction(deleteBtn);
         }
