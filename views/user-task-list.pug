@@ -3,3 +3,33 @@ extends layout.pug
 block content
 
     include lists-sidebar.pug
+
+    #task-list-main
+        form(action="/tasks" method="post")
+            div
+                input(type="text" name="description" id="new-textbox" value=description)
+            div
+                label(for="dueDate") Due Date
+                input(type="datetime-local" name="dueDate" id="dueDate" value=dueDate)
+                label Estimated Time
+                label(for="hours") Hours
+                input(type="number" name="hours" id="hours" max=24 min=0 value=hours)
+                label(for="minutes") Minutes
+                input(type="number" name="minutes" id="minutes" max=60 min=0 value=minutes)
+                select(name="importance" id="importance")
+                    option(value="") -- Select Priority --
+                    option(value="0") None
+                    option(value="3") High
+                    option(value="2") Medium
+                    option(value="1") Low
+                button#new-button Add Task
+        #task-list-display
+            ul
+                if tasks.length
+                    each task in tasks
+                        div
+                            li(id=task.id) #{task.description}
+                            button Update
+                            button Delete
+                else
+                    div Get busy son.

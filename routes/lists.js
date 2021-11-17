@@ -65,7 +65,7 @@ router.post('/', userValidators, asyncHandler(async (req, res, next) => {
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
-    const listId = req.params.id;
+    const listId = parseInt(req.params.id, 10);
     //For Sidebar
     let lists = await List.findAll({
         where: {
