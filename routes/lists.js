@@ -160,7 +160,7 @@ router.put('/:id(\\d+)', userValidators, asyncHandler(async (req, res) => {
         const errors = validatorErrors.array().map(error => error.msg);
         return res.json({
             errors,
-            csrfToken: req.csrfToken(),
+            // csrfToken: req.csrfToken()
         })
     }
 

@@ -84,6 +84,7 @@ for (let i = 0; i < deleteListButtons.length; i++) {
 // UPDATE BUTTON
 const updateListButtons = document.getElementsByClassName("update-list-buttons");
 const updateListForm = document.getElementById("update-list-form")
+const updateListPopup = document.getElementById('update-list-popup');
 let updateTarget;
 let updateId;
 
@@ -92,7 +93,6 @@ for (let i = 0; i < updateListButtons.length; i++) {
     console.log(updateListButton)
     updateListButton.addEventListener("click", e => {
         console.log("inside event listener")
-        const updateListPopup = document.getElementById('update-list-popup');
         updateListPopup.style.display = 'block';
         updateTarget = e.target.id.split('-')[2];
         updateId = parseInt(updateTarget, 10);
@@ -109,6 +109,7 @@ submitUpdate.addEventListener("click", async (e) => {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
+            // "Authorization": "Bearer"
         },
         body: JSON.stringify({
             name
@@ -120,7 +121,23 @@ submitUpdate.addEventListener("click", async (e) => {
     }
 
     const dataJSON = await data.json();
-    console.log(dataJSON.message);
+
+    if (dataJSON.errors) {
+        const errorDiv = document.createElement("div");
+        const errorHeader = document.createElement("p");
+        const ul = document.createElement("ul")
+        errorHeader.innerHTML = "The following error(s) occurred:"
+        updateListPopup.append(errorDiv);
+        errorDiv.append(errorHeader);
+        errorDiv.append(ul);
+
+        dataJSON.errors.forEach(error => {
+            const errorMessage = document.createElement("li");
+            errorMessage.innerHTML = error;
+            ul.append(errorMessage);
+        })
+    }
+
 
     if (dataJSON.message) {
         window.location.href = `/lists/${dataJSON.message}`
