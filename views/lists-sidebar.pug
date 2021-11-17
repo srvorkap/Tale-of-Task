@@ -3,8 +3,8 @@ div
     each list in lists
       li
         a(href= `/lists/${list.id}`)=list.name
-        button Update
-        button Delete
+        button(class='update-list-buttons' id=`update-list-${list.id}`) Update
+        button(class='delete-list-buttons' id=`delete-list-${list.id}`) Delete
   button#add-list-button Add List
 
 div#add-list-popup

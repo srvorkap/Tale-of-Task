@@ -57,10 +57,10 @@ router.post('/', userValidators, asyncHandler(async (req, res, next) => {
         res.json({
             message: list.id
         })
-    // On errors
+        // On errors
     } else {
         const errors = validatorErrors.array().map(err => err.msg)
-        res.json({errors})
+        res.json({ errors })
     }
 }))
 
@@ -94,14 +94,26 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 }))
 
 router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
-    // Is listId in req.params already? Is it tied to the button? HOW DO WE GET THIS.
-    const listId = req.params.listId
+    const userId = req.session.auth.userId;
+    const listId = req.params.id
     const list = await List.findByPk(listId);
     await list.destroy();
-    res.json({ message: "List successfully deleted" })
+
+    // FIND ALL LISTS TO NAVIGATE TO THE FIRST OF THE USER'S LISTS
+    let lists = await List.findAll({
+        where: {
+            userId
+        }
+    })
+    JSON.stringify(lists)
+    const currentList = lists[0];
+
+    res.json({
+        message: currentList.id
+    })
 }))
 
-router.put('/:id(\\d+)', userValidators, asyncHandler(async(req, res) => {
+router.put('/:id(\\d+)', userValidators, asyncHandler(async (req, res) => {
     const listId = parseInt(req.params.id, 10);
     const list = await List.findByPk(listId);
     const {
