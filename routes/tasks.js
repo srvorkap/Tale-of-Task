@@ -11,6 +11,7 @@ router.use(requireAuth);
 
 const taskValidator = [
     check('description')
+        .exists({ checkFalsy: true })
         .withMessage('Please enter a description for your task')
         .isLength({ max: 255 })
         .withMessage('Description length must not exceed 255 characters'),
