@@ -1,7 +1,10 @@
 window.addEventListener('DOMContentLoaded', (event) => {
     addCreateFunction()
-    const buttons = document.querySelectorAll('.delete-task-btn')
-    buttons.forEach(button => addDeleteFunction(button));
+
+    const updateButtons = document.querySelectorAll('.update-task-btn')
+
+    const deleteButtons = document.querySelectorAll('.delete-task-btn')
+    deleteButtons.forEach(button => addDeleteFunction(button));
 })
 
 const addCreateFunction = () => {
