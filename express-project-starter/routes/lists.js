@@ -29,30 +29,43 @@ router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
     })
 }))
 
-router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, next) => {
-    const { name, userId } = req.body;
+router.post('/', userValidators, asyncHandler(async (req, res, next) => {
+    //add csrf
+    const userId = req.session.auth.userId;
+    const { name } = req.body;
     const list = List.build({
-        name,
-        userId
+        name
     })
+
+    //For Sidebar
+    let lists = await List.findAll({
+        where: {
+            userId
+        }
+    })
+    JSON.stringify(lists)
+
     const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
+        list.userId = userId
         await list.save()
         res.locals.list = list;
-        res.render('user-task-list')
+
+        res.redirect(`/lists/${list.id}`)
     } else {
         const errors = validatorErrors.array().map(err => err.msg)
         res.render('user-task-list', {
-            errors,
-            csrfToken: req.csrfToken()
+            lists,
+            errors
+            //csrftoken
         })
     }
 }))
 
-router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
+router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
-    const listId = req.url.slice('/')[2];
+    const listId = req.params.id;
     //For Sidebar
     let lists = await List.findAll({
         where: {

@@ -1,3 +1,8 @@
 #add-list-popup {
-  visibility: hidden;
+  display: none;
+  border: 2px solid green;
+  padding: 10px;
+  margin: 20px;
+  width: 200px;
+  height: 75px;
 }
