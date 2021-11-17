@@ -81,6 +81,49 @@ for (let i = 0; i < deleteListButtons.length; i++) {
     })
 }
 
-
 // UPDATE BUTTON
+const updateListButtons = document.getElementsByClassName("update-list-buttons");
+const updateListForm = document.getElementById("update-list-form")
+let updateTarget;
+let updateId;
 
+for (let i = 0; i < updateListButtons.length; i++) {
+    const updateListButton = updateListButtons[i];
+    console.log(updateListButton)
+    updateListButton.addEventListener("click", e => {
+        console.log("inside event listener")
+        const updateListPopup = document.getElementById('update-list-popup');
+        updateListPopup.style.display = 'block';
+        updateTarget = e.target.id.split('-')[2];
+        updateId = parseInt(updateTarget, 10);
+    })
+}
+
+const submitUpdate = document.getElementById("submit-update-list");
+submitUpdate.addEventListener("click", async (e) => {
+    e.preventDefault();
+    console.log("in event listener")
+    const formData = new FormData(updateListForm);
+    const name = formData.get("name");
+    const data = await fetch(`/lists/${updateId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name
+        })
+    })
+
+    if (!data.ok) {
+        throw data;
+    }
+
+    const dataJSON = await data.json();
+    console.log(dataJSON.message);
+
+    if (dataJSON.message) {
+        window.location.href = `/lists/${dataJSON.message}`
+    }
+
+})

@@ -35,7 +35,6 @@ router.post('/', userValidators, asyncHandler(async (req, res, next) => {
     //add csrf
     const userId = req.session.auth.userId;
     const { name } = req.body;
-    console.log(name)
     const list = List.build({
         name
     })
@@ -106,7 +105,7 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         }
     })
     JSON.stringify(lists)
-    
+
     let currentList = lists[0];
     res.json({
         message: currentList.id
@@ -114,6 +113,7 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 }))
 
 router.put('/:id(\\d+)', userValidators, asyncHandler(async (req, res) => {
+    const userId = req.session.auth.userId;
     const listId = parseInt(req.params.id, 10);
     const list = await List.findByPk(listId);
     const {
@@ -124,10 +124,27 @@ router.put('/:id(\\d+)', userValidators, asyncHandler(async (req, res) => {
         name
     })
 
+    let lists = await List.findAll({
+        where: {
+            userId
+        }
+    })
+    JSON.stringify(lists)
+
+    const tasks = await Task.findAll({
+        where: {
+            listId
+        }
+    })
+
+    JSON.stringify(tasks);
+
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
         await list.save();
-        res.render('user-task-list')
+        return res.json({
+            message: list.id
+        })
     } else {
         const errors = validatorErrors.array().map(error => error.msg);
         return res.json({

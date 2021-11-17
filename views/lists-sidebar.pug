@@ -14,3 +14,11 @@ div#add-list-popup
     input(type="hidden" name="_csrf" value=csrfToken)
     button#submit-add-list(type="submit") Add
     button#cancel-add-list(type="button") Cancel
+
+div#update-list-popup
+  +validationErrorSummary(errors)
+  form#update-list-form
+    +field('List Name', 'name', '')
+    input(type="hidden" name="_csrf" value=csrfToken)
+    button#submit-update-list(type="submit") Update
+    button#cancel-update-list(type="button") Cancel
