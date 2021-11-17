@@ -14,7 +14,15 @@ const taskValidator = [
         .exists({ checkFalsy: true })
         .withMessage('Please enter a description for your task')
         .isLength({ max: 255 })
-        .withMessage('Description length must not exceed 255 characters')
+        .withMessage('Description length must not exceed 255 characters'),
+    // check('hours')
+    //     .optional({ checkFalsy: true })
+    //     .isNumeric({ min: 0, max: 24 })
+    //     .withMessage('Hours must be between 0 and 24'),
+    // check('minutes')
+    //     .optional({ checkFalsy: true })
+    //     .isNumeric({ min: 0, max: 60 })
+    //     .withMessage('Minutes must be between 0 and 60')
 ]
 // add a validator for importance
 
@@ -26,8 +34,12 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
 router.post('/', taskValidator, asyncHandler(async (req, res) => {
     // add csrf
     let {
-        description, userId, listId, dueDate, estimatedTime, importance
+        description, listId, dueDate, estimatedTime, importance
     } = req.body;
+
+    const list = await List.findByPk(listId)
+    const userId = list.userId
+    //got user id in back end by querying db
 
     if (!dueDate) dueDate = null;
     if (!estimatedTime) estimatedTime = null;
@@ -37,22 +49,14 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
         description, userId, listId, dueDate, estimatedTime, importance, completed: false, deleted: false
     })
 
+
     const validatorErrors = validationResult(req);
 
     if (validatorErrors.isEmpty()) {
         await task.save();
-        return res.json({ task });
+        return res.json(task);
     } else {
         const errors = validatorErrors.array().map(err => err.msg);
-        // const errorBox = document.getElementById('task-errors');
-        // const errorsHtml = errors.map(error => {
-        //     return `
-        //     <li>${error}</li>
-        //     `
-        // })
-        // const ul = document.createElement('ul')
-        // ul.innerHTML = errorsHtml.join('');
-        // errorBox.appendChild(ul);
         return res.json({ errors });
     }
 }))
@@ -86,6 +90,7 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
 
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
+
         await task.save()
         res.json({ task })
     } else {

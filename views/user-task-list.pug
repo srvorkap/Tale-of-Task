@@ -2,10 +2,11 @@ extends layout.pug
 
 block content
 
+    script(src='/javascripts/api-task.js' type='module')
     include lists-sidebar.pug
 
     #task-list-main
-        form(action="/tasks" method="post")
+        form
             div
                 input(type="text" name="description" id="new-textbox" value=description)
             div
@@ -23,13 +24,14 @@ block content
                     option(value="2") Medium
                     option(value="1") Low
                 button#new-button Add Task
+            div
+                ul#add-errors-display
         #task-list-display
-            ul
+            ul#task-list-render
                 if tasks.length
                     each task in tasks
-                        div
-                            li(id=task.id) #{task.description}
-                            button Update
-                            button Delete
+                        div(id=`task-container-${task.id}`)
+                            li(id=`task-list-${task.id}`) #{task.description}
+                            button(id=`update-${task.id}` class="update-task-btn") Update
+                            button(id=`delete-${task.id}` class="delete-task-btn") Delete
                 else
-                    div Get busy son.
