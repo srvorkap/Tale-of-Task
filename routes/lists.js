@@ -76,6 +76,17 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 
     //Set res.locals.list to currentList
     const currentList = await List.findByPk(listId);
+
+    if (currentList === null) {
+        let inbox = await List.findOne({
+            where: {
+                userId,
+                name: "Inbox"
+            }
+        })
+        return res.redirect(`/lists/${inbox.id}`)
+    }
+
     res.locals.list = currentList;
 
     const tasks = await Task.findAll({
