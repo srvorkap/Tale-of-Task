@@ -120,13 +120,19 @@ const addDeleteFunction = (button) => {
 }
 
 const addSaveFunction = (button) => {
-
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
 
         // Make the other buttons visible again
 
         const taskId = ev.target.id.split('-')[1]
+        const taskListDiv = document.getElementById(`task-container-${taskId}`);
+        const updateForm = document.getElementById(`update-form-${taskId}`);
+        const divKids = taskListDiv.children;
+        for (let el of divKids) {
+            el.style.display = '';
+        }
+        updateForm.remove();
 
         const res = await fetch(`/tasks/${taskId}`, {
             method: "PUT",
@@ -143,7 +149,7 @@ const addUpdateFunction = (button) => {
         ev.preventDefault();
 
         const taskId = ev.target.id.split('-')[1];
-        console.log(taskId);
+        // console.log(taskId);
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
         const divKids = taskListDiv.children;
         for (let el of divKids) {
@@ -256,7 +262,7 @@ const addUpdateFunction = (button) => {
         form.appendChild(errorsDiv);
 
         // console.log(form)
-
+        form.id = `update-form-${taskId}`;
         taskListDiv.appendChild(form);
     })
 
