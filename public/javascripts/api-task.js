@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     addTask()
     deleteTask()
 
+
 })
 
 const addTask = () => {
@@ -46,12 +47,14 @@ const addTask = () => {
             const ul = document.getElementById('task-list-render')
 
             ul.innerHTML += `
-        <div class=task-container-${data.id}>
-            <li class-list-${data.id} task-list>${data.description}</li>
-            <button id=update-${data.id} class=update-task-button>Update</button>
-            <button id=delete-${data.id} class=delete-task-btn>Delete</button>
+        <div class="task-container-${data.id}">
+            <li class="task-list-${data.id}">${data.description}</li>
+            <button id="update-${data.id}" class="update-task-btn">Update</button>
+            <button id="delete-${data.id}" class="delete-task-btn">Delete</button>
         </div>
         `
+
+            const newDelete = document.getElementById(`delete-${data.id}`)
         }
         textBox.value = null;
         dueDateBox.value= null;
@@ -70,6 +73,7 @@ const addTask = () => {
 
     })
 
+
 }
 
 
@@ -83,7 +87,6 @@ const deleteTask = () => {
     buttons.forEach(button => {
         button.addEventListener('click', async (ev) => {
             const taskId = ev.target.id.split('-')[1]
-            console.log(ev.target.id)
 
             const res = await fetch(`/tasks/${taskId}`, {
                 method: "DELETE"
@@ -96,5 +99,22 @@ const deleteTask = () => {
                 container.remove()
             }
         })
+    })
+}
+
+const newDeleteTask = (button) => {
+    button.addEventListener('click', async(ev) => {
+        const taskId = ev.target.id.split('-')[1]
+
+        const res = await fetch(`/tasks/${taskId}`, {
+            method: "DELETE"
+        })
+
+        const data = await res.json();
+        if (data.message === "Task successfully deleted") {
+            const container = document.querySelector(`.task-container-${taskId}`)
+
+            container.remove()
+        }
     })
 }
