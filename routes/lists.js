@@ -106,8 +106,8 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
         }
     })
     JSON.stringify(lists)
-    const currentList = lists[0];
-
+    
+    let currentList = lists[0];
     res.json({
         message: currentList.id
     })
