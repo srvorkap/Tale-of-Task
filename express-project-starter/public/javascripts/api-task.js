@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
     addTask()
     deleteTask()
-    
+
 })
 
 const addTask = () => {
@@ -22,7 +22,7 @@ const addTask = () => {
         const priorityBox = document.getElementById('importance')
         const importance = priorityBox.value;
 
-        // const userId = user.id;
+
         const listId = window.location.href.split('/')[4]
 
 
@@ -34,9 +34,11 @@ const addTask = () => {
             body: JSON.stringify({ listId, description, dueDate, estimatedTime, importance })
         })
 
+
         const data = await res.json();
+
         if (data.errors) {
-            console.log("data yes", data)
+
             //add error handling
 
         } else {
@@ -45,15 +47,33 @@ const addTask = () => {
 
             ul.innerHTML += `
         <div class=task-container-${data.id}>
-        <li class=task-list-${data.id} task-list>${data.description}</li>
-        <button id=update-${data.id} class=update-task-button>Update</button>
-        <button id=delete-${data.id} class=delete-task-btn>Delete</button>
+            <li class-list-${data.id} task-list>${data.description}</li>
+            <button id=update-${data.id} class=update-task-button>Update</button>
+            <button id=delete-${data.id} class=delete-task-btn>Delete</button>
         </div>
         `
-
         }
+        textBox.value = null;
+        dueDateBox.value= null;
+        minutesBox.value = null;
+        hoursBox.value= null;
+        priorityBox.innerHTML = `
+        <select name=importance id=importance>
+            <option value=""> -- Select Priority -- </option>
+            <option value=0> None </option>
+            <option value=3> High </option>
+            <option value=2> Medium </option>
+            <option value=1> Low </option>
+        </select>
+
+        `
+
     })
 }
+
+
+
+
 
 const deleteTask = () => {
     const buttons = document.querySelectorAll('.delete-task-btn')
@@ -71,6 +91,7 @@ const deleteTask = () => {
             const data = await res.json();
             if (data.message === "Task successfully deleted") {
                 const container = document.querySelector(`.task-container-${taskId}`)
+
                 container.remove()
             }
         })

@@ -59,7 +59,7 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
         // const ul = document.createElement('ul')
         // ul.innerHTML = errorsHtml.join('');
         // errorBox.appendChild(ul);
-        return res.json(errors);
+        return res.json({errors});
     }
 }))
 
