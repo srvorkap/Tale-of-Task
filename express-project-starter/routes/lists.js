@@ -119,7 +119,8 @@ router.put('/:id(\\d+)', userValidators, asyncHandler(async(req, res) => {
         const errors = validatorErrors.array().map(error => error.msg);
         res.render('user-task-list', {
             errors,
-            csrfToken: req.csrfToken()
+            csrfToken: req.csrfToken(),
+            success: false
         })
     }
 
