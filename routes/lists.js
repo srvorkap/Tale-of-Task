@@ -15,23 +15,23 @@ const userValidators = [
 
 
 //MAY NOT USE - how do we redirect to the inbox automatically?
-router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
-    const userId = req.session.auth.userId;
-    let lists = await List.findAll({
-        where: {
-            userId
-        }
-    })
-    JSON.stringify(lists)
+// router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
+//     const userId = req.session.auth.userId;
+//     let lists = await List.findAll({
+//         where: {
+//             userId
+//         }
+//     })
+//     JSON.stringify(lists)
 
-    res.render('user-task-list', {
-        lists,
-        csrfToken: req.csrfToken()
-    })
-}))
+//     res.render('user-task-list', {
+//         lists,
+//         csrfToken: req.csrfToken()
+//     })
+// }))
 
 
-router.post('/', userValidators, asyncHandler(async (req, res, next) => {
+router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, next) => {
     //add csrf
     const userId = req.session.auth.userId;
     const { name } = req.body;
@@ -54,16 +54,20 @@ router.post('/', userValidators, asyncHandler(async (req, res, next) => {
         await list.save()
         res.locals.list = list;
         res.json({
-            message: list.id
+            message: list.id,
+            csrfToken: req.csrfToken()
         })
         // On errors
     } else {
         const errors = validatorErrors.array().map(err => err.msg)
-        res.json({ errors })
+        res.json({
+            errors,
+            csrfToken: req.csrfToken()
+        })
     }
 }))
 
-router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
+router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
     const listId = parseInt(req.params.id, 10);
 
@@ -99,7 +103,8 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
 
     res.render('user-task-list', {
         lists,
-        tasks
+        tasks,
+        csrfToken: req.csrfToken()
     });
 }))
 
@@ -123,7 +128,7 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     })
 }))
 
-router.put('/:id(\\d+)', userValidators, asyncHandler(async (req, res) => {
+router.put('/:id(\\d+)', csrfProtection, userValidators, asyncHandler(async (req, res) => {
     const userId = req.session.auth.userId;
     const listId = parseInt(req.params.id, 10);
     const list = await List.findByPk(listId);
@@ -154,13 +159,14 @@ router.put('/:id(\\d+)', userValidators, asyncHandler(async (req, res) => {
     if (validatorErrors.isEmpty()) {
         await list.save();
         return res.json({
-            message: list.id
+            message: list.id,
+            csrfToken: req.csrfToken()
         })
     } else {
         const errors = validatorErrors.array().map(error => error.msg);
         return res.json({
             errors,
-            // csrfToken: req.csrfToken()
+            csrfToken: req.csrfToken()
         })
     }
 

@@ -13,11 +13,14 @@ addListForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(addListForm);
     const name = formData.get("name");
+    const csrfToken = document.getElementById("addCsrf").value
     const data = await fetch('/lists', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            'X-CSRF-TOKEN': csrfToken
         },
+        credentials: 'include',
         body: JSON.stringify({
             name
         })
@@ -90,7 +93,6 @@ let updateId;
 
 for (let i = 0; i < updateListButtons.length; i++) {
     const updateListButton = updateListButtons[i];
-    console.log(updateListButton)
     updateListButton.addEventListener("click", e => {
         console.log("inside event listener")
         updateListPopup.style.display = 'block';
@@ -105,12 +107,14 @@ submitUpdate.addEventListener("click", async (e) => {
     console.log("in event listener")
     const formData = new FormData(updateListForm);
     const name = formData.get("name");
+    const csrfToken = document.getElementById("updateCsrf").value
     const data = await fetch(`/lists/${updateId}`, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json",
-            // "Authorization": "Bearer"
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
         },
+        credentials: 'include',
         body: JSON.stringify({
             name
         })

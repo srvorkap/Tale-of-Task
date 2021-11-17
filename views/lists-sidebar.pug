@@ -11,7 +11,7 @@ div#add-list-popup
   +validationErrorSummary(errors)
   form#add-list-form(action= "/lists" method= "post")
     +field('List Name', 'name', '')
-    input(type="hidden" name="_csrf" value=csrfToken)
+    input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
     button#submit-add-list(type="submit") Add
     button#cancel-add-list(type="button") Cancel
 
@@ -19,6 +19,6 @@ div#update-list-popup
   +validationErrorSummary(errors)
   form#update-list-form
     +field('List Name', 'name', '')
-    input(type="hidden" name="_csrf" value=csrfToken)
+    input(type="hidden" name="_csrf" id="updateCsrf" value=csrfToken)
     button#submit-update-list(type="submit") Update
     button#cancel-update-list(type="button") Cancel
