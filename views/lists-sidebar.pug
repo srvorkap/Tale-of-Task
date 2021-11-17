@@ -9,8 +9,8 @@ div
 
 div#add-list-popup
   +validationErrorSummary(errors)
-  form(action= "/lists" method= "post")
+  form#add-list-form(action= "/lists" method= "post")
     +field('List Name', 'name', '')
     input(type="hidden" name="_csrf" value=csrfToken)
-    button#submit-add-list Add
+    button#submit-add-list(type="submit") Add
     button#cancel-add-list(type="button") Cancel

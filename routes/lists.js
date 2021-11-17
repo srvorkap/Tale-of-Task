@@ -13,6 +13,7 @@ const userValidators = [
         .withMessage('List name must not exceed 50 characters')
 ]
 
+
 //MAY NOT USE - how do we redirect to the inbox automatically?
 router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
@@ -29,15 +30,16 @@ router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
     })
 }))
 
+
 router.post('/', userValidators, asyncHandler(async (req, res, next) => {
     //add csrf
     const userId = req.session.auth.userId;
     const { name } = req.body;
+    console.log(name)
     const list = List.build({
         name
     })
 
-    //For Sidebar
     let lists = await List.findAll({
         where: {
             userId
@@ -47,26 +49,25 @@ router.post('/', userValidators, asyncHandler(async (req, res, next) => {
 
     const validatorErrors = validationResult(req);
 
+    // On success
     if (validatorErrors.isEmpty()) {
         list.userId = userId
         await list.save()
         res.locals.list = list;
-
-        res.redirect(`/lists/${list.id}`)
+        res.json({
+            message: list.id
+        })
+    // On errors
     } else {
         const errors = validatorErrors.array().map(err => err.msg)
-        res.render('user-task-list', {
-            lists,
-            errors
-            //csrftoken
-        })
+        res.json({errors})
     }
 }))
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
     const listId = parseInt(req.params.id, 10);
-    //For Sidebar
+
     let lists = await List.findAll({
         where: {
             userId
