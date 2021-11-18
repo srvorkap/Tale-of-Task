@@ -98,7 +98,7 @@ const addCreateFunction = () => {
             <option value=2> Medium </option>
             <option value=1> Low </option>
         </select>
-        `
+        `;
     })
 }
 
@@ -122,6 +122,8 @@ const addDeleteFunction = (button) => {
 const addSaveFunction = (button, form) => {
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
+
+        // Need error handling
 
         // Make the other buttons visible again
 
