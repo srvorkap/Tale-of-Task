@@ -7,6 +7,9 @@ html
         title= title
         link(rel='stylesheet' href='/stylesheets/popup.css')
         script(src="/javascripts/api-lists.js" type="module")
+        link(rel="preconnect" href="https://fonts.googleapis.com")
+        link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+        link(href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Noto+Sans+JP&family=Noto+Serif+JP&family=Oranienbaum&family=Press+Start+2P&display=swap" rel="stylesheet")
   body
     nav
       a(href='/') Home
@@ -20,4 +23,4 @@ html
             a(href='/users/login') Login
             a(href='/users/signup') Sign Up
 
-  block content
+    block content

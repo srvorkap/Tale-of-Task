@@ -1,10 +1,35 @@
-extends layout.pug
 include utils.pug
 
-block content
-    +validationErrorSummary(errors)
-    form(action="/users/login" method="post")
-        +field('Email Address', 'email', email, 'email')
-        +field('Password', 'password', '', 'password')
-        input(type="hidden", name="_csrf", value=csrfToken)
-        button Login
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title TALE Of TASK
+        link(rel='stylesheet' href='/stylesheets/login.css')
+        link(rel="preconnect" href="https://fonts.googleapis.com")
+        link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+        link(href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Noto+Sans+JP&family=Noto+Serif+JP&family=Oranienbaum&family=Press+Start+2P&display=swap" rel="stylesheet")
+    body
+
+    body
+        #login-container
+            #title-card
+                #title TALE Of TASK
+                #title-kana テール・オブ・タースク
+            #login-sprites
+            +validationErrorSummary(errors)
+            #login-card
+                form(action="/users/login" method="post" id="login-form")
+                    .label-text
+                        label(for="email") Email Address
+                    div
+                        input(type="text" id="email" name="email")
+                    .label-text
+                        label(for="password") Password
+                    div
+                        input(type="password" id="password" name="password")
+                    input(type="hidden", name="_csrf", value=csrfToken)
+                    button#login LOGIN
+            script(src="/javascripts/login.js" type="module")
