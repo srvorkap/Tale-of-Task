@@ -28,7 +28,7 @@ const taskValidator = [
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     const task = await Task.findByPk(parseInt(req.params.id, 10));
-    res.json({ task });
+    return res.json(task);
 }))
 
 router.post('/', taskValidator, asyncHandler(async (req, res) => {

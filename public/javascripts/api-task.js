@@ -160,8 +160,8 @@ const addUpdateFunction = (button) => {
             method: "GET"
         });
 
-        const data = res.json()
-        console.log(data);
+        const data = await res.json()
+
 
         const { description, dueDate, estimatedTime, importance } = data;
 
@@ -199,6 +199,7 @@ const addUpdateFunction = (button) => {
         dueDateInput.type = 'datetime-local';
         dueDateInput.id = `dueDate-${taskId}`;
         dueDateInput.value = dueDate;
+        console.log(dueDate)
 
         timeLabel.innerText = 'Estimated Time';
 
