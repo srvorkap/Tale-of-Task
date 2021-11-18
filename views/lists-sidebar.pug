@@ -7,18 +7,26 @@ div
         button(class='delete-list-buttons' id=`delete-list-${list.id}`) Delete
   button#add-list-button Add List
 
-div#add-list-popup
+div#add-list-popup.popup
   +validationErrorSummary(errors)
-  form#add-list-form(action= "/lists" method= "post")
-    +field('List Name', 'name', '')
-    input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
-    button#submit-add-list(type="submit") Add
-    button#cancel-add-list(type="button") Cancel
+  div.blocker-add
+  div#add-content.contents
+    div#error-add-div
+      ul#add-error-ul
+    form#add-list-form(action= "/lists" method= "post")
+      +field('List Name', 'name', '')
+      input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
+      button#submit-add-list(type="submit") Add
+      button#cancel-add-list(type="button") Cancel
 
-div#update-list-popup
+div#update-list-popup.popup
   +validationErrorSummary(errors)
-  form#update-list-form
-    +field('List Name', 'name', '')
-    input(type="hidden" name="_csrf" id="updateCsrf" value=csrfToken)
-    button#submit-update-list(type="submit") Update
-    button#cancel-update-list(type="button") Cancel
+  div.blocker-update
+  div#update-content.contents
+    div#error-div
+      ul#update-error-ul
+    form#update-list-form
+      +field('List Name', 'name', '')
+      input(type="hidden" name="_csrf" id="updateCsrf" value=csrfToken)
+      button#submit-update-list(type="submit") Update
+      button#cancel-update-list(type="button") Cancel
