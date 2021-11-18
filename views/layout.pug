@@ -6,21 +6,31 @@ html
       block head
         title= title
         link(rel='stylesheet' href='/stylesheets/popup.css')
+        link(rel='stylesheet' href='/stylesheets/main.css')
         script(src="/javascripts/api-lists.js" type="module")
         link(rel="preconnect" href="https://fonts.googleapis.com")
         link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
         link(href="https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Noto+Sans+JP&family=Noto+Serif+JP&family=Oranienbaum&family=Press+Start+2P&display=swap" rel="stylesheet")
   body
-    nav
-      a(href='/') Home
-      div
-        if locals.authenticated
-          span Welcome #{user.firstName}!
-          form(action='/users/logout' method='post')
-            button Logout
-        else
-          span
-            a(href='/users/login') Login
-            a(href='/users/signup') Sign Up
-
-    block content
+    #main-window
+      nav#navbar
+        #navleft
+          img(src="http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05013.png" alt="Home" class="sprite")
+          #user-info
+            span#username= user.firstName
+            br
+            span.class-info Astrologian
+            br
+            span.class-info Level #{user.level}
+        #navright
+          div
+            if locals.authenticated
+              form(action='/users/logout' method='post')
+                button#logout Logout
+            else
+              span
+                a(href='/users/login') Login
+                a(href='/users/signup') Sign Up
+      #exp-bar EXP 90/100
+        #exp-progress
+      block content
