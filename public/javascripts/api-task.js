@@ -326,15 +326,14 @@ const searchTask = () => {
     const searchInput = document.getElementById('searchbar')
     searchInput.addEventListener('keyup', async (ev) => {
 
-        const listId = window.location.href.split('/')[4]
+        // const listId = window.location.href.split('/')[4]
 
-        const res = await fetch(`/lists/${listId}/search`, {
+        const res = await fetch(`/tasks/search`, {
             method: "GET"
         })
 
         const data = await res.json()
-        // console.log(data)
-        // console.log(data[1].description)
+
         const divs = document.querySelectorAll(`.search-list-container`)
         console.log(divs)
 
@@ -347,7 +346,7 @@ const searchTask = () => {
         for (let i = 0; i < data.length; i++) {
 
             if (data[i].description.toLowerCase().includes(searchInput.value.toLowerCase())) {
-                // console.log(searchInput.value)
+
 
                 const ul = document.getElementById('task-list-render');
 
@@ -375,15 +374,11 @@ const searchTask = () => {
                 container.appendChild(li)
                 container.appendChild(updateBtn)
                 container.appendChild(deleteBtn)
-                // // ul.children.forEach(div => div.remove())
-                // if (!ul.children.length > 0) {
+
                     ul.appendChild(container)
-                // }
+
 
             }
-
-            //if search bar backed to empty display original list
-
 
         }
 

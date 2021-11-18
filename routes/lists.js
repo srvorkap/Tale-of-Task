@@ -196,18 +196,6 @@ router.put('/:id(\\d+)', csrfProtection, userValidators, asyncHandler(async (req
 
 }))
 
-router.get('/:id(\\d+)/search', asyncHandler(async(req, res) => {
-
-    //change url
-
-    // const listId = parseInt(req.params.id, 10);
-    // const list = await List.findByPk(listId);
-    // console.log(req.session.auth.userId)
-    const userId = req.session.auth.userId
-    const tasks = await Task.findAll({ where: {userId}})
-    // console.log("itRoute", tasks)
-    res.json(tasks)
-}))
 
 
 module.exports = router;
