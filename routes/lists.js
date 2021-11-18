@@ -103,7 +103,11 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
     const tasks = await Task.findAll({
         where: {
             listId
-        }
+        },
+        order: [
+            ['importance', 'DESC'],
+            ['updatedAt', 'DESC']
+        ]
     })
 
     JSON.stringify(tasks);

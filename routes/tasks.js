@@ -28,7 +28,7 @@ const taskValidator = [
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     const task = await Task.findByPk(parseInt(req.params.id, 10));
-    res.json({ task });
+    return res.json(task);
 }))
 
 router.post('/', taskValidator, asyncHandler(async (req, res) => {
@@ -78,20 +78,19 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
         description, listId, dueDate, estimatedTime, importance, deleted, completed
     } = req.body;
 
-    await task.update({
-        description,
-        listId,
-        dueDate,
-        estimatedTime,
-        completed,
-        deleted,
-        importance
-    })
-
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
 
-        await task.save()
+        await task.update({
+            description,
+            listId,
+            dueDate,
+            estimatedTime,
+            completed,
+            deleted,
+            importance
+        })
+
         res.json(task)
     } else {
         const hours = Math.floor(estimatedTime / 60);

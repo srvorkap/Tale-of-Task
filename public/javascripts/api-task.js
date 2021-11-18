@@ -49,6 +49,9 @@ const addCreateFunction = () => {
         if (data.errors) {
 
             data.errors.forEach(msg => {
+                if (errorsDisplay.firstChild) {
+                    errorsDisplay.childNodes.forEach(c => c.remove());
+                }
                 const li = document.createElement('li');
                 li.innerText = msg;
                 errorsDisplay.append(li);
@@ -98,7 +101,7 @@ const addCreateFunction = () => {
             <option value=2> Medium </option>
             <option value=1> Low </option>
         </select>
-        `
+        `;
     })
 }
 
@@ -119,30 +122,68 @@ const addDeleteFunction = (button) => {
     })
 }
 
-const addSaveFunction = (button) => {
+const addSaveFunction = (button, form) => {
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
 
+        // Need error handling
         // Make the other buttons visible again
 
         const taskId = ev.target.id.split('-')[1]
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
         const updateForm = document.getElementById(`update-form-${taskId}`);
         const divKids = taskListDiv.children;
-        for (let el of divKids) {
-            el.style.display = '';
+
+        const updateDate = new FormData(form);
+        const dataObj = {};
+        for (let pair of updateDate.entries()) {
+            dataObj[pair[0]] = pair[1];
         }
-        updateForm.remove();
+        // console.log(dataObj);
+
+        dataObj.estimatedTime = parseInt(dataObj.hours, 10) * 60 + parseInt(dataObj.minutes, 10);
 
         const res = await fetch(`/tasks/${taskId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify()
+            body: JSON.stringify(dataObj)
         })
+
+        const data = await res.json();
+        // console.log(data.errors);
+
+        if (data.errors) {
+            const errorsDisplay = document.getElementById(`errors-${taskId}`);
+            data.errors.forEach(msg => {
+                if (errorsDisplay.firstChild) {
+                    errorsDisplay.childNodes.forEach(c => c.remove());
+                }
+                const li = document.createElement('li');
+                li.innerText = msg;
+                errorsDisplay.append(li);
+            });
+        } else {
+            for (let el of divKids) {
+                el.style.display = '';
+            }
+            const li = document.getElementById(`task-list-${taskId}`);
+            li.innerText = dataObj.description;
+            updateForm.remove();
+        }
     })
-}
+};
+
+const addOption = (text, value, importance) => {
+    const opt = document.createElement('option');
+    opt.innerText = text;
+    opt.value = value;
+    if (value === importance) {
+        opt.selected = 'selected';
+    };
+    return opt;
+};
 
 const addUpdateFunction = (button) => {
     button.addEventListener('click', async (ev) => {
@@ -160,8 +201,7 @@ const addUpdateFunction = (button) => {
             method: "GET"
         });
 
-        const data = res.json()
-        console.log(data);
+        const data = await res.json()
 
         const { description, dueDate, estimatedTime, importance } = data;
 
@@ -182,12 +222,14 @@ const addUpdateFunction = (button) => {
         const minutesInput = document.createElement('input');
         const select = document.createElement('select');
         const optionSelect = document.createElement('option');
-        const optionNone = document.createElement('option');
-        const optionHigh = document.createElement('option');
-        const optionMed = document.createElement('option');
-        const optionLow = document.createElement('option');
+        const optionNone = addOption('None', 0, importance)
+        const optionHigh = addOption('High', 3, importance)
+        const optionMed = addOption('Med', 2, importance)
+        const optionLow = addOption('Low', 1, importance)
         const errorsDisplay = document.createElement('ul')
         const saveButton = document.createElement('button');
+
+        form.id = `update-form-${taskId}`;
 
         textInput.type = 'text';
         textInput.name = 'description';
@@ -207,8 +249,6 @@ const addUpdateFunction = (button) => {
         hoursInput.type = 'number';
         hoursInput.name = 'hours'
         hoursInput.id = `hours-${taskId}`
-        hoursInput.max = 24;
-        hoursInput.min = 0;
         hoursInput.value = hours;
 
         minutesLabel.for = 'minutes';
@@ -216,25 +256,15 @@ const addUpdateFunction = (button) => {
         minutesInput.type = 'number';
         minutesInput.name = 'minutes';
         minutesInput.id = `minutes-${taskId}`;
-        minutesInput.max = 60;
-        minutesInput.min = 0;
         minutesInput.value = minutes;
 
         select.name = 'importance';
         select.id = `importance-${taskId}`;
         optionSelect.innerText = "-- Select Priority --";
-        optionNone.innerText = "None";
-        optionNone.value = 0;
-        optionHigh.innerText = "High";
-        optionHigh.value = 3;
-        optionMed.innerText = "Medium";
-        optionMed.value = 2;
-        optionLow.innerText = "Low";
-        optionLow.value = 1;
 
         saveButton.innerText = "Save";
         saveButton.id = `save-${taskId}`;
-        addSaveFunction(saveButton);
+        addSaveFunction(saveButton, form);
 
         errorsDisplay.id = `errors-${taskId}`;
         errorsDiv.appendChild(errorsDisplay);
@@ -262,7 +292,6 @@ const addUpdateFunction = (button) => {
         form.appendChild(errorsDiv);
 
         // console.log(form)
-        form.id = `update-form-${taskId}`;
         taskListDiv.appendChild(form);
     })
 
