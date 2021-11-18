@@ -8,9 +8,9 @@ const router = express.Router()
 const userValidators = [
     check('name')
         .exists({ checkFalsy: true })
-        .withMessage('Please enter a list name')
+        .withMessage('Please enter a list name.')
         .isLength({ max: 50 })
-        .withMessage('List name must not exceed 50 characters')
+        .withMessage('List name must not exceed 50 characters.')
 ]
 
 
@@ -39,14 +39,22 @@ router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, n
         name
     })
 
-    let lists = await List.findAll({
+    const validatorErrors = validationResult(req);
+
+    // Check if name of list exists in this user's lists already
+
+    const checkList = await List.findOne({
         where: {
+            name,
             userId
         }
     })
-    JSON.stringify(lists)
 
-    const validatorErrors = validationResult(req);
+    if (checkList) {
+        validatorErrors.errors.push({
+            msg: "You already have a list with that name."
+        })
+    }
 
     // On success
     if (validatorErrors.isEmpty()) {
