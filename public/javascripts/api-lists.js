@@ -12,6 +12,10 @@ const blockerAdd = document.querySelector('.blocker-add')
 
 blockerAdd.addEventListener("click", e => {
     e.preventDefault();
+    const addErrorUl = document.getElementById('add-error-ul');
+    if (addErrorUl.firstChild) {
+        addErrorUl.childNodes.forEach(c => c.remove());
+    }
     const addListPopup = document.getElementById('add-list-popup')
     addListPopup.classList.remove('open')
 })
@@ -44,22 +48,23 @@ addListForm.addEventListener("submit", async (e) => {
         throw data;
     }
 
-    const errorDivElement = document.getElementById("errorHeader");
+    if (dataJSON.errors) {
+        const addErrorUl = document.getElementById('add-error-ul');
 
-    if (dataJSON.errors && !errorDivElement) {
-        const errorDiv = document.createElement("div");
-        const errorHeader = document.createElement("p");
-        errorHeader.setAttribute("id", "errorHeader")
-        const ul = document.createElement("ul")
-        errorHeader.innerHTML = "The following error(s) occurred:"
-        addListPopup.append(errorDiv);
-        errorDiv.append(errorHeader);
-        errorDiv.append(ul);
+        // const addContent = document.getElementById('add-content')
+        // const errorDiv = document.createElement("div");
+        // const errorHeader = document.createElement("p");
+        // errorHeader.setAttribute("id", "errorHeader")
+        // const ul = document.createElement("ul")
+        // errorHeader.innerHTML = "The following error(s) occurred:"
+        // addContent.append(errorDiv);
+        // errorDiv.append(errorHeader);
+        // errorDiv.append(ul);
 
         dataJSON.errors.forEach(error => {
             const errorMessage = document.createElement("li");
             errorMessage.innerHTML = error;
-            ul.append(errorMessage);
+            addErrorUl.append(errorMessage);
         })
     }
 
@@ -67,6 +72,10 @@ addListForm.addEventListener("submit", async (e) => {
 
 const cancelListButton = document.getElementById('cancel-add-list');
 cancelListButton.addEventListener("click", () => {
+    const addErrorUl = document.getElementById('add-error-ul');
+    if (addErrorUl.firstChild) {
+        addErrorUl.childNodes.forEach(c => c.remove());
+    }
     const addListPopup = document.getElementById('add-list-popup');
     addListPopup.classList.remove('open')
 })
@@ -115,6 +124,11 @@ const blockerUpdate = document.querySelector('.blocker-update')
 
 blockerUpdate.addEventListener("click", e => {
     e.preventDefault();
+    const updateErrorUl = document.getElementById('update-error-ul');
+        if (updateErrorUl.firstChild) {
+            console.log(updateErrorUl.childNodes)
+            updateErrorUl.childNodes.forEach(c => c.remove());
+        }
     const updateListPopup = document.getElementById('update-list-popup')
     updateListPopup.classList.remove('open')
 })
@@ -143,36 +157,30 @@ submitUpdate.addEventListener("click", async (e) => {
 
     const dataJSON = await data.json();
 
-    const errorDivElement = document.getElementById("errorHeader");
 
-    if (dataJSON.errors && !errorDivElement) {
-        const errorDiv = document.createElement("div");
-        const errorHeader = document.createElement("p");
-        errorHeader.setAttribute("id", "errorHeader")
-        const ul = document.createElement("ul")
-        errorHeader.innerHTML = "The following error(s) occurred:"
-        updateListPopup.append(errorDiv);
-        errorDiv.append(errorHeader);
-        errorDiv.append(ul);
 
+    if (dataJSON.errors) {
+        const updateContent = document.getElementById('update-content')
+        const updateErrorUl = document.getElementById('update-error-ul');
         dataJSON.errors.forEach(error => {
             const errorMessage = document.createElement("li");
             errorMessage.innerHTML = error;
-            ul.append(errorMessage);
+            updateErrorUl.append(errorMessage);
         })
     }
-
 
     if (dataJSON.message) {
         window.location.href = `/lists/${dataJSON.message}`
     }
-
-
-
 })
 
 const cancelUpdateListButton = document.getElementById('cancel-update-list');
 cancelUpdateListButton.addEventListener("click", () => {
+    const updateErrorUl = document.getElementById('update-error-ul');
+    if (updateErrorUl.firstChild) {
+        console.log(updateErrorUl.childNodes)
+        updateErrorUl.childNodes.forEach(c => c.remove());
+    }
     const updateListPopup = document.getElementById('update-list-popup');
     updateListPopup.classList.remove('open')
 })

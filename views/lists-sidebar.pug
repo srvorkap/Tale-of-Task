@@ -10,7 +10,9 @@ div
 div#add-list-popup.popup
   +validationErrorSummary(errors)
   div.blocker-add
-  div.contents
+  div#add-content.contents
+    div#error-add-div
+      ul#add-error-ul
     form#add-list-form(action= "/lists" method= "post")
       +field('List Name', 'name', '')
       input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
@@ -20,7 +22,9 @@ div#add-list-popup.popup
 div#update-list-popup.popup
   +validationErrorSummary(errors)
   div.blocker-update
-  div.contents
+  div#update-content.contents
+    div#error-div
+      ul#update-error-ul
     form#update-list-form
       +field('List Name', 'name', '')
       input(type="hidden" name="_csrf" id="updateCsrf" value=csrfToken)
