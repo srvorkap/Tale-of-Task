@@ -42,7 +42,6 @@ router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, n
     const validatorErrors = validationResult(req);
 
     // Check if name of list exists in this user's lists already
-
     const checkList = await List.findOne({
         where: {
             name,
@@ -144,10 +143,6 @@ router.put('/:id(\\d+)', csrfProtection, userValidators, asyncHandler(async (req
         name
     } = req.body;
 
-    await list.update({
-        name
-    })
-
     let lists = await List.findAll({
         where: {
             userId
@@ -160,12 +155,28 @@ router.put('/:id(\\d+)', csrfProtection, userValidators, asyncHandler(async (req
             listId
         }
     })
+    const validatorErrors = validationResult(req);
 
     JSON.stringify(tasks);
 
-    const validatorErrors = validationResult(req);
+     // Check if name of list exists in this user's lists already
+     const checkList = await List.findOne({
+        where: {
+            name,
+            userId
+        }
+    })
+
+    if (checkList) {
+        validatorErrors.errors.push({
+            msg: "You already have a list with that name."
+        })
+    }
+
     if (validatorErrors.isEmpty()) {
-        await list.save();
+        await list.update({
+            name
+        })
         return res.json({
             message: list.id,
             csrfToken: req.csrfToken()
