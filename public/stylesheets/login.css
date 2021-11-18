@@ -4,10 +4,6 @@ body {
     background-color: rgb(239, 238, 234);
 }
 
-a {
-    color: #00B7FF;
-}
-
 * {
     box-sizing: border-box;
 }
@@ -49,13 +45,7 @@ ul {
     align-items: center;
 }
 
-#title-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#login-form{
+.login-div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,9 +67,21 @@ ul {
 }
 
 label {
-    min-width: 100px;
     color:rgb(51, 51, 51);
     font-weight: bold;
+}
+
+#register {
+    text-align: center;
+}
+
+#register a {
+    color:rgb(51, 51, 51);
+    text-decoration: none;
+}
+
+#register a:hover {
+    color: rgb(36, 154, 209);
 }
 
 .label-text {
@@ -94,41 +96,32 @@ input {
     text-align: center;
 }
 
-#login {
+.login-button {
     font-size: 20px;
     font-weight: bold;
     height: 50px;
     width: 150px;
-    background: linear-gradient(to right top, rgb(42, 99, 26), rgb(80, 216, 62));
-    /* border: 0px 0px 1px 0px solid black; */
-    border: 1px solid rgb(118, 179, 105);
     border-radius: 5px;
     font-size: 24px;
     letter-spacing: 2px;
     color:white;
-    margin: 50px 15px;
+    margin: 50px 15px 30px 15px;
     filter: drop-shadow(2.5px 2.5px 5px lightgrey);
     font-family: 'Noto Sans JP', sans-serif;
     padding-bottom: 5px;
 }
 
+#login {
+    background: linear-gradient(to right top, rgb(42, 99, 26), rgb(80, 216, 62));
+    /* border: 0px 0px 1px 0px solid black; */
+    border: 1px solid rgb(118, 179, 105);
+}
+
 #demo {
-    font-size: 20px;
-    font-weight: bold;
-    height: 50px;
-    width: 150px;
     background: linear-gradient(to right top, rgb(26, 70, 99), rgb(62, 185, 216));
     /* border: 0px 0px 1px 0px solid black; */
     border: 1px solid rgb(105, 152, 179);
-    border-radius: 5px;
-    font-size: 24px;
-    letter-spacing: 2px;
-    color:white;
-    margin: 50px 15px;
-    filter: drop-shadow(2.5px 2.5px 5px lightgrey);
-    font-family: 'Noto Sans JP', sans-serif;
-    padding-bottom: 5px;
-    }
+}
 
 .sprite {
 height: 100px;
