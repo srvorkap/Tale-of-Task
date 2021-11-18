@@ -17,7 +17,7 @@ html(lang="en")
         #login-container
             #title-card
                 #title TALE Of TASK
-                #title-kana テール・オブ・タースク
+                #title-kata テール・オブ・タースク
             #login-sprites
             +validationErrorSummary(errors)
             #login-card
@@ -31,5 +31,8 @@ html(lang="en")
                     div
                         input(type="password" id="password" name="password")
                     input(type="hidden", name="_csrf", value=csrfToken)
-                    button#login LOGIN
+                    div
+                        button#login LOGIN
+                        form(id="demo-login")
+                            button#demo(form="demo-login") DEMO
             script(src="/javascripts/login.js" type="module")
