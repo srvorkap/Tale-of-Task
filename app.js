@@ -45,7 +45,7 @@ store.sync();
 
 app.use(restoreUser);
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 app.use('/lists', listsRouter)

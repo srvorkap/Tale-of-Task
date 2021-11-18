@@ -36,9 +36,12 @@ addListForm.addEventListener("submit", async (e) => {
         throw data;
     }
 
-    if (dataJSON.errors) {
+    const errorDivElement = document.getElementById("errorHeader");
+
+    if (dataJSON.errors && !errorDivElement) {
         const errorDiv = document.createElement("div");
         const errorHeader = document.createElement("p");
+        errorHeader.setAttribute("id", "errorHeader")
         const ul = document.createElement("ul")
         errorHeader.innerHTML = "The following error(s) occurred:"
         addListPopup.append(errorDiv);
@@ -94,7 +97,6 @@ let updateId;
 for (let i = 0; i < updateListButtons.length; i++) {
     const updateListButton = updateListButtons[i];
     updateListButton.addEventListener("click", e => {
-        console.log("inside event listener")
         updateListPopup.style.display = 'block';
         updateTarget = e.target.id.split('-')[2];
         updateId = parseInt(updateTarget, 10);
@@ -104,7 +106,6 @@ for (let i = 0; i < updateListButtons.length; i++) {
 const submitUpdate = document.getElementById("submit-update-list");
 submitUpdate.addEventListener("click", async (e) => {
     e.preventDefault();
-    console.log("in event listener")
     const formData = new FormData(updateListForm);
     const name = formData.get("name");
     const csrfToken = document.getElementById("updateCsrf").value
@@ -126,9 +127,12 @@ submitUpdate.addEventListener("click", async (e) => {
 
     const dataJSON = await data.json();
 
-    if (dataJSON.errors) {
+    const errorDivElement = document.getElementById("errorHeader");
+
+    if (dataJSON.errors && !errorDivElement) {
         const errorDiv = document.createElement("div");
         const errorHeader = document.createElement("p");
+        errorHeader.setAttribute("id", "errorHeader")
         const ul = document.createElement("ul")
         errorHeader.innerHTML = "The following error(s) occurred:"
         updateListPopup.append(errorDiv);
