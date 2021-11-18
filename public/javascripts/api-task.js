@@ -5,6 +5,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     updateButtons.forEach(button => addUpdateFunction(button))
     const deleteButtons = document.querySelectorAll('.delete-task-btn')
     deleteButtons.forEach(button => addDeleteFunction(button));
+
+    searchTask();
 })
 
 const addCreateFunction = () => {
@@ -36,15 +38,21 @@ const addCreateFunction = () => {
 
         const listId = window.location.href.split('/')[4]
 
+
+
+
         const res = await fetch('/tasks', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+
             },
+            credentials: 'include',
             body: JSON.stringify({ listId, description, dueDate, estimatedTime, importance })
         })
 
         const data = await res.json();
+
 
         if (data.errors) {
 
@@ -63,10 +71,17 @@ const addCreateFunction = () => {
 
             const container = document.createElement('div');
             container.id = `task-container-${data.id}`;
+            container.className = "search-list-container";
+            //add class
 
             const li = document.createElement('li');
             li.id = `task-list-${data.id}`;
+            li.className = "search-list"
+            //add class
             li.innerText = data.description;
+
+
+
 
             const updateBtn = document.createElement('button');
             updateBtn.id = `update-${data.id}`;
@@ -81,6 +96,7 @@ const addCreateFunction = () => {
             container.appendChild(li);
             container.appendChild(updateBtn);
             container.appendChild(deleteBtn);
+
             ul.appendChild(container);
 
             // console.log(ul);
@@ -202,8 +218,9 @@ const addUpdateFunction = (button) => {
         });
 
         const data = await res.json()
+        console.log(data)
 
-        const { description, dueDate, estimatedTime, importance } = data;
+        const { description, dueDate, estimatedTime, importance, csrfToken } = data;
 
         const minutes = estimatedTime % 60;
         const hours = Math.floor(estimatedTime / 60);
@@ -228,6 +245,13 @@ const addUpdateFunction = (button) => {
         const optionLow = addOption('Low', 1, importance)
         const errorsDisplay = document.createElement('ul')
         const saveButton = document.createElement('button');
+
+
+        const csrfInput = document.createElement('input');
+        csrfInput.name = '_csrf'
+        csrfInput.type = 'hidden'
+        csrfInput.value = csrfToken
+
 
         form.id = `update-form-${taskId}`;
 
@@ -290,9 +314,78 @@ const addUpdateFunction = (button) => {
         form.appendChild(textDiv);
         form.appendChild(dataDiv);
         form.appendChild(errorsDiv);
+        form.appendChild(csrfInput)
 
         // console.log(form)
         taskListDiv.appendChild(form);
     })
 
+}
+
+const searchTask = () => {
+    const searchInput = document.getElementById('searchbar')
+    searchInput.addEventListener('keyup', async (ev) => {
+
+        const listId = window.location.href.split('/')[4]
+
+        const res = await fetch(`/lists/${listId}/search`, {
+            method: "GET"
+        })
+
+        const data = await res.json()
+        // console.log(data)
+        // console.log(data[1].description)
+        const divs = document.querySelectorAll(`.search-list-container`)
+        console.log(divs)
+
+        for (let i = 0; i < divs.length; i++) {
+            let div = divs[i]
+            div.remove()
+
+        }
+
+        for (let i = 0; i < data.length; i++) {
+
+            if (data[i].description.toLowerCase().includes(searchInput.value.toLowerCase())) {
+                // console.log(searchInput.value)
+
+                const ul = document.getElementById('task-list-render');
+
+
+                const container = document.createElement('div');
+                container.id = `task-container-${data[i].id}`;
+                container.className = 'search-list-container'
+                const li = document.createElement('li');
+                li.id = `task-list-${data[i].id}`;
+                li.innerText = data[i].description;
+
+                const updateBtn = document.createElement('button');
+                updateBtn.id = `update-${data[i].id}`;
+                updateBtn.classList.add('update-task-btn');
+                updateBtn.innerText = 'Update';
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.id = `delete-${data[i].id}`;
+                deleteBtn.classList.add('delete-task-btn');
+                deleteBtn.innerText = 'Delete';
+
+                addDeleteFunction(deleteBtn);
+                addUpdateFunction(updateBtn);
+
+                container.appendChild(li)
+                container.appendChild(updateBtn)
+                container.appendChild(deleteBtn)
+                // // ul.children.forEach(div => div.remove())
+                // if (!ul.children.length > 0) {
+                    ul.appendChild(container)
+                // }
+
+            }
+
+            //if search bar backed to empty display original list
+
+
+        }
+
+    })
 }

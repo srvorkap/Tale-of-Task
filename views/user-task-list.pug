@@ -5,8 +5,11 @@ block content
     script(src='/javascripts/api-task.js' type='module')
     include lists-sidebar.pug
 
+
     #task-list-main
         form
+            input(id="searchbar" type="text" name="search" placeholder="Search task")
+            input(type="hidden" name="_csrf" value=csrfToken id="addCsrfTasks")
             div
                 input(type="text" name="description" id="new-textbox" value=description)
             div
@@ -30,8 +33,8 @@ block content
             ul#task-list-render
                 if tasks.length
                     each task in tasks
-                        div(id=`task-container-${task.id}`)
-                            li(id=`task-list-${task.id}`) #{task.description}
+                        div(id=`task-container-${task.id}` class="search-list-container")
+                            li(id=`task-list-${task.id}` class="search-list") #{task.description}
                             button(id=`update-${task.id}` class="update-task-btn") Update
                             button(id=`delete-${task.id}` class="delete-task-btn") Delete
                 else
