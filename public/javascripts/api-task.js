@@ -119,7 +119,7 @@ const addDeleteFunction = (button) => {
     })
 }
 
-const addSaveFunction = (button) => {
+const addSaveFunction = (button, form) => {
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
 
@@ -132,6 +132,14 @@ const addSaveFunction = (button) => {
         for (let el of divKids) {
             el.style.display = '';
         }
+
+        const data = new FormData(form);
+        const dataObj = {};
+        for (let pair of data.entries()) {
+            dataObj[pair[0]] = pair[1];
+        }
+        // console.log(dataObj);
+
         updateForm.remove();
 
         const res = await fetch(`/tasks/${taskId}`, {
@@ -139,10 +147,23 @@ const addSaveFunction = (button) => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify()
+            body: JSON.stringify(dataObj)
         })
+
+        const li = document.getElementById(`task-list-${taskId}`);
+        li.innerText = dataObj.description;
     })
 }
+
+const addOption = (text, value, importance) => {
+    const opt = document.createElement('option');
+    opt.innerText = text;
+    opt.value = value;
+    if (value === importance) {
+        opt.selected = 'selected';
+    };
+    return opt;
+};
 
 const addUpdateFunction = (button) => {
     button.addEventListener('click', async (ev) => {
@@ -182,12 +203,14 @@ const addUpdateFunction = (button) => {
         const minutesInput = document.createElement('input');
         const select = document.createElement('select');
         const optionSelect = document.createElement('option');
-        const optionNone = document.createElement('option');
-        const optionHigh = document.createElement('option');
-        const optionMed = document.createElement('option');
-        const optionLow = document.createElement('option');
+        const optionNone = addOption('None', 0, importance)
+        const optionHigh = addOption('High', 3, importance)
+        const optionMed = addOption('Med', 2, importance)
+        const optionLow = addOption('Low', 1, importance)
         const errorsDisplay = document.createElement('ul')
         const saveButton = document.createElement('button');
+
+        form.id = `update-form-${taskId}`;
 
         textInput.type = 'text';
         textInput.name = 'description';
@@ -199,7 +222,6 @@ const addUpdateFunction = (button) => {
         dueDateInput.type = 'datetime-local';
         dueDateInput.id = `dueDate-${taskId}`;
         dueDateInput.value = dueDate;
-        console.log(dueDate)
 
         timeLabel.innerText = 'Estimated Time';
 
@@ -208,34 +230,22 @@ const addUpdateFunction = (button) => {
         hoursInput.type = 'number';
         hoursInput.name = 'hours'
         hoursInput.id = `hours-${taskId}`
-        hoursInput.max = 24;
-        hoursInput.min = 0;
-        hoursInput.value = hours;
+        hoursInput.value = hours || null;
 
         minutesLabel.for = 'minutes';
         minutesLabel.innerText = "Minutes";
         minutesInput.type = 'number';
         minutesInput.name = 'minutes';
         minutesInput.id = `minutes-${taskId}`;
-        minutesInput.max = 60;
-        minutesInput.min = 0;
-        minutesInput.value = minutes;
+        minutesInput.value = minutes || null;
 
         select.name = 'importance';
         select.id = `importance-${taskId}`;
         optionSelect.innerText = "-- Select Priority --";
-        optionNone.innerText = "None";
-        optionNone.value = 0;
-        optionHigh.innerText = "High";
-        optionHigh.value = 3;
-        optionMed.innerText = "Medium";
-        optionMed.value = 2;
-        optionLow.innerText = "Low";
-        optionLow.value = 1;
 
         saveButton.innerText = "Save";
         saveButton.id = `save-${taskId}`;
-        addSaveFunction(saveButton);
+        addSaveFunction(saveButton, form);
 
         errorsDisplay.id = `errors-${taskId}`;
         errorsDiv.appendChild(errorsDisplay);
@@ -263,7 +273,6 @@ const addUpdateFunction = (button) => {
         form.appendChild(errorsDiv);
 
         // console.log(form)
-        form.id = `update-form-${taskId}`;
         taskListDiv.appendChild(form);
     })
 
