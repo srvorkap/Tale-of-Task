@@ -7,13 +7,15 @@ div
         button(class='delete-list-buttons' id=`delete-list-${list.id}`) Delete
   button#add-list-button Add List
 
-div#add-list-popup
+div.popup
   +validationErrorSummary(errors)
-  form#add-list-form(action= "/lists" method= "post")
-    +field('List Name', 'name', '')
-    input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
-    button#submit-add-list(type="submit") Add
-    button#cancel-add-list(type="button") Cancel
+  div.blocker
+  div.contents
+    form#form(action= "/lists" method= "post")
+      +field('List Name', 'name', '')
+      input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
+      button#submit-add-list(type="submit") Add
+      button#cancel-add-list(type="button") Cancel
 
 div#update-list-popup
   +validationErrorSummary(errors)

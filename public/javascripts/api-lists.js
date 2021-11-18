@@ -2,14 +2,22 @@
 const addListForm = document.getElementById("add-list-form");
 const addListButton = document.getElementById('add-list-button');
 
+const blocker = document.querySelector('.blocker')
+
 addListButton.addEventListener("click", e => {
     e.preventDefault();
-    const addListPopup = document.getElementById('add-list-popup');
-    addListPopup.style.display = 'block';
+    const popup = document.querySelector('.popup')
+    popup.classList.add('open')
+})
+
+blocker.addEventListener("click", e => {
+    e.preventDefault();
+    const popup = document.querySelector('.popup')
+    popup.classList.remove('open')
 })
 
 addListForm.addEventListener("submit", async (e) => {
-    const addListPopup = document.getElementById('add-list-popup');
+    const addListPopup = document.querySelector('#form');
     e.preventDefault();
     const formData = new FormData(addListForm);
     const name = formData.get("name");
