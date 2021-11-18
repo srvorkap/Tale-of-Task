@@ -17,7 +17,7 @@ blocker.addEventListener("click", e => {
 })
 
 addListForm.addEventListener("submit", async (e) => {
-    const addListPopup = document.querySelector('#form');
+    const addListPopup = document.getElementById('#add-list-form');
     e.preventDefault();
     const formData = new FormData(addListForm);
     const name = formData.get("name");

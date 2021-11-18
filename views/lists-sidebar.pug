@@ -7,11 +7,11 @@ div
         button(class='delete-list-buttons' id=`delete-list-${list.id}`) Delete
   button#add-list-button Add List
 
-div.popup
+div#add-list-popup.popup
   +validationErrorSummary(errors)
   div.blocker
   div.contents
-    form#form(action= "/lists" method= "post")
+    form#add-list-form(action= "/lists" method= "post")
       +field('List Name', 'name', '')
       input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
       button#submit-add-list(type="submit") Add

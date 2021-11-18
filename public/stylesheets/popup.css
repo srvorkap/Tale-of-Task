@@ -10,10 +10,9 @@
   left: 0;
   bottom: 0;
   right: 0;
-  content: " ";
   background: rgba(0, 0, 0, 0.5);
 }
-.popup .contents {
+#add-list-popup .contents {
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 200px;
