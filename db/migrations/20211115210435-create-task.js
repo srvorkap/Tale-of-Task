@@ -15,15 +15,15 @@ module.exports = {
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Users'}
+        references: { model: 'Users' }
       },
       listId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: 'Lists'}
+        references: { model: 'Lists' }
       },
       dueDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       estimatedTime: {
         type: Sequelize.INTEGER

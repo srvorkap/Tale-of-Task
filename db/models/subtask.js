@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     dueDate: {
-      type: DataTypes.DATE
+      type: DataTypes.DATEONLY
     },
     estimatedTime: {
       type: DataTypes.INTEGER
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN
     },
   }, {});
-  Subtask.associate = function(models) {
+  Subtask.associate = function (models) {
     Subtask.belongsTo(models.Task, {
       foreignKey: 'taskId',
       onDelete: 'cascade',
