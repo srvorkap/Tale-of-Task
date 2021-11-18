@@ -2,6 +2,7 @@ const express = require('express')
 const { csrfProtection, asyncHandler } = require('./utils')
 const { User, List, Task } = require('../db/models')
 const { check, validationResult } = require('express-validator')
+const { requireAuth } = require('../auth');
 
 const router = express.Router()
 
@@ -30,6 +31,7 @@ const userValidators = [
 //     })
 // }))
 
+router.use(requireAuth)
 
 router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, next) => {
     //add csrf
@@ -83,12 +85,13 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
             userId
         }
     })
+
     JSON.stringify(lists)
 
     //Set res.locals.list to currentList
     const currentList = await List.findByPk(listId);
 
-    if (currentList === null) {
+    if (currentList === null || currentList.userId !== userId) {
         let inbox = await List.findOne({
             where: {
                 userId,
@@ -163,8 +166,8 @@ router.put('/:id(\\d+)', csrfProtection, userValidators, asyncHandler(async (req
 
     JSON.stringify(tasks);
 
-     // Check if name of list exists in this user's lists already
-     const checkList = await List.findOne({
+    // Check if name of list exists in this user's lists already
+    const checkList = await List.findOne({
         where: {
             name,
             userId
