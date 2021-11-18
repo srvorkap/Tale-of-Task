@@ -6,7 +6,7 @@ const blocker = document.querySelector('.blocker')
 
 addListButton.addEventListener("click", e => {
     e.preventDefault();
-    const popup = document.querySelector('.popup')
+    const popup = document.getElementById('add-list-popup')
     popup.classList.add('open')
 })
 
