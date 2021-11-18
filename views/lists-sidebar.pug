@@ -9,7 +9,7 @@ div
 
 div#add-list-popup.popup
   +validationErrorSummary(errors)
-  div.blocker
+  div.blocker-add
   div.contents
     form#add-list-form(action= "/lists" method= "post")
       +field('List Name', 'name', '')

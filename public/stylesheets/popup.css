@@ -4,7 +4,7 @@
 .popup.open {
   display: block;
 }
-.blocker {
+.blocker-add {
   position: fixed;
   top: 0;
   left: 0;

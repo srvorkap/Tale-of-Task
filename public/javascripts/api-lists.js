@@ -2,18 +2,18 @@
 const addListForm = document.getElementById("add-list-form");
 const addListButton = document.getElementById('add-list-button');
 
-const blocker = document.querySelector('.blocker')
-
 addListButton.addEventListener("click", e => {
     e.preventDefault();
-    const popup = document.getElementById('add-list-popup')
-    popup.classList.add('open')
+    const addListPopup = document.getElementById('add-list-popup')
+    addListPopup.classList.add('open')
 })
 
-blocker.addEventListener("click", e => {
+const blockerAdd = document.querySelector('.blocker-add')
+
+blockerAdd.addEventListener("click", e => {
     e.preventDefault();
-    const popup = document.querySelector('.popup')
-    popup.classList.remove('open')
+    const addListPopup = document.getElementById('add-list-popup')
+    addListPopup.classList.remove('open')
 })
 
 addListForm.addEventListener("submit", async (e) => {
