@@ -49,6 +49,9 @@ const addCreateFunction = () => {
         if (data.errors) {
 
             data.errors.forEach(msg => {
+                if (errorsDisplay.firstChild) {
+                    errorsDisplay.childNodes.forEach(c => c.remove());
+                }
                 const li = document.createElement('li');
                 li.innerText = msg;
                 errorsDisplay.append(li);
@@ -124,25 +127,21 @@ const addSaveFunction = (button, form) => {
         ev.preventDefault();
 
         // Need error handling
-
         // Make the other buttons visible again
 
         const taskId = ev.target.id.split('-')[1]
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
         const updateForm = document.getElementById(`update-form-${taskId}`);
         const divKids = taskListDiv.children;
-        for (let el of divKids) {
-            el.style.display = '';
-        }
 
-        const data = new FormData(form);
+        const updateDate = new FormData(form);
         const dataObj = {};
-        for (let pair of data.entries()) {
+        for (let pair of updateDate.entries()) {
             dataObj[pair[0]] = pair[1];
         }
         // console.log(dataObj);
 
-        updateForm.remove();
+        dataObj.estimatedTime = parseInt(dataObj.hours, 10) * 60 + parseInt(dataObj.minutes, 10);
 
         const res = await fetch(`/tasks/${taskId}`, {
             method: "PUT",
@@ -152,10 +151,29 @@ const addSaveFunction = (button, form) => {
             body: JSON.stringify(dataObj)
         })
 
-        const li = document.getElementById(`task-list-${taskId}`);
-        li.innerText = dataObj.description;
+        const data = await res.json();
+        // console.log(data.errors);
+
+        if (data.errors) {
+            const errorsDisplay = document.getElementById(`errors-${taskId}`);
+            data.errors.forEach(msg => {
+                if (errorsDisplay.firstChild) {
+                    errorsDisplay.childNodes.forEach(c => c.remove());
+                }
+                const li = document.createElement('li');
+                li.innerText = msg;
+                errorsDisplay.append(li);
+            });
+        } else {
+            for (let el of divKids) {
+                el.style.display = '';
+            }
+            const li = document.getElementById(`task-list-${taskId}`);
+            li.innerText = dataObj.description;
+            updateForm.remove();
+        }
     })
-}
+};
 
 const addOption = (text, value, importance) => {
     const opt = document.createElement('option');
@@ -184,7 +202,6 @@ const addUpdateFunction = (button) => {
         });
 
         const data = await res.json()
-
 
         const { description, dueDate, estimatedTime, importance } = data;
 
@@ -232,14 +249,14 @@ const addUpdateFunction = (button) => {
         hoursInput.type = 'number';
         hoursInput.name = 'hours'
         hoursInput.id = `hours-${taskId}`
-        hoursInput.value = hours || null;
+        hoursInput.value = hours;
 
         minutesLabel.for = 'minutes';
         minutesLabel.innerText = "Minutes";
         minutesInput.type = 'number';
         minutesInput.name = 'minutes';
         minutesInput.id = `minutes-${taskId}`;
-        minutesInput.value = minutes || null;
+        minutesInput.value = minutes;
 
         select.name = 'importance';
         select.id = `importance-${taskId}`;
