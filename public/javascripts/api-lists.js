@@ -36,9 +36,12 @@ addListForm.addEventListener("submit", async (e) => {
         throw data;
     }
 
-    if (dataJSON.errors) {
+    const errorDivElement = document.getElementById("errorHeader");
+
+    if (dataJSON.errors && !errorDivElement) {
         const errorDiv = document.createElement("div");
         const errorHeader = document.createElement("p");
+        errorHeader.setAttribute("id", "errorHeader")
         const ul = document.createElement("ul")
         errorHeader.innerHTML = "The following error(s) occurred:"
         addListPopup.append(errorDiv);
@@ -124,10 +127,12 @@ submitUpdate.addEventListener("click", async (e) => {
 
     const dataJSON = await data.json();
 
-    if (dataJSON.errors) {
-        const errorDiv = document.createElement("div");
+    const errorDivElement = document.getElementById("errorHeader");
 
+    if (dataJSON.errors && !errorDivElement) {
+        const errorDiv = document.createElement("div");
         const errorHeader = document.createElement("p");
+        errorHeader.setAttribute("id", "errorHeader")
         const ul = document.createElement("ul")
         errorHeader.innerHTML = "The following error(s) occurred:"
         updateListPopup.append(errorDiv);
