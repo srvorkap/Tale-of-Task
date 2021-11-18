@@ -1,5 +1,7 @@
 div
   ul
+    li
+      a(href= `/lists/${inbox.id}`)=inbox.name
     each list in lists
       li
         a(href= `/lists/${list.id}`)=list.name
