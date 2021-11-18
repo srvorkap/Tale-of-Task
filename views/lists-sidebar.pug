@@ -17,10 +17,12 @@ div#add-list-popup.popup
       button#submit-add-list(type="submit") Add
       button#cancel-add-list(type="button") Cancel
 
-div#update-list-popup
+div#update-list-popup.popup
   +validationErrorSummary(errors)
-  form#update-list-form
-    +field('List Name', 'name', '')
-    input(type="hidden" name="_csrf" id="updateCsrf" value=csrfToken)
-    button#submit-update-list(type="submit") Update
-    button#cancel-update-list(type="button") Cancel
+  div.blocker-update
+  div.contents
+    form#update-list-form
+      +field('List Name', 'name', '')
+      input(type="hidden" name="_csrf" id="updateCsrf" value=csrfToken)
+      button#submit-update-list(type="submit") Update
+      button#cancel-update-list(type="button") Cancel

@@ -68,7 +68,7 @@ addListForm.addEventListener("submit", async (e) => {
 const cancelListButton = document.getElementById('cancel-add-list');
 cancelListButton.addEventListener("click", () => {
     const addListPopup = document.getElementById('add-list-popup');
-    addListPopup.style.display = 'none';
+    addListPopup.classList.remove('open')
 })
 
 // DELETE BUTTON
@@ -105,11 +105,19 @@ let updateId;
 for (let i = 0; i < updateListButtons.length; i++) {
     const updateListButton = updateListButtons[i];
     updateListButton.addEventListener("click", e => {
-        updateListPopup.style.display = 'block';
+        updateListPopup.classList.add('open');
         updateTarget = e.target.id.split('-')[2];
         updateId = parseInt(updateTarget, 10);
     })
 }
+
+const blockerUpdate = document.querySelector('.blocker-update')
+
+blockerUpdate.addEventListener("click", e => {
+    e.preventDefault();
+    const updateListPopup = document.getElementById('update-list-popup')
+    updateListPopup.classList.remove('open')
+})
 
 const submitUpdate = document.getElementById("submit-update-list");
 submitUpdate.addEventListener("click", async (e) => {
@@ -159,4 +167,12 @@ submitUpdate.addEventListener("click", async (e) => {
         window.location.href = `/lists/${dataJSON.message}`
     }
 
+
+
+})
+
+const cancelUpdateListButton = document.getElementById('cancel-update-list');
+cancelUpdateListButton.addEventListener("click", () => {
+    const updateListPopup = document.getElementById('update-list-popup');
+    updateListPopup.classList.remove('open')
 })
