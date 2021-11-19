@@ -21,7 +21,6 @@ blockerAdd.addEventListener("click", e => {
 })
 
 addListForm.addEventListener("submit", async (e) => {
-    const addListPopup = document.getElementById('#add-list-form');
     e.preventDefault();
     const formData = new FormData(addListForm);
     const name = formData.get("name");
@@ -50,24 +49,15 @@ addListForm.addEventListener("submit", async (e) => {
 
     if (dataJSON.errors) {
         const addErrorUl = document.getElementById('add-error-ul');
-
-        // const addContent = document.getElementById('add-content')
-        // const errorDiv = document.createElement("div");
-        // const errorHeader = document.createElement("p");
-        // errorHeader.setAttribute("id", "errorHeader")
-        // const ul = document.createElement("ul")
-        // errorHeader.innerHTML = "The following error(s) occurred:"
-        // addContent.append(errorDiv);
-        // errorDiv.append(errorHeader);
-        // errorDiv.append(ul);
-
+        if (addErrorUl.firstChild) {
+            addErrorUl.childNodes.forEach(c => c.remove());
+        }
         dataJSON.errors.forEach(error => {
             const errorMessage = document.createElement("li");
             errorMessage.innerHTML = error;
             addErrorUl.append(errorMessage);
         })
     }
-
 })
 
 const cancelListButton = document.getElementById('cancel-add-list');
@@ -86,7 +76,7 @@ const deleteListButtons = document.getElementsByClassName("delete-list-buttons")
 for (let i = 0; i < deleteListButtons.length; i++) {
     const deleteList = deleteListButtons[i];
     deleteList.addEventListener("click", async (e) => {
-        let deleteListId = e.target.id.split('-')[2]
+        let deleteListId = deleteList.id.split('-')[2]
         const deleteId = parseInt(deleteListId, 10);
         const data = await fetch(`/lists/${deleteId}`, {
             method: "DELETE"
@@ -115,7 +105,7 @@ for (let i = 0; i < updateListButtons.length; i++) {
     const updateListButton = updateListButtons[i];
     updateListButton.addEventListener("click", e => {
         updateListPopup.classList.add('open');
-        updateTarget = e.target.id.split('-')[2];
+        updateTarget = updateListButton.id.split('-')[2];
         updateId = parseInt(updateTarget, 10);
     })
 }
@@ -125,10 +115,10 @@ const blockerUpdate = document.querySelector('.blocker-update')
 blockerUpdate.addEventListener("click", e => {
     e.preventDefault();
     const updateErrorUl = document.getElementById('update-error-ul');
-        if (updateErrorUl.firstChild) {
-            console.log(updateErrorUl.childNodes)
-            updateErrorUl.childNodes.forEach(c => c.remove());
-        }
+    if (updateErrorUl.firstChild) {
+        console.log(updateErrorUl.childNodes)
+        updateErrorUl.childNodes.forEach(c => c.remove());
+    }
     const updateListPopup = document.getElementById('update-list-popup')
     updateListPopup.classList.remove('open')
 })
@@ -160,8 +150,10 @@ submitUpdate.addEventListener("click", async (e) => {
 
 
     if (dataJSON.errors) {
-        const updateContent = document.getElementById('update-content')
         const updateErrorUl = document.getElementById('update-error-ul');
+        if (updateErrorUl.firstChild) {
+            updateErrorUl.childNodes.forEach(c => c.remove());
+        }
         dataJSON.errors.forEach(error => {
             const errorMessage = document.createElement("li");
             errorMessage.innerHTML = error;

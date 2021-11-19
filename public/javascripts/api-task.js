@@ -31,6 +31,8 @@ const addCreateFunction = () => {
         const description = textBox.value;
         const dueDate = dueDateBox.value;
 
+        console.log(dueDate);
+
         const hoursValue = hoursBox.value;
         const minutesValue = minutesBox.value;
         const estimatedTime = parseInt(hoursValue, 10) * 60 + parseInt(minutesValue, 10);
