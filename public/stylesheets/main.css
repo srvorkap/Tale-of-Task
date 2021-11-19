@@ -196,7 +196,7 @@ input, select {
 }
 
 #new-button, .update-save-btn{
-    display: none;
+    /* display: none; */
 }
 
 #new-textbox, .update-text-input{

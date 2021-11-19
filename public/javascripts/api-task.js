@@ -26,20 +26,29 @@ const addCreateFunction = () => {
         const dueDateBox = document.getElementById('dueDate');
         const hoursBox = document.getElementById('hours');
         const minutesBox = document.getElementById('minutes');
-        const priorityBox = document.getElementById('importance')
+        const priorityBox = document.getElementById('importance');
 
         const description = textBox.value;
         const dueDate = dueDateBox.value;
 
         // console.log(dueDate);
 
-        const hoursValue = hoursBox.value;
-        const minutesValue = minutesBox.value;
-        const estimatedTime = parseInt(hoursValue, 10) * 60 + parseInt(minutesValue, 10);
+        let hoursValue = hoursBox.value;
+        let minutesValue = minutesBox.value;
+
+        hoursValue ? hoursValue = parseInt(hoursValue, 10) : hoursValue = 0;
+        minutesValue ? minutesValue = parseInt(minutesValue, 10) : minutesValue = 0;
+
+        // console.log(hoursValue, minutesValue);
+
+        const estimatedTime = hoursValue * 60 + minutesValue;
+        // console.log(estimatedTime);
 
         const importance = priorityBox.value;
 
         const listId = window.location.href.split('/')[4]
+
+        // console.log(listId, description, dueDate, estimatedTime, importance);
 
         const res = await fetch('/tasks', {
             method: 'POST',

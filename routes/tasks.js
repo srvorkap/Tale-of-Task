@@ -41,7 +41,6 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
     const list = await List.findByPk(listId)
     const userId = list.userId
 
-
     if (!dueDate) dueDate = null;
     if (!estimatedTime) estimatedTime = null;
     if (!importance) importance = 0;
@@ -49,7 +48,6 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
     const task = await Task.build({
         description, userId, listId, dueDate, estimatedTime, importance, completed: false, deleted: false
     })
-
 
     const validatorErrors = validationResult(req);
 
@@ -82,10 +80,8 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
     } = req.body;
 
     if (!dueDate) dueDate = null;
-    if (!estimatedTime) estimatedTime = 0;
-    if (!importance) importance = 0;
-
-    // console.log('Text', description, 'Due', dueDate, 'Time', estimatedTime, 'Priority', importance)
+    // if (!estimatedTime) estimatedTime = 0;
+    // if (!importance) importance = 0;
 
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
