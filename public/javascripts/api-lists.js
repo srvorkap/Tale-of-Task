@@ -86,7 +86,7 @@ const deleteListButtons = document.getElementsByClassName("delete-list-buttons")
 for (let i = 0; i < deleteListButtons.length; i++) {
     const deleteList = deleteListButtons[i];
     deleteList.addEventListener("click", async (e) => {
-        let deleteListId = e.target.id.split('-')[2]
+        let deleteListId = deleteList.id.split('-')[2]
         const deleteId = parseInt(deleteListId, 10);
         const data = await fetch(`/lists/${deleteId}`, {
             method: "DELETE"
@@ -115,7 +115,7 @@ for (let i = 0; i < updateListButtons.length; i++) {
     const updateListButton = updateListButtons[i];
     updateListButton.addEventListener("click", e => {
         updateListPopup.classList.add('open');
-        updateTarget = e.target.id.split('-')[2];
+        updateTarget = updateListButton.id.split('-')[2];
         updateId = parseInt(updateTarget, 10);
     })
 }
@@ -125,10 +125,10 @@ const blockerUpdate = document.querySelector('.blocker-update')
 blockerUpdate.addEventListener("click", e => {
     e.preventDefault();
     const updateErrorUl = document.getElementById('update-error-ul');
-        if (updateErrorUl.firstChild) {
-            console.log(updateErrorUl.childNodes)
-            updateErrorUl.childNodes.forEach(c => c.remove());
-        }
+    if (updateErrorUl.firstChild) {
+        console.log(updateErrorUl.childNodes)
+        updateErrorUl.childNodes.forEach(c => c.remove());
+    }
     const updateListPopup = document.getElementById('update-list-popup')
     updateListPopup.classList.remove('open')
 })
