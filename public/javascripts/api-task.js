@@ -132,14 +132,23 @@ const addSaveFunction = (button, form) => {
         const taskId = ev.target.id.split('-')[1]
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
         const updateForm = document.getElementById(`update-form-${taskId}`);
+        const dueDateInput = document.getElementById(`dueDate-${taskId}`)
+        const dateValue = dueDateInput.value
+
+
+
         const divKids = taskListDiv.children;
 
         const updateDate = new FormData(form);
+        console.log(updateDate.entries(), "updateData")
+
         const dataObj = {};
         for (let pair of updateDate.entries()) {
+
             dataObj[pair[0]] = pair[1];
         }
-        // console.log(dataObj);
+        dataObj.dueDate = dateValue;
+
 
         dataObj.estimatedTime = parseInt(dataObj.hours, 10) * 60 + parseInt(dataObj.minutes, 10);
 
@@ -152,7 +161,7 @@ const addSaveFunction = (button, form) => {
         })
 
         const data = await res.json();
-        // console.log(data.errors);
+
 
         if (data.errors) {
             const errorsDisplay = document.getElementById(`errors-${taskId}`);
@@ -169,7 +178,10 @@ const addSaveFunction = (button, form) => {
                 el.style.display = '';
             }
             const li = document.getElementById(`task-list-${taskId}`);
+
             li.innerText = dataObj.description;
+
+
             updateForm.remove();
         }
     })
@@ -190,7 +202,7 @@ const addUpdateFunction = (button) => {
         ev.preventDefault();
 
         const taskId = ev.target.id.split('-')[1];
-        // console.log(taskId);
+
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
         const divKids = taskListDiv.children;
         for (let el of divKids) {
@@ -204,6 +216,7 @@ const addUpdateFunction = (button) => {
         const data = await res.json()
 
         const { description, dueDate, estimatedTime, importance } = data;
+        console.log(dueDate,"due date")
 
         const minutes = estimatedTime % 60;
         const hours = Math.floor(estimatedTime / 60);
@@ -238,9 +251,10 @@ const addUpdateFunction = (button) => {
 
         dueDateLabel.for = 'dueDate';
         dueDateLabel.innerText = 'Due Date';
-        dueDateInput.type = 'datetime-local';
+        dueDateInput.type = 'date';
         dueDateInput.id = `dueDate-${taskId}`;
         dueDateInput.value = dueDate;
+
 
         timeLabel.innerText = 'Estimated Time';
 
@@ -250,6 +264,7 @@ const addUpdateFunction = (button) => {
         hoursInput.name = 'hours'
         hoursInput.id = `hours-${taskId}`
         hoursInput.value = hours;
+        hoursInput.min = 0;
 
         minutesLabel.for = 'minutes';
         minutesLabel.innerText = "Minutes";
@@ -257,13 +272,17 @@ const addUpdateFunction = (button) => {
         minutesInput.name = 'minutes';
         minutesInput.id = `minutes-${taskId}`;
         minutesInput.value = minutes;
+        minutesInput.min = 0;
 
         select.name = 'importance';
         select.id = `importance-${taskId}`;
         optionSelect.innerText = "-- Select Priority --";
 
+
+
         saveButton.innerText = "Save";
         saveButton.id = `save-${taskId}`;
+        console.log("form", form)
         addSaveFunction(saveButton, form);
 
         errorsDisplay.id = `errors-${taskId}`;
@@ -291,7 +310,7 @@ const addUpdateFunction = (button) => {
         form.appendChild(dataDiv);
         form.appendChild(errorsDiv);
 
-        // console.log(form)
+
         taskListDiv.appendChild(form);
     })
 
