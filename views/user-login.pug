@@ -31,12 +31,12 @@ html(lang="en")
                     div
                         input(type="password" id="password" name="password")
                     input(type="hidden", name="_csrf", value=csrfToken)
-                    div
-                        button.login-button#login LOGIN
                 form(acton="users/login" method="post" id="demo-login")
                     input(type="hidden" name="email" value="demo@demo.com")
                     input(type="hidden" name="password" value="Abc1!")
                     input(type="hidden", name="_csrf", value=csrfToken)
+                div
+                    button.login-button#login(form="login-form") LOGIN
                     button.login-button#demo(form="demo-login") DEMO
                 div#register
                     a(href="/users/signup") Not yet registered? Start your journey now!
