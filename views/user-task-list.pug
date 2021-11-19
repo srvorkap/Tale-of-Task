@@ -2,36 +2,38 @@ extends layout.pug
 
 block content
 
-    script(src='/javascripts/api-task.js' type='module')
-    include lists-sidebar.pug
+    div#side-and-list
+        include lists-sidebar.pug
+        #task-list-main
+            #search-bar Search
+            form
+                div
+                    input(type="text" name="description" id="new-textbox" value=description)
+                div
+                    label(for="dueDate") Due Date
+                    input(type="datetime-local" name="dueDate" id="dueDate" value=dueDate)
+                    label Estimated Time
+                    label(for="hours") Hours
+                    input(type="number" name="hours" id="hours" value=hours)
+                    label(for="minutes") Minutes
+                    input(type="number" name="minutes" id="minutes" value=minutes)
+                    select(name="importance" id="importance")
+                        option(value="") -- Select Priority --
+                        option(value="0") None
+                        option(value="3") High
+                        option(value="2") Medium
+                        option(value="1") Low
+                    button#new-button Add Task
+                div
+                    ul#add-errors-display
+            #task-list-display
+                ul#task-list-render
+                    if tasks.length
+                        each task in tasks
+                            div(id=`task-container-${task.id}`)
+                                li(id=`task-list-${task.id}`) #{task.description}
+                                button(id=`update-${task.id}` class="update-task-btn") Update
+                                button(id=`delete-${task.id}` class="delete-task-btn") Delete
+                    else
 
-    #task-list-main
-        form
-            div
-                input(type="text" name="description" id="new-textbox" value=description)
-            div
-                label(for="dueDate") Due Date
-                input(type="datetime-local" name="dueDate" id="dueDate" value=dueDate)
-                label Estimated Time
-                label(for="hours") Hours
-                input(type="number" name="hours" id="hours" value=hours)
-                label(for="minutes") Minutes
-                input(type="number" name="minutes" id="minutes" value=minutes)
-                select(name="importance" id="importance")
-                    option(value="") -- Select Priority --
-                    option(value="0") None
-                    option(value="3") High
-                    option(value="2") Medium
-                    option(value="1") Low
-                button#new-button Add Task
-            div
-                ul#add-errors-display
-        #task-list-display
-            ul#task-list-render
-                if tasks.length
-                    each task in tasks
-                        div(id=`task-container-${task.id}`)
-                            li(id=`task-list-${task.id}`) #{task.description}
-                            button(id=`update-${task.id}` class="update-task-btn") Update
-                            button(id=`delete-${task.id}` class="delete-task-btn") Delete
-                else
+    script(src='/javascripts/api-task.js' type='module')

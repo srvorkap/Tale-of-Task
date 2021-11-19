@@ -1,13 +1,17 @@
-div
+div#sidebar
   ul
     li
       a(href= `/lists/${inbox.id}`)=inbox.name
     each list in lists
-      li
-        a(href= `/lists/${list.id}`)=list.name
-        button(class='update-list-buttons' id=`update-list-${list.id}`) Update
-        button(class='delete-list-buttons' id=`delete-list-${list.id}`) Delete
-  button#add-list-button Add List
+      li.list-item
+        a(href=`/lists/${list.id}`)=list.name
+        div.list-button-div
+          button(class='update-list-buttons' id=`update-list-${list.id}`)
+            i(class="fas fa-feather-alt")
+          button(class='delete-list-buttons' id=`delete-list-${list.id}`)
+            i(class="fas fa-skull")
+  div#add-list-div
+    button#add-list-button Add List
 
 div#add-list-popup.popup
   +validationErrorSummary(errors)
