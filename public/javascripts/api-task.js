@@ -31,7 +31,7 @@ const addCreateFunction = () => {
         const description = textBox.value;
         const dueDate = dueDateBox.value;
 
-        console.log(dueDate);
+        // console.log(dueDate);
 
         const hoursValue = hoursBox.value;
         const minutesValue = minutesBox.value;
@@ -93,7 +93,7 @@ const addCreateFunction = () => {
             const completeBtn = document.createElement('button');
             completeBtn.id = `completed-${data.id}`
             completeBtn.className = 'completed-task-btn'
-            completeBtn.innerText = 'Mark Completed'
+            completeBtn.innerText = 'Complete'
 
             container.appendChild(li);
             container.appendChild(updateBtn);
@@ -154,7 +154,7 @@ const addSaveFunction = (button, form) => {
         const divKids = taskListDiv.children;
 
         const updateDate = new FormData(form);
-        console.log(updateDate.entries(), "updateData")
+        // console.log(updateDate.entries(), "updateData")
 
         const dataObj = {};
         for (let pair of updateDate.entries()) {
@@ -295,7 +295,7 @@ const addUpdateFunction = (button) => {
 
         saveButton.innerText = "Save";
         saveButton.id = `save-${taskId}`;
-        console.log("form", form)
+        // console.log("form", form)
         addSaveFunction(saveButton, form);
 
         errorsDisplay.id = `errors-${taskId}`;
@@ -347,7 +347,7 @@ const searchTask = () => {
         const originalTasks = await resO.json();
 
         const divs = document.querySelectorAll(`.search-list-container`)
-        console.log(divs)
+        // console.log(divs)
 
         for (let i = 0; i < divs.length; i++) {
             let div = divs[i]
@@ -378,12 +378,19 @@ const searchTask = () => {
                 deleteBtn.classList.add('delete-task-btn');
                 deleteBtn.innerText = 'Delete';
 
+                const completeBtn = document.createElement('button');
+                completeBtn.id = `completed-${data[i].id}`;
+                completeBtn.classList.add('completed-task-btn');
+                completeBtn.innerText = 'Complete';
+
                 addDeleteFunction(deleteBtn);
                 addUpdateFunction(updateBtn);
+                markCompletedFunction(completeBtn);
 
-                container.appendChild(li)
-                container.appendChild(updateBtn)
-                container.appendChild(deleteBtn)
+                container.appendChild(li);
+                container.appendChild(updateBtn);
+                container.appendChild(deleteBtn);
+                container.appendChild(completeBtn);
 
                 ul.appendChild(container)
             } else if (!searchInput.value) {
@@ -419,12 +426,19 @@ const createTaskList = (tasks) => {
         deleteBtn.classList.add('delete-task-btn');
         deleteBtn.innerText = 'Delete';
 
+        const completeBtn = document.createElement('button');
+        completeBtn.id = `completed-${task.id}`;
+        completeBtn.classList.add('completed-task-btn');
+        completeBtn.innerText = 'Complete';
+
         addDeleteFunction(deleteBtn);
         addUpdateFunction(updateBtn);
+        markCompletedFunction(completeBtn);
 
         container.appendChild(li)
         container.appendChild(updateBtn)
         container.appendChild(deleteBtn)
+        container.appendChild(completeBtn)
 
         newUl.appendChild(container)
     })
