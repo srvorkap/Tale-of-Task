@@ -97,7 +97,7 @@ const addCreateFunction = () => {
         hoursBox.value = null;
         priorityBox.innerHTML = `
         <select name=importance id=importance>
-            <option value=""> -- Select Priority -- </option>
+            <option value=""> ~ Priority ~ </option>
             <option value=0> None </option>
             <option value=3> High </option>
             <option value=2> Medium </option>
@@ -232,19 +232,21 @@ const addUpdateFunction = (button) => {
         const saveButton = document.createElement('button');
 
         form.id = `update-form-${taskId}`;
+        // form.classList.add('entry');
 
         textInput.type = 'text';
         textInput.name = 'description';
         textInput.id = `text-box-${taskId}`;
+        textInput.classList.add('update-text-input');
         textInput.value = description;
 
         dueDateLabel.for = 'dueDate';
         dueDateLabel.innerText = 'Due Date';
-        dueDateInput.type = 'datetime-local';
+        dueDateInput.type = 'date';
         dueDateInput.id = `dueDate-${taskId}`;
         dueDateInput.value = dueDate;
 
-        timeLabel.innerText = 'Estimated Time';
+        timeLabel.innerText = 'Estimated Time:';
 
         hoursLabel.for = 'hours';
         hoursLabel.innerText = "Hours";
@@ -252,6 +254,7 @@ const addUpdateFunction = (button) => {
         hoursInput.name = 'hours'
         hoursInput.id = `hours-${taskId}`
         hoursInput.value = hours;
+        hoursInput.classList.add('update-time-input');
 
         minutesLabel.for = 'minutes';
         minutesLabel.innerText = "Minutes";
@@ -259,13 +262,15 @@ const addUpdateFunction = (button) => {
         minutesInput.name = 'minutes';
         minutesInput.id = `minutes-${taskId}`;
         minutesInput.value = minutes;
+        minutesInput.classList.add('update-time-input');
 
         select.name = 'importance';
         select.id = `importance-${taskId}`;
-        optionSelect.innerText = "-- Select Priority --";
+        optionSelect.innerText = "~ Priority ~";
 
         saveButton.innerText = "Save";
         saveButton.id = `save-${taskId}`;
+        saveButton.classList.add('update-save-btn')
         addSaveFunction(saveButton, form);
 
         errorsDisplay.id = `errors-${taskId}`;
