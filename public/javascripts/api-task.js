@@ -5,6 +5,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     updateButtons.forEach(button => addUpdateFunction(button))
     const deleteButtons = document.querySelectorAll('.delete-task-btn')
     deleteButtons.forEach(button => addDeleteFunction(button));
+    const completedBtn = document.querySelectorAll('.completed-task-btn')
+    completedBtn.forEach(button => markCompletedFunction(button))
 })
 
 const addCreateFunction = () => {
@@ -78,15 +80,22 @@ const addCreateFunction = () => {
             deleteBtn.classList.add('delete-task-btn');
             deleteBtn.innerText = 'Delete';
 
+            const completeBtn = document.createElement('button');
+            completeBtn.id = `completed-${data.id}`
+            completeBtn.className = 'completed-task-btn'
+            completeBtn.innerText = 'Mark Completed'
+
             container.appendChild(li);
             container.appendChild(updateBtn);
             container.appendChild(deleteBtn);
+            container.appendChild(completeBtn)
             ul.appendChild(container);
 
             // console.log(ul);
 
             addDeleteFunction(deleteBtn);
             addUpdateFunction(updateBtn)
+            markCompletedFunction(completeBtn)
         }
 
         textBox.value = null;
@@ -216,7 +225,7 @@ const addUpdateFunction = (button) => {
         const data = await res.json()
 
         const { description, dueDate, estimatedTime, importance } = data;
-        console.log(dueDate,"due date")
+        console.log(dueDate, "due date")
 
         const minutes = estimatedTime % 60;
         const hours = Math.floor(estimatedTime / 60);
@@ -314,4 +323,41 @@ const addUpdateFunction = (button) => {
         taskListDiv.appendChild(form);
     })
 
+}
+
+const markCompletedFunction = (button) => {
+    button.addEventListener('click', async (ev) => {
+        ev.preventDefault();
+
+
+        const taskId = ev.target.id.split('-')[1]
+
+        const res = await fetch(`/tasks/${taskId}/completed`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ completed: true })
+        })
+
+        const data = await res.json()
+
+        const div = document.createElement('div')
+        const ul = document.createElement('ul')
+
+        data.forEach((task, i) => {
+            const li = document.createElement('li')
+            const valueLi = document.getElementById(`task-list-${taskId}`).innerText
+            console.log(valueLi)
+            if (task.description === valueLi) {
+                li.innerText = task.description
+                ul.appendChild(li)
+            }
+        })
+        div.appendChild(ul)
+        document.body.appendChild(div)
+        const removeDiv = document.getElementById(`task-container-${taskId}`)
+        removeDiv.remove()
+
+    })
 }

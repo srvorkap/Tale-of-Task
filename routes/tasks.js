@@ -100,4 +100,25 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
     }
 }))
 
+router.post('/:id(\\d+)/completed', asyncHandler(async(req, res) => {
+    const taskId = parseInt(req.params.id, 10);
+    const userId = req.session.auth.userId
+
+    const {completed} = req.body;
+    console.log("in route", completed)
+
+    const task = await Task.findByPk(taskId)
+
+    await task.update({completed})
+
+    const completedTasks = await Task.findAll({
+        where: {
+            userId: userId,
+            completed: true
+        }
+    })
+    res.json(completedTasks)
+    // console.log(completedTasks)
+}))
+
 module.exports = router;
