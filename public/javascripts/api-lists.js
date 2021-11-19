@@ -21,7 +21,6 @@ blockerAdd.addEventListener("click", e => {
 })
 
 addListForm.addEventListener("submit", async (e) => {
-    const addListPopup = document.getElementById('#add-list-form');
     e.preventDefault();
     const formData = new FormData(addListForm);
     const name = formData.get("name");
@@ -50,24 +49,15 @@ addListForm.addEventListener("submit", async (e) => {
 
     if (dataJSON.errors) {
         const addErrorUl = document.getElementById('add-error-ul');
-
-        // const addContent = document.getElementById('add-content')
-        // const errorDiv = document.createElement("div");
-        // const errorHeader = document.createElement("p");
-        // errorHeader.setAttribute("id", "errorHeader")
-        // const ul = document.createElement("ul")
-        // errorHeader.innerHTML = "The following error(s) occurred:"
-        // addContent.append(errorDiv);
-        // errorDiv.append(errorHeader);
-        // errorDiv.append(ul);
-
+        if (addErrorUl.firstChild) {
+            addErrorUl.childNodes.forEach(c => c.remove());
+        }
         dataJSON.errors.forEach(error => {
             const errorMessage = document.createElement("li");
             errorMessage.innerHTML = error;
             addErrorUl.append(errorMessage);
         })
     }
-
 })
 
 const cancelListButton = document.getElementById('cancel-add-list');
@@ -160,8 +150,10 @@ submitUpdate.addEventListener("click", async (e) => {
 
 
     if (dataJSON.errors) {
-        const updateContent = document.getElementById('update-content')
         const updateErrorUl = document.getElementById('update-error-ul');
+        if (updateErrorUl.firstChild) {
+            updateErrorUl.childNodes.forEach(c => c.remove());
+        }
         dataJSON.errors.forEach(error => {
             const errorMessage = document.createElement("li");
             errorMessage.innerHTML = error;

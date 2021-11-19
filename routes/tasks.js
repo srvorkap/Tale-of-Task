@@ -28,6 +28,7 @@ const taskValidator = [
 
 router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     const task = await Task.findByPk(parseInt(req.params.id, 10));
+
     return res.json(task);
 }))
 
@@ -39,7 +40,7 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
 
     const list = await List.findByPk(listId)
     const userId = list.userId
-    //got user id in back end by querying db
+
 
     if (!dueDate) dueDate = null;
     if (!estimatedTime) estimatedTime = null;
@@ -54,6 +55,7 @@ router.post('/', taskValidator, asyncHandler(async (req, res) => {
 
     if (validatorErrors.isEmpty()) {
         await task.save();
+
         return res.json(task);
     } else {
         const errors = validatorErrors.array().map(err => err.msg);
@@ -74,23 +76,26 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
     // add csrf
     const taskId = parseInt(req.params.id, 10)
     const task = await Task.findByPk(taskId)
-    const {
-        description, listId, dueDate, estimatedTime, importance, deleted, completed
+
+    let {
+        description, dueDate, estimatedTime, importance
     } = req.body;
+
+    if (!dueDate) dueDate = null;
+    if (!estimatedTime) estimatedTime = 0;
+    if (!importance) importance = 0;
+
+    // console.log('Text', description, 'Due', dueDate, 'Time', estimatedTime, 'Priority', importance)
 
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
-
         await task.update({
             description,
-            listId,
             dueDate,
             estimatedTime,
-            completed,
-            deleted,
             importance
         })
-
+        // console.log('*** PASS ***')
         res.json(task)
     } else {
         const hours = Math.floor(estimatedTime / 60);
@@ -99,5 +104,37 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
         res.json({ errors, task, hours, minutes })
     }
 }))
+
+router.get('/search', asyncHandler(async (req, res) => {
+
+    const userId = req.session.auth.userId
+    const tasks = await Task.findAll({ where: { userId } })
+
+    res.json(tasks)
+}))
+
+
+router.post('/:id(\\d+)/completed', asyncHandler(async (req, res) => {
+    const taskId = parseInt(req.params.id, 10);
+    const userId = req.session.auth.userId
+
+    const { completed } = req.body;
+    console.log("in route", completed)
+
+    const task = await Task.findByPk(taskId)
+
+    await task.update({ completed })
+
+    const completedTasks = await Task.findAll({
+        where: {
+            userId: userId,
+            completed: true
+        }
+    })
+    res.json(completedTasks)
+    // console.log(completedTasks)
+}))
+
+
 
 module.exports = router;

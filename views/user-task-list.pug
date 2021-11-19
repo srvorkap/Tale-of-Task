@@ -5,7 +5,8 @@ block content
     div#side-and-list
         include lists-sidebar.pug
         #task-list-main
-            #search-bar Search
+            #search-bar
+                input(id="searchbar" type="text" name="search" placeholder="Search task")
             form.entry
                 div
                     ul#add-errors-display
@@ -16,11 +17,11 @@ block content
                     input(type="date" name="dueDate" id="dueDate" value=dueDate)
                     label Estimated Time:
                     label(for="hours") Hours
-                    input(type="number" name="hours" id="hours" value=hours)
+                    input(type="number" name="hours" min=0 id="hours" value=hours)
                     label(for="minutes") Minutes
-                    input(type="number" name="minutes" id="minutes" value=minutes)
+                    input(type="number" name="minutes" min=0 id="minutes" value=minutes)
                     select(name="importance" id="importance")
-                        option(value="") ~ Priority ~
+                        option(value="") Priority
                         option(value="0") None
                         option(value="3") High
                         option(value="2") Medium
@@ -34,6 +35,6 @@ block content
                                 li(id=`task-list-${task.id}`) #{task.description}
                                 button(id=`update-${task.id}` class="update-task-btn") Update
                                 button(id=`delete-${task.id}` class="delete-task-btn") Delete
-                    else
+                                button(id=`completed-${task.id}` class="completed-task-btn") Complete
 
     script(src='/javascripts/api-task.js' type='module')
