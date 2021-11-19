@@ -1,5 +1,7 @@
 div#sidebar
   ul
+    li
+      a(href= `/lists/${inbox.id}`)=inbox.name
     each list in lists
       li.list-item
         a(href=`/lists/${list.id}`)=list.name

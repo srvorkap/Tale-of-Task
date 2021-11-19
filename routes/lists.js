@@ -3,6 +3,7 @@ const { csrfProtection, asyncHandler } = require('./utils')
 const { User, List, Task } = require('../db/models')
 const { check, validationResult } = require('express-validator')
 const { requireAuth } = require('../auth');
+const { Op } = require('sequelize');
 
 const router = express.Router()
 
@@ -82,7 +83,10 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
 
     let lists = await List.findAll({
         where: {
-            userId
+            userId,
+            name: {
+                [Op.not]: 'Inbox'
+            }
         }
     })
 
@@ -115,7 +119,17 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
 
     JSON.stringify(tasks);
 
+    let inbox = await List.findOne({
+        where: {
+            userId,
+            name: "Inbox"
+        }
+    })
+
+    JSON.stringify(inbox);
+
     res.render('user-task-list', {
+        inbox,
         lists,
         tasks,
         csrfToken: req.csrfToken()
