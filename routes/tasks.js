@@ -108,7 +108,7 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
 router.get('/search', asyncHandler(async (req, res) => {
 
     const userId = req.session.auth.userId
-    const tasks = await Task.findAll({ where: { userId } })
+    const tasks = await Task.findAll({ where: { userId, completed: false } })
 
     res.json(tasks)
 }))
