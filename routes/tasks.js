@@ -76,23 +76,26 @@ router.put('/:id(\\d+)', taskValidator, asyncHandler(async (req, res) => {
     // add csrf
     const taskId = parseInt(req.params.id, 10)
     const task = await Task.findByPk(taskId)
-    const {
-        description, listId, dueDate, estimatedTime, importance, deleted, completed
+
+    let {
+        description, dueDate, estimatedTime, importance
     } = req.body;
+
+    if (!dueDate) dueDate = null;
+    if (!estimatedTime) estimatedTime = 0;
+    if (!importance) importance = 0;
+
+    // console.log('Text', description, 'Due', dueDate, 'Time', estimatedTime, 'Priority', importance)
 
     const validatorErrors = validationResult(req);
     if (validatorErrors.isEmpty()) {
-
         await task.update({
             description,
-            listId,
             dueDate,
             estimatedTime,
-            completed,
-            deleted,
             importance
         })
-
+        // console.log('*** PASS ***')
         res.json(task)
     } else {
         const hours = Math.floor(estimatedTime / 60);
