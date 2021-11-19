@@ -122,7 +122,7 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
         order: [
             ['updatedAt', 'DESC']
         ],
-        limit: 10
+        limit: 30
     })
 
     JSON.stringify(tasks);
