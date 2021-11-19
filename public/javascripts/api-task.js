@@ -26,20 +26,29 @@ const addCreateFunction = () => {
         const dueDateBox = document.getElementById('dueDate');
         const hoursBox = document.getElementById('hours');
         const minutesBox = document.getElementById('minutes');
-        const priorityBox = document.getElementById('importance')
+        const priorityBox = document.getElementById('importance');
 
         const description = textBox.value;
         const dueDate = dueDateBox.value;
 
         // console.log(dueDate);
 
-        const hoursValue = hoursBox.value;
-        const minutesValue = minutesBox.value;
-        const estimatedTime = parseInt(hoursValue, 10) * 60 + parseInt(minutesValue, 10);
+        let hoursValue = hoursBox.value;
+        let minutesValue = minutesBox.value;
+
+        hoursValue ? hoursValue = parseInt(hoursValue, 10) : hoursValue = 0;
+        minutesValue ? minutesValue = parseInt(minutesValue, 10) : minutesValue = 0;
+
+        // console.log(hoursValue, minutesValue);
+
+        const estimatedTime = hoursValue * 60 + minutesValue;
+        // console.log(estimatedTime);
 
         const importance = priorityBox.value;
 
         const listId = window.location.href.split('/')[4]
+
+        // console.log(listId, description, dueDate, estimatedTime, importance);
 
         const res = await fetch('/tasks', {
             method: 'POST',
@@ -114,7 +123,7 @@ const addCreateFunction = () => {
         hoursBox.value = null;
         priorityBox.innerHTML = `
         <select name=importance id=importance>
-            <option value=""> -- Select Priority -- </option>
+            <option value=""> ~ Priority ~ </option>
             <option value=0> None </option>
             <option value=3> High </option>
             <option value=2> Medium </option>
@@ -259,10 +268,12 @@ const addUpdateFunction = (button) => {
         // csrfInput.value = csrfToken
 
         form.id = `update-form-${taskId}`;
+        // form.classList.add('entry');
 
         textInput.type = 'text';
         textInput.name = 'description';
         textInput.id = `text-box-${taskId}`;
+        textInput.classList.add('update-text-input');
         textInput.value = description;
 
         dueDateLabel.for = 'dueDate';
@@ -271,7 +282,7 @@ const addUpdateFunction = (button) => {
         dueDateInput.id = `dueDate-${taskId}`;
         dueDateInput.value = dueDate;
 
-        timeLabel.innerText = 'Estimated Time';
+        timeLabel.innerText = 'Estimated Time:';
 
         hoursLabel.for = 'hours';
         hoursLabel.innerText = "Hours";
@@ -279,6 +290,7 @@ const addUpdateFunction = (button) => {
         hoursInput.name = 'hours'
         hoursInput.id = `hours-${taskId}`
         hoursInput.value = hours;
+        hoursInput.classList.add('update-time-input');
         hoursInput.min = 0;
 
         minutesLabel.for = 'minutes';
@@ -287,6 +299,7 @@ const addUpdateFunction = (button) => {
         minutesInput.name = 'minutes';
         minutesInput.id = `minutes-${taskId}`;
         minutesInput.value = minutes;
+        minutesInput.classList.add('update-time-input');
         minutesInput.min = 0;
 
         select.name = 'importance';
@@ -295,7 +308,7 @@ const addUpdateFunction = (button) => {
 
         saveButton.innerText = "Save";
         saveButton.id = `save-${taskId}`;
-        // console.log("form", form)
+        saveButton.classList.add('update-save-btn')
         addSaveFunction(saveButton, form);
 
         errorsDisplay.id = `errors-${taskId}`;
@@ -394,8 +407,8 @@ const searchTask = () => {
 
                 ul.appendChild(container)
             } else if (!searchInput.value) {
-
                 createTaskList(originalTasks);
+                console.log('Pop')
             }
         }
     })

@@ -1,7 +1,19 @@
+html {
+    background: url('https://img.finalfantasyxiv.com/lds/h/H/U1cNR3uhHiUiwj6ga0bnPZt1EE.jpg') no-repeat center center fixed;
+    background-size: cover;
+    overflow: auto;
+}
+
+
 body {
     padding: 50px;
     font: 14px 'Karla', sans-serif;
-    background-color: rgb(239, 238, 234);
+    /* background-color: rgb(239, 238, 234); */
+    /* background-image:url("https://img.finalfantasyxiv.com/lds/h/H/U1cNR3uhHiUiwj6ga0bnPZt1EE.jpg"); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover;
+    background-position-x: center;
+    background-repeat: no-repeat; */
 }
 
 html, body { height: 100%; }
@@ -42,8 +54,10 @@ Border added to everything for testing
     /* border: 1px solid rgb(124, 124, 124); */
 }
 
-input {
+input, select {
     border: 0px;
+    height: 25px;
+    background-color: rgb(209, 208, 204);
 }
 
 #main-window {
@@ -55,9 +69,10 @@ input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(106, 226, 180);
+    background-color: rgb(239, 238, 234);
     height: 15%;
     margin: 5px;
+    border-radius: 10px;
 }
 
 #navleft {
@@ -90,23 +105,25 @@ input {
 #side-and-list {
     display: flex;
     height: 95%;
+    margin: 5px;
 }
 
 #sidebar {
     /* display: flex; */
     width: 30%;
     flex-direction: column;
-    background-color: salmon;
-    margin: 5px;
+    background-color: rgb(209, 208, 204);
     padding: 10px;
+    border-radius: 10px;
 }
 
 #task-list-main {
     display: flex;
     width: 70%;
     flex-direction: column;
-    background-color: rgb(159, 171, 204);
-    margin: 5px;
+    background-color: rgb(239, 238, 234);
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .sprite {
@@ -119,6 +136,10 @@ input {
     display: flex;
     justify-content: space-between;
     margin: 5px;
+}
+
+#add-errors-display > li {
+    color: rgb(244, 67, 54);
 }
 
 #add-list-div {
@@ -150,6 +171,7 @@ input {
 
 #search-bar {
     background-color: plum;
+    margin-bottom: 10px;
 }
 
 #exp-bar {
@@ -160,11 +182,29 @@ input {
     /* margin: 5px 0px; */
     /* filter: drop-shadow(0px 0px 5px rgb(255, 230, 120)); */
     filter: drop-shadow(2.5px 2.5px 5px lightgrey);
-    margin: 5px;
+    margin: 20px;
 }
 
 #exp-progress {
     height: 24px;
     background: linear-gradient(to right top, #be6924, #ffd51c );
     width: 70%;
+}
+
+#hours, #minutes, .update-time-input {
+    width: 50px
+}
+
+#new-button, .update-save-btn{
+    /* display: none; */
+}
+
+#new-textbox, .update-text-input{
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.entry {
+    padding: 10px 0px;
+    border-bottom: 1px solid rgb(209, 208, 204);
 }

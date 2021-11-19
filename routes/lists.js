@@ -81,7 +81,8 @@ router.get('/:id(\\d+)/tasks', asyncHandler(async (req, res) => {
     const listId = parseInt(req.params.id, 10);
     const tasks = await Task.findAll({
         where: {
-            listId
+            listId,
+            completed: false
         },
         order: [
             ['dueDate', 'DESC'],
