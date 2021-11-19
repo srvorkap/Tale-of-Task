@@ -2,7 +2,7 @@ const express = require('express')
 const { csrfProtection, asyncHandler } = require('./utils')
 const { User, List, Task } = require('../db/models')
 const { check, validationResult } = require('express-validator')
-const { TSTypeAliasDeclaration } = require('babel-types')
+const { requireAuth } = require('../auth');
 
 const router = express.Router()
 
@@ -31,6 +31,7 @@ const userValidators = [
 //     })
 // }))
 
+router.use(requireAuth)
 
 router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, next) => {
     //add csrf
@@ -80,7 +81,12 @@ router.get('/:id(\\d+)/tasks', asyncHandler(async (req, res) => {
     const tasks = await Task.findAll({
         where: {
             listId
-        }
+        },
+        order: [
+            ['dueDate', 'DESC'],
+            ['importance', 'DESC'],
+            ['id', 'ASC']
+        ]
     })
 
     res.json(tasks);
@@ -93,18 +99,15 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
     let lists = await List.findAll({
         where: {
             userId
-        },
-        order: [
-            ['importance', 'DESC'],
-            ['updatedAt', 'DESC']
-        ]
+        }
     })
+
     JSON.stringify(lists)
 
     //Set res.locals.list to currentList
     const currentList = await List.findByPk(listId);
 
-    if (currentList === null) {
+    if (currentList === null || currentList.userId !== userId) {
         let inbox = await List.findOne({
             where: {
                 userId,
@@ -118,17 +121,32 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
 
     const tasks = await Task.findAll({
         where: {
-            listId
+            listId: listId,
+            completed: false
         },
         order: [
+            ['dueDate', 'DESC'],
             ['importance', 'DESC'],
-            ['updatedAt', 'DESC']
+            ['id', 'ASC']
         ]
+    })
+
+    const completedTasks = await Task.findAll({
+        where: {
+            listId: listId,
+            completed: true
+        },
+        order: [
+            ['updatedAt', 'DESC']
+        ],
+        limit: 30
     })
 
     JSON.stringify(tasks);
 
+
     res.render('user-task-list', {
+        completedTasks,
         lists,
         tasks,
         csrfToken: req.csrfToken()
@@ -210,7 +228,5 @@ router.put('/:id(\\d+)', csrfProtection, userValidators, asyncHandler(async (req
     }
 
 }))
-
-
 
 module.exports = router;

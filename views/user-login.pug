@@ -15,13 +15,13 @@ html(lang="en")
 
     body
         #login-container
-            #title-card
-                #title TALE Of TASK
-                #title-kana テール・オブ・タースク
+            .login-div
+                h1#title TALE Of TASK
+                h2#title-kata テール・オブ・タースク
             #login-sprites
             +validationErrorSummary(errors)
-            #login-card
-                form(action="/users/login" method="post" id="login-form")
+            div
+                form(action="/users/login" method="post" id="login-form" class="login-div")
                     .label-text
                         label(for="email") Email Address
                     div
@@ -31,5 +31,10 @@ html(lang="en")
                     div
                         input(type="password" id="password" name="password")
                     input(type="hidden", name="_csrf", value=csrfToken)
-                    button#login LOGIN
+                    div
+                        button.login-button#login LOGIN
+                        form(id="demo-login")
+                            button.login-button#demo(form="demo-login") DEMO
+                    div#register
+                        a(href="/users/signup") Not yet registered? Start your journey now!
             script(src="/javascripts/login.js" type="module")

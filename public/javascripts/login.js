@@ -1,22 +1,61 @@
 const sprites = {
-    paladin: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05001.png',
-    monk: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05002.png',
-    warrior: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05003.png',
-    dragoon: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05004.png',
-    bard: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05005.png',
-    whiteMage: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05006.png',
-    blackMage: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05007.png',
-    summoner: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05008.png',
-    scholar: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05009.png',
-    ninja: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05010.png',
-    machinist: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05011.png',
-    darkKnight: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05012.png',
-    astrologian: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05013.png'
+    paladin: {
+        name: 'Paladin',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05001.png'
+    },
+    monk: {
+        name: 'Monk',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05002.png'
+    },
+    warrior: {
+        name: 'Warrior',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05003.png'
+    },
+    dragoon: {
+        name: 'Dragoon',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05004.png'
+    },
+    bard: {
+        name: 'Bard',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05005.png'
+    },
+    whiteMage: {
+        name: 'White Mage',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05006.png'
+    },
+    blackMage: {
+        name: 'Black Mage',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05007.png'
+    },
+    summoner: {
+        name: 'Summoner',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05008.png'
+    },
+    scholar: {
+        name: 'Scholar',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05009.png'
+    },
+    ninja: {
+        name: 'Ninja',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05010.png'
+    },
+    machinist: {
+        name: 'Machinist',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05011.png'
+    },
+    darkKnight: {
+        name: 'Dark Knight',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05012.png'
+    },
+    astrologian: {
+        name: 'Astrologian',
+        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05013.png'
+    }
 }
 
-const urls = [];
-for (const job in sprites) {
-    urls.push(sprites[job])
+const data = [];
+for (let job in sprites) {
+    data.push([sprites[job]['name'], sprites[job]['url']])
 }
 
 const spriteDisplay = document.getElementById('login-sprites');
@@ -30,7 +69,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
     }
 
     const html = nums.map(n => {
-        return `<img class="sprite" src="${urls[n]}">`
+        return `<img class="sprite" src="${data[n][1]}" alt="Pixel sprite of ${data[n][0]}">`;
     })
 
     spriteDisplay.innerHTML = html.join('');
@@ -42,7 +81,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         for (let i = 0; i < 4; i++) {
             allSprites[i].style.opacity = 1;
         }
-    }, 100);
+    }, 100)
 })
 
 spriteDisplay.addEventListener('click', (e) => {
@@ -54,7 +93,7 @@ spriteDisplay.addEventListener('click', (e) => {
     }
 
     const html = nums.map(n => {
-        return `<img class="sprite" src="${urls[n]}">`
+        return `<img class="sprite" src="${data[n][1]}" alt="Pixel sprite of ${data[n][0]}">`;
     })
 
     spriteDisplay.innerHTML = html.join('');

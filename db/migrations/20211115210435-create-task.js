@@ -23,7 +23,7 @@ module.exports = {
         references: {model: 'Lists'}
       },
       dueDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       estimatedTime: {
         type: Sequelize.INTEGER

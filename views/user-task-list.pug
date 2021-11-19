@@ -5,6 +5,11 @@ block content
     script(src='/javascripts/api-task.js' type='module')
     include lists-sidebar.pug
 
+    #tasks-completed
+        ul#tasks-completed-list
+            each completedTask in completedTasks
+                li= completedTask.description
+
 
     #task-list-main
         input(id="searchbar" type="text" name="search" placeholder="Search task")
@@ -14,12 +19,12 @@ block content
                 input(type="text" name="description" id="new-textbox" value=description)
             div
                 label(for="dueDate") Due Date
-                input(type="datetime-local" name="dueDate" id="dueDate" value=dueDate)
+                input(type="date" name="dueDate" id="dueDate" value=dueDate)
                 label Estimated Time
                 label(for="hours") Hours
-                input(type="number" name="hours" id="hours" value=hours)
+                input(type="number" name="hours" id="hours" min=0 value=hours)
                 label(for="minutes") Minutes
-                input(type="number" name="minutes" id="minutes" value=minutes)
+                input(type="number" name="minutes" id="minutes" min=0 value=minutes)
                 select(name="importance" id="importance")
                     option(value="") -- Select Priority --
                     option(value="0") None
@@ -37,4 +42,5 @@ block content
                             li(id=`task-list-${task.id}` class="search-list") #{task.description}
                             button(id=`update-${task.id}` class="update-task-btn") Update
                             button(id=`delete-${task.id}` class="delete-task-btn") Delete
+                            button(id=`completed-${task.id}` class="completed-task-btn") Mark Completed
                 else
