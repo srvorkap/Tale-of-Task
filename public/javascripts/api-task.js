@@ -407,8 +407,8 @@ const searchTask = () => {
 
                 ul.appendChild(container)
             } else if (!searchInput.value) {
-
                 createTaskList(originalTasks);
+                console.log('Pop')
             }
         }
     })
