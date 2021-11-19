@@ -38,9 +38,6 @@ const addCreateFunction = () => {
 
         const listId = window.location.href.split('/')[4]
 
-
-
-
         const res = await fetch('/tasks', {
             method: 'POST',
             headers: {
@@ -79,9 +76,6 @@ const addCreateFunction = () => {
             li.className = "search-list"
             //add class
             li.innerText = data.description;
-
-
-
 
             const updateBtn = document.createElement('button');
             updateBtn.id = `update-${data.id}`;
@@ -326,13 +320,18 @@ const searchTask = () => {
     const searchInput = document.getElementById('searchbar')
     searchInput.addEventListener('keyup', async (ev) => {
 
-        // const listId = window.location.href.split('/')[4]
+        const listId = window.location.href.split('/')[4]
 
         const res = await fetch(`/tasks/search`, {
             method: "GET"
         })
 
+        const resO = await fetch(`/lists/${listId}/tasks`, {
+            method: "GET"
+        })
+
         const data = await res.json()
+        const originalTasks = await resO.json();
 
         const divs = document.querySelectorAll(`.search-list-container`)
         console.log(divs)
@@ -345,11 +344,9 @@ const searchTask = () => {
 
         for (let i = 0; i < data.length; i++) {
 
-            if (data[i].description.toLowerCase().includes(searchInput.value.toLowerCase())) {
-
+            if (searchInput.value && data[i].description.toLowerCase().includes(searchInput.value.toLowerCase())) {
 
                 const ul = document.getElementById('task-list-render');
-
 
                 const container = document.createElement('div');
                 container.id = `task-container-${data[i].id}`;
@@ -375,12 +372,53 @@ const searchTask = () => {
                 container.appendChild(updateBtn)
                 container.appendChild(deleteBtn)
 
-                    ul.appendChild(container)
-
-
+                ul.appendChild(container)
+            } else if (!searchInput.value) {
+                const disp = document.getElementById('task-list-display');
+                const ul = document.getElementById('task-list-render');
+                ul.remove();
+                const newUl = document.createElement('ul');
+                newUl.id = 'task-list-render';
+                disp.appendChild(newUl);
+                createTaskList(originalTasks);
             }
-
         }
-
     })
 }
+
+const createTaskList = (tasks) => {
+    const ul = document.getElementById('task-list-render');
+
+    tasks.forEach(task => {
+        const container = document.createElement('div');
+        container.id = `task-container-${task.id}`;
+        container.className = 'search-list-container'
+        const li = document.createElement('li');
+        li.id = `task-list-${task.id}`;
+        li.innerText = task.description;
+
+        const updateBtn = document.createElement('button');
+        updateBtn.id = `update-${task.id}`;
+        updateBtn.classList.add('update-task-btn');
+        updateBtn.innerText = 'Update';
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.id = `delete-${task.id}`;
+        deleteBtn.classList.add('delete-task-btn');
+        deleteBtn.innerText = 'Delete';
+
+        addDeleteFunction(deleteBtn);
+        addUpdateFunction(updateBtn);
+
+        container.appendChild(li)
+        container.appendChild(updateBtn)
+        container.appendChild(deleteBtn)
+
+        ul.appendChild(container)
+    })
+}
+
+// div(id=`task-container-${task.id}` class="search-list-container")
+// li(id=`task-list-${task.id}` class="search-list") #{task.description}
+// button(id=`update-${task.id}` class="update-task-btn") Update
+// button(id=`delete-${task.id}` class="delete-task-btn") Delete

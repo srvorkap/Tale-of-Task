@@ -7,8 +7,8 @@ block content
 
 
     #task-list-main
+        input(id="searchbar" type="text" name="search" placeholder="Search task")
         form
-            input(id="searchbar" type="text" name="search" placeholder="Search task")
             input(type="hidden" name="_csrf" value=csrfToken id="addCsrfTasks")
             div
                 input(type="text" name="description" id="new-textbox" value=description)

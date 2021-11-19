@@ -75,6 +75,17 @@ router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, n
     }
 }))
 
+router.get('/:id(\\d+)/tasks', asyncHandler(async (req, res) => {
+    const listId = parseInt(req.params.id, 10);
+    const tasks = await Task.findAll({
+        where: {
+            listId
+        }
+    })
+
+    res.json(tasks);
+}));
+
 router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
     const listId = parseInt(req.params.id, 10);
@@ -82,7 +93,11 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
     let lists = await List.findAll({
         where: {
             userId
-        }
+        },
+        order: [
+            ['importance', 'DESC'],
+            ['updatedAt', 'DESC']
+        ]
     })
     JSON.stringify(lists)
 
@@ -164,8 +179,8 @@ router.put('/:id(\\d+)', csrfProtection, userValidators, asyncHandler(async (req
 
     JSON.stringify(tasks);
 
-     // Check if name of list exists in this user's lists already
-     const checkList = await List.findOne({
+    // Check if name of list exists in this user's lists already
+    const checkList = await List.findOne({
         where: {
             name,
             userId
