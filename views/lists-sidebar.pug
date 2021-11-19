@@ -13,6 +13,11 @@ div#sidebar
   div#add-list-div
     button#add-list-button Add List
 
+  #tasks-completed
+    ul#tasks-completed-list
+        each completedTask in completedTasks
+            li= completedTask.description
+
 div#add-list-popup.popup
   +validationErrorSummary(errors)
   div.blocker-add

@@ -77,6 +77,22 @@ router.post('/', csrfProtection, userValidators, asyncHandler(async (req, res, n
     }
 }))
 
+router.get('/:id(\\d+)/tasks', asyncHandler(async (req, res) => {
+    const listId = parseInt(req.params.id, 10);
+    const tasks = await Task.findAll({
+        where: {
+            listId
+        },
+        order: [
+            ['dueDate', 'DESC'],
+            ['importance', 'DESC'],
+            ['id', 'ASC']
+        ]
+    })
+
+    res.json(tasks);
+}));
+
 router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
     const listId = parseInt(req.params.id, 10);
@@ -109,12 +125,25 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
 
     const tasks = await Task.findAll({
         where: {
-            listId
+            listId: listId,
+            completed: false
         },
         order: [
+            ['dueDate', 'DESC'],
             ['importance', 'DESC'],
-            ['updatedAt', 'DESC']
+            ['id', 'ASC']
         ]
+    })
+
+    const completedTasks = await Task.findAll({
+        where: {
+            listId: listId,
+            completed: true
+        },
+        order: [
+            ['updatedAt', 'DESC']
+        ],
+        limit: 30
     })
 
     JSON.stringify(tasks);
@@ -129,6 +158,7 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
     JSON.stringify(inbox);
 
     res.render('user-task-list', {
+        completedTasks,
         inbox,
         lists,
         tasks,
@@ -222,6 +252,5 @@ router.put('/:id(\\d+)', csrfProtection, userValidators, asyncHandler(async (req
     }
 
 }))
-
 
 module.exports = router;
