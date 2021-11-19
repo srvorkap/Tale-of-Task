@@ -5,6 +5,12 @@ block content
     script(src='/javascripts/api-task.js' type='module')
     include lists-sidebar.pug
 
+    #tasks-completed
+        ul#tasks-completed-list
+            each completedTask in completedTasks
+                li= completedTask.description
+
+
     #task-list-main
         form
             div

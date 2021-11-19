@@ -105,7 +105,8 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
 
     const tasks = await Task.findAll({
         where: {
-            listId
+            listId: listId,
+            completed: false
         },
         order: [
             ['importance', 'DESC'],
@@ -113,9 +114,22 @@ router.get('/:id(\\d+)', csrfProtection, asyncHandler(async (req, res, next) => 
         ]
     })
 
+    const completedTasks = await Task.findAll({
+        where: {
+            listId: listId,
+            completed: true
+        },
+        order: [
+            ['updatedAt', 'DESC']
+        ],
+        limit: 10
+    })
+
     JSON.stringify(tasks);
 
+
     res.render('user-task-list', {
+        completedTasks,
         lists,
         tasks,
         csrfToken: req.csrfToken()

@@ -326,6 +326,7 @@ const addUpdateFunction = (button) => {
 }
 
 const markCompletedFunction = (button) => {
+
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
 
@@ -342,20 +343,20 @@ const markCompletedFunction = (button) => {
 
         const data = await res.json()
 
-        const div = document.createElement('div')
-        const ul = document.createElement('ul')
+
+        const div = document.getElementById('tasks-completed')
+        const ul = document.getElementById('tasks-completed-list')
+        const li = document.createElement('li')
 
         data.forEach((task, i) => {
-            const li = document.createElement('li')
             const valueLi = document.getElementById(`task-list-${taskId}`).innerText
-            console.log(valueLi)
+
             if (task.description === valueLi) {
                 li.innerText = task.description
-                ul.appendChild(li)
+                ul.prepend(li)
             }
         })
         div.appendChild(ul)
-        document.body.appendChild(div)
         const removeDiv = document.getElementById(`task-container-${taskId}`)
         removeDiv.remove()
 
