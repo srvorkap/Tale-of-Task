@@ -170,6 +170,17 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res, next) => {
     const userId = req.session.auth.userId;
     const listId = req.params.id
     const list = await List.findByPk(listId);
+
+    // Added removing tasks to ensure list deletion
+    const tasks = await Task.findAll({
+        where: {
+            listId
+        }
+    })
+
+    tasks.forEach(async (task) => {
+        await task.destroy();
+    })
     await list.destroy();
 
     // FIND ALL LISTS TO NAVIGATE TO THE FIRST OF THE USER'S LISTS
