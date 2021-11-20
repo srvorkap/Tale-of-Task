@@ -83,6 +83,7 @@ select {
 .entry {
     padding: 10px 0px;
     border-bottom: 1px solid rgb(209, 208, 204);
+    min-height: 50px;
 }
 
 .task-options-div {
@@ -153,7 +154,11 @@ select {
     flex-direction: column;
     background-color: rgb(239, 238, 234);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 10px;;
+}
+
+#add-options-div {
+    margin-bottom: 15px;
 }
 
 .sprite {
@@ -228,11 +233,11 @@ select {
     width: 50px
 }
 
-#new-button, .update-save-btn{
-    /* display: none; */
-}
-
 #new-textbox, .update-text-input{
     width: 100%;
     margin-bottom: 8px;
+}
+
+#task-list-display {
+    overflow-y: scroll;
 }
