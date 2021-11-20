@@ -12,7 +12,7 @@ block content
                     ul#add-errors-display
                 div
                     input(type="text" name="description" id="new-textbox" value=description placeholder="Enter your next task!")
-                div
+                div.task-options-div
                     label(for="dueDate") Due Date
                     input(type="date" name="dueDate" id="dueDate" value=dueDate)
                     label Estimated Time:
@@ -21,7 +21,7 @@ block content
                     label(for="minutes") Minutes
                     input(type="number" name="minutes" min=0 id="minutes" value=minutes)
                     select(name="importance" id="importance")
-                        option(value="") Priority
+                        option(value="0") Priority
                         option(value="0") None
                         option(value="3") High
                         option(value="2") Medium

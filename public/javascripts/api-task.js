@@ -81,6 +81,7 @@ const addCreateFunction = () => {
             const container = document.createElement('div');
             container.id = `task-container-${data.id}`;
             container.className = "search-list-container";
+            container.classList.add('entry');
             //add class
 
             const li = document.createElement('li');
@@ -91,18 +92,18 @@ const addCreateFunction = () => {
 
             const updateBtn = document.createElement('button');
             updateBtn.id = `update-${data.id}`;
+            updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
             updateBtn.classList.add('update-task-btn');
-            updateBtn.innerText = 'Update';
 
             const deleteBtn = document.createElement('button');
             deleteBtn.id = `delete-${data.id}`;
+            deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
             deleteBtn.classList.add('delete-task-btn');
-            deleteBtn.innerText = 'Delete';
 
             const completeBtn = document.createElement('button');
             completeBtn.id = `completed-${data.id}`
-            completeBtn.className = 'completed-task-btn'
-            completeBtn.innerText = 'Complete'
+            completeBtn.innerHTML = '<i class="fas fa-check"></i>';
+            completeBtn.classList.add('completed-task-btn');
 
             container.appendChild(li);
             container.appendChild(updateBtn);
@@ -123,7 +124,7 @@ const addCreateFunction = () => {
         hoursBox.value = null;
         priorityBox.innerHTML = `
         <select name=importance id=importance>
-            <option value="">Priority</option>
+            <option value=0>Priority</option>
             <option value=0> None </option>
             <option value=3> High </option>
             <option value=2> Medium </option>
@@ -304,6 +305,7 @@ const addUpdateFunction = (button) => {
         select.name = 'importance';
         select.id = `importance-${taskId}`;
         optionSelect.innerText = "Priority";
+        optionSelect.value = 0;
 
         saveButton.innerHTML = '<i class="fas fa-save"></i>';
         saveButton.id = `save-${taskId}`;
@@ -320,6 +322,8 @@ const addUpdateFunction = (button) => {
         select.appendChild(optionLow);
 
         textDiv.appendChild(textInput);
+
+        dataDiv.classList.add('task-options-div');
 
         dataDiv.appendChild(dueDateLabel);
         dataDiv.appendChild(dueDateInput);
@@ -408,7 +412,6 @@ const searchTask = () => {
                 ul.appendChild(container)
             } else if (!searchInput.value) {
                 createTaskList(originalTasks);
-                console.log('Pop')
             }
         }
     })

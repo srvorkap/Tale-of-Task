@@ -67,6 +67,16 @@ input, select {
     height: 25px;
     background-color: rgb(209, 208, 204);
     border-radius: 5px;
+    /* margin: 0px 3px; */
+}
+
+select {
+    width: 85px;
+}
+
+.task-options-div {
+    display: flex;
+    justify-content: space-between;
 }
 
 #main-window {
