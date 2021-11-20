@@ -83,6 +83,7 @@ label {
 #register a {
     color:rgb(51, 51, 51);
     text-decoration: none;
+    transition: 0.3s;
 }
 
 #register a:hover {

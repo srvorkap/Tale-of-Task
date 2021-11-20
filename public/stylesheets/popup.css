@@ -51,6 +51,12 @@
   transform: translate(-50%, -50%);
 }
 
+
+#add-list-button {
+  height: 25px;
+  margin-right: 8px;
+}
+
 .blocker-update {
   position: fixed;
   top: 0;
@@ -96,4 +102,29 @@
 
 #update-list-form input {
   margin-right: 6px;
+}
+
+#inbox-li a {
+  font-weight: bold;
+  margin-left: 5px;
+  font-size: 28px;
+  transition: 0.3s;
+}
+
+#inbox-li a:hover {
+  color: rgb(33, 135, 182);
+}
+
+#inbox-li {
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.list-item a {
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.list-item a:hover{
+  color: rgb(33, 135, 182);
 }

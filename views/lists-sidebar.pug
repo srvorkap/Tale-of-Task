@@ -1,6 +1,6 @@
 div#sidebar
   ul
-    li
+    li#inbox-li
       a(href= `/lists/${inbox.id}`)=inbox.name
     each list in lists
       li.list-item
@@ -11,6 +11,7 @@ div#sidebar
           button(class='delete-list-buttons' id=`delete-list-${list.id}`)
             i(class="fas fa-trash-alt")
   div#add-list-div
+    p Add a new list
     button#add-list-button
       i(class="fas fa-plus")
 
