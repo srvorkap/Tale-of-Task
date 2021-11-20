@@ -22,8 +22,17 @@ a {
     text-decoration: none;
 }
 
+button {
+    border: 1px solid rgb(141, 147, 155);
+    margin: 0px 3px;
+    border-radius: 2.5px;
+    padding: 4px 6px;
+    transition: 0.3s;
+}
+
 button:hover{
     cursor: pointer;
+    filter: invert(.7);
 }
 
 h1, h2, h3, h4, h5, h6, a, ol, li, ul, div, span,
@@ -58,6 +67,35 @@ input, select {
     border: 0px;
     height: 25px;
     background-color: rgb(209, 208, 204);
+    border-radius: 5px;
+    /* margin: 0px 3px; */
+}
+
+select {
+    width: 85px;
+}
+
+.pre-open {
+    display: flex;
+    justify-content: space-between;
+    /* width: 100%; */
+}
+
+.entry {
+    padding: 10px 0px;
+    border-bottom: 1px solid rgb(209, 208, 204);
+    min-height: 80px;
+}
+
+.entry li {
+    font-weight: 500;
+    font-size: 18px;
+    /* font-style: italic; */
+}
+
+.task-options-div {
+    display: flex;
+    justify-content: space-between;
 }
 
 #main-window {
@@ -123,7 +161,11 @@ input, select {
     flex-direction: column;
     background-color: rgb(239, 238, 234);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 10px;;
+}
+
+#add-options-div {
+    margin-bottom: 20px;
 }
 
 .sprite {
@@ -144,8 +186,16 @@ input, select {
 
 #add-list-div {
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     margin-top: 25px;
+    align-items: center;
+    border-top: 1px solid rgb(95, 95, 95);
+    border-bottom: 1px solid rgb(95, 95, 95);
+}
+
+#add-list-div p {
+    font-size: 20px;
+    margin-left: 5px;
 }
 
 #logout {
@@ -157,7 +207,7 @@ input, select {
     border-radius: 5px;
     letter-spacing: 2px;
     color:white;
-    margin-right: 50px;
+    margin: 0 50px 0 0;
     filter: drop-shadow(2.5px 2.5px 5px lightgrey);
     padding-bottom: 5px;
     background: linear-gradient(to right top, rgb(99, 26, 44), rgb(216, 62, 108));
@@ -170,8 +220,11 @@ input, select {
 }
 
 #search-bar {
-    background-color: plum;
     margin-bottom: 10px;
+}
+
+#search-bar input {
+    width: 100%;
 }
 
 #exp-bar {
@@ -195,16 +248,35 @@ input, select {
     width: 50px
 }
 
-#new-button, .update-save-btn{
-    /* display: none; */
-}
-
 #new-textbox, .update-text-input{
     width: 100%;
     margin-bottom: 8px;
 }
 
-.entry {
-    padding: 10px 0px;
+#task-list-display {
+    overflow-y: auto;
+}
+
+#tasks-completed {
+    margin: 20px 0px 20px 5px;
+}
+
+#tasks-completed span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#tasks-completed-list {
+    overflow-y: auto;
+    background-color: rgb(239, 238, 234);
+    border-radius: 5px;
+    margin: 10px 7px 0px 2px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    max-height: 600px;
+}
+
+#tasks-completed-list li {
+    margin: 5px 10px 5px 10px;
     border-bottom: 1px solid rgb(209, 208, 204);
 }

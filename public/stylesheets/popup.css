@@ -12,12 +12,36 @@
   right: 0;
   background: rgba(0, 0, 0, 0.5);
 }
+
+#error-add-div {
+  margin-bottom: 15px;
+}
+
+#add-error-ul li {
+  color: rgb(244, 67, 54);
+  font-size: 18px;
+}
+
+#add-list-form {
+  display: flex;
+}
+
+#add-list-form label {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+#add-list-form input {
+  margin-right: 6px;
+}
+
 #add-list-popup .contents {
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 200px;
-  height: 100px;
+  width: 450px;
+  height: 200px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #fff;
@@ -25,6 +49,12 @@
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
+}
+
+
+#add-list-button {
+  height: 25px;
+  margin-right: 8px;
 }
 
 .blocker-update {
@@ -39,9 +69,10 @@
 #update-list-popup .contents {
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 200px;
-  height: 100px;
+  width: 450px;
+  height: 200px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #fff;
@@ -49,4 +80,51 @@
   top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%);
+}
+
+#error-div {
+  margin-bottom: 15px;
+}
+
+#update-error-ul li {
+  color: rgb(244, 67, 54);
+  font-size: 18px;
+}
+
+#update-list-form {
+  display: flex;
+}
+
+#update-list-form label {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+#update-list-form input {
+  margin-right: 6px;
+}
+
+#inbox-li a {
+  font-weight: bold;
+  margin-left: 5px;
+  font-size: 28px;
+  transition: 0.3s;
+}
+
+#inbox-li a:hover {
+  color: rgb(33, 135, 182);
+}
+
+#inbox-li {
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.list-item a {
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.list-item a:hover{
+  color: rgb(33, 135, 182);
 }

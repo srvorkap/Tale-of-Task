@@ -81,6 +81,8 @@ const addCreateFunction = () => {
             const container = document.createElement('div');
             container.id = `task-container-${data.id}`;
             container.className = "search-list-container";
+            container.classList.add('entry');
+            container.classList.add('pre-open');
             //add class
 
             const li = document.createElement('li');
@@ -89,25 +91,28 @@ const addCreateFunction = () => {
             //add class
             li.innerText = data.description;
 
+            const buttons = document.createElement('div');
+
             const updateBtn = document.createElement('button');
             updateBtn.id = `update-${data.id}`;
+            updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
             updateBtn.classList.add('update-task-btn');
-            updateBtn.innerText = 'Update';
 
             const deleteBtn = document.createElement('button');
             deleteBtn.id = `delete-${data.id}`;
+            deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
             deleteBtn.classList.add('delete-task-btn');
-            deleteBtn.innerText = 'Delete';
 
             const completeBtn = document.createElement('button');
             completeBtn.id = `completed-${data.id}`
-            completeBtn.className = 'completed-task-btn'
-            completeBtn.innerText = 'Complete'
+            completeBtn.innerHTML = '<i class="fas fa-check"></i>';
+            completeBtn.classList.add('completed-task-btn');
 
             container.appendChild(li);
-            container.appendChild(updateBtn);
-            container.appendChild(deleteBtn);
-            container.appendChild(completeBtn)
+            buttons.appendChild(updateBtn);
+            buttons.appendChild(deleteBtn);
+            buttons.appendChild(completeBtn)
+            container.appendChild(buttons);
             ul.appendChild(container);
 
             // console.log(ul);
@@ -123,7 +128,7 @@ const addCreateFunction = () => {
         hoursBox.value = null;
         priorityBox.innerHTML = `
         <select name=importance id=importance>
-            <option value=""> ~ Priority ~ </option>
+            <option value=0>Priority</option>
             <option value=0> None </option>
             <option value=3> High </option>
             <option value=2> Medium </option>
@@ -135,7 +140,7 @@ const addCreateFunction = () => {
 
 const addDeleteFunction = (button) => {
     button.addEventListener('click', async (ev) => {
-        const taskId = ev.target.id.split('-')[1]
+        const taskId = button.id.split('-')[1]
 
         const res = await fetch(`/tasks/${taskId}`, {
             method: "DELETE"
@@ -154,8 +159,11 @@ const addSaveFunction = (button, form) => {
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
 
-        const taskId = ev.target.id.split('-')[1]
+        const taskId = button.id.split('-')[1]
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
+
+        taskListDiv.classList.add('pre-open');
+
         const updateForm = document.getElementById(`update-form-${taskId}`);
         const dueDateInput = document.getElementById(`dueDate-${taskId}`)
         const dateValue = dueDateInput.value
@@ -202,7 +210,6 @@ const addSaveFunction = (button, form) => {
 
             li.innerText = dataObj.description;
 
-
             updateForm.remove();
         }
     })
@@ -222,9 +229,11 @@ const addUpdateFunction = (button) => {
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
 
-        const taskId = ev.target.id.split('-')[1];
+        const taskId = button.id.split('-')[1];
 
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
+        taskListDiv.classList.remove('pre-open');
+
         const divKids = taskListDiv.children;
         for (let el of divKids) {
             el.style.display = 'none';
@@ -304,9 +313,10 @@ const addUpdateFunction = (button) => {
 
         select.name = 'importance';
         select.id = `importance-${taskId}`;
-        optionSelect.innerText = "~ Priority ~";
+        optionSelect.innerText = "Priority";
+        optionSelect.value = 0;
 
-        saveButton.innerText = "Save";
+        saveButton.innerHTML = '<i class="fas fa-save"></i>';
         saveButton.id = `save-${taskId}`;
         saveButton.classList.add('update-save-btn')
         addSaveFunction(saveButton, form);
@@ -321,6 +331,8 @@ const addUpdateFunction = (button) => {
         select.appendChild(optionLow);
 
         textDiv.appendChild(textInput);
+
+        dataDiv.classList.add('task-options-div');
 
         dataDiv.appendChild(dueDateLabel);
         dataDiv.appendChild(dueDateInput);
@@ -374,9 +386,13 @@ const searchTask = () => {
 
                 const ul = document.getElementById('task-list-render');
 
+                const buttons = document.createElement('div');
+
                 const container = document.createElement('div');
                 container.id = `task-container-${data[i].id}`;
                 container.className = 'search-list-container'
+                container.classList.add('entry');
+                container.classList.add('pre-open');
                 const li = document.createElement('li');
                 li.id = `task-list-${data[i].id}`;
                 li.innerText = data[i].description;
@@ -384,31 +400,30 @@ const searchTask = () => {
                 const updateBtn = document.createElement('button');
                 updateBtn.id = `update-${data[i].id}`;
                 updateBtn.classList.add('update-task-btn');
-                updateBtn.innerText = 'Update';
+                updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.id = `delete-${data[i].id}`;
                 deleteBtn.classList.add('delete-task-btn');
-                deleteBtn.innerText = 'Delete';
+                deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
 
                 const completeBtn = document.createElement('button');
                 completeBtn.id = `completed-${data[i].id}`;
                 completeBtn.classList.add('completed-task-btn');
-                completeBtn.innerText = 'Complete';
+                completeBtn.innerHTML = '<i class="fas fa-check"></i>';
 
                 addDeleteFunction(deleteBtn);
                 addUpdateFunction(updateBtn);
                 markCompletedFunction(completeBtn);
 
                 container.appendChild(li);
-                container.appendChild(updateBtn);
-                container.appendChild(deleteBtn);
-                container.appendChild(completeBtn);
-
+                buttons.appendChild(updateBtn);
+                buttons.appendChild(deleteBtn);
+                buttons.appendChild(completeBtn);
+                container.appendChild(buttons);
                 ul.appendChild(container)
             } else if (!searchInput.value) {
                 createTaskList(originalTasks);
-                console.log('Pop')
             }
         }
     })
@@ -425,34 +440,38 @@ const createTaskList = (tasks) => {
         const container = document.createElement('div');
         container.id = `task-container-${task.id}`;
         container.className = 'search-list-container'
+        container.classList.add('entry');
+        container.classList.add('pre-open');
         const li = document.createElement('li');
         li.id = `task-list-${task.id}`;
         li.innerText = task.description;
 
+        const buttons = document.createElement('div');
+
         const updateBtn = document.createElement('button');
         updateBtn.id = `update-${task.id}`;
         updateBtn.classList.add('update-task-btn');
-        updateBtn.innerText = 'Update';
+        updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
 
         const deleteBtn = document.createElement('button');
         deleteBtn.id = `delete-${task.id}`;
         deleteBtn.classList.add('delete-task-btn');
-        deleteBtn.innerText = 'Delete';
+        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
 
         const completeBtn = document.createElement('button');
         completeBtn.id = `completed-${task.id}`;
         completeBtn.classList.add('completed-task-btn');
-        completeBtn.innerText = 'Complete';
+        completeBtn.innerHTML = '<i class="fas fa-check"></i>';
 
         addDeleteFunction(deleteBtn);
         addUpdateFunction(updateBtn);
         markCompletedFunction(completeBtn);
 
         container.appendChild(li)
-        container.appendChild(updateBtn)
-        container.appendChild(deleteBtn)
-        container.appendChild(completeBtn)
-
+        buttons.appendChild(updateBtn)
+        buttons.appendChild(deleteBtn)
+        buttons.appendChild(completeBtn)
+        container.appendChild(buttons);
         newUl.appendChild(container)
     })
 
@@ -465,7 +484,7 @@ const markCompletedFunction = (button) => {
         ev.preventDefault();
 
 
-        const taskId = ev.target.id.split('-')[1]
+        const taskId = button.id.split('-')[1]
 
         const res = await fetch(`/tasks/${taskId}/completed`, {
             method: "POST",

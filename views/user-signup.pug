@@ -41,4 +41,5 @@ html(lang="en")
                                 button.start-button#signup START
                                 #login-link-div
                                     a(href="/users/login") Back to Login
-            +validationErrorSummary(errors)
+            #signup-errors-div
+                +validationErrorSummary(errors)

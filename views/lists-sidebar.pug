@@ -1,17 +1,19 @@
 div#sidebar
   ul
-    li
+    li#inbox-li
       a(href= `/lists/${inbox.id}`)=inbox.name
     each list in lists
       li.list-item
         a(href=`/lists/${list.id}`)=list.name
         div.list-button-div
           button(class='update-list-buttons' id=`update-list-${list.id}`)
-            i(class="fas fa-feather-alt")
+            i(class="fas fa-feather")
           button(class='delete-list-buttons' id=`delete-list-${list.id}`)
-            i(class="fas fa-skull")
+            i(class="fas fa-trash-alt")
   div#add-list-div
-    button#add-list-button Add List
+    p Add a new list
+    button#add-list-button
+      i(class="fas fa-plus")
 
   #tasks-completed
     span Recently Completed
@@ -28,8 +30,10 @@ div#add-list-popup.popup
     form#add-list-form(action= "/lists" method= "post")
       +field('List Name', 'name', '')
       input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
-      button#submit-add-list(type="submit") Add
-      button#cancel-add-list(type="button") Cancel
+      button#submit-add-list(type="submit")
+        i(class="fas fa-plus")
+      button#cancel-add-list(type="button")
+        i(class="fas fa-ban")
 
 div#update-list-popup.popup
   +validationErrorSummary(errors)
@@ -40,5 +44,7 @@ div#update-list-popup.popup
     form#update-list-form
       +field('List Name', 'name', '')
       input(type="hidden" name="_csrf" id="updateCsrf" value=csrfToken)
-      button#submit-update-list(type="submit") Update
-      button#cancel-update-list(type="button") Cancel
+      button#submit-update-list(type="submit")
+        i(class="fas fa-plus")
+      button#cancel-update-list(type="button")
+        i(class="fas fa-ban")
