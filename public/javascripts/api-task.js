@@ -123,7 +123,7 @@ const addCreateFunction = () => {
         hoursBox.value = null;
         priorityBox.innerHTML = `
         <select name=importance id=importance>
-            <option value=""> ~ Priority ~ </option>
+            <option value="">Priority</option>
             <option value=0> None </option>
             <option value=3> High </option>
             <option value=2> Medium </option>
@@ -304,9 +304,9 @@ const addUpdateFunction = (button) => {
 
         select.name = 'importance';
         select.id = `importance-${taskId}`;
-        optionSelect.innerText = "~ Priority ~";
+        optionSelect.innerText = "Priority";
 
-        saveButton.innerText = "Save";
+        saveButton.innerHTML = '<i class="fas fa-save"></i>';
         saveButton.id = `save-${taskId}`;
         saveButton.classList.add('update-save-btn')
         addSaveFunction(saveButton, form);
