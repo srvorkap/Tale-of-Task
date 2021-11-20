@@ -29,8 +29,10 @@ div#add-list-popup.popup
     form#add-list-form(action= "/lists" method= "post")
       +field('List Name', 'name', '')
       input(type="hidden" name="_csrf" id="addCsrf" value=csrfToken)
-      button#submit-add-list(type="submit") Add
-      button#cancel-add-list(type="button") Cancel
+      button#submit-add-list(type="submit")
+        i(class="fas fa-plus")
+      button#cancel-add-list(type="button")
+        i(class="fas fa-ban")
 
 div#update-list-popup.popup
   +validationErrorSummary(errors)
@@ -41,5 +43,7 @@ div#update-list-popup.popup
     form#update-list-form
       +field('List Name', 'name', '')
       input(type="hidden" name="_csrf" id="updateCsrf" value=csrfToken)
-      button#submit-update-list(type="submit") Update
-      button#cancel-update-list(type="button") Cancel
+      button#submit-update-list(type="submit")
+        i(class="fas fa-plus")
+      button#cancel-update-list(type="button")
+        i(class="fas fa-ban")

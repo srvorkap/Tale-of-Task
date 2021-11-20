@@ -89,7 +89,7 @@ select {
 .entry li {
     font-weight: 500;
     font-size: 18px;
-    font-style: italic;
+    /* font-style: italic; */
 }
 
 .task-options-div {
