@@ -202,7 +202,6 @@ const addSaveFunction = (button, form) => {
 
             li.innerText = dataObj.description;
 
-
             updateForm.remove();
         }
     })
@@ -377,6 +376,7 @@ const searchTask = () => {
                 const container = document.createElement('div');
                 container.id = `task-container-${data[i].id}`;
                 container.className = 'search-list-container'
+                container.classList.add('entry');
                 const li = document.createElement('li');
                 li.id = `task-list-${data[i].id}`;
                 li.innerText = data[i].description;
@@ -425,6 +425,7 @@ const createTaskList = (tasks) => {
         const container = document.createElement('div');
         container.id = `task-container-${task.id}`;
         container.className = 'search-list-container'
+        container.classList.add('entry');
         const li = document.createElement('li');
         li.id = `task-list-${task.id}`;
         li.innerText = task.description;
@@ -432,17 +433,17 @@ const createTaskList = (tasks) => {
         const updateBtn = document.createElement('button');
         updateBtn.id = `update-${task.id}`;
         updateBtn.classList.add('update-task-btn');
-        updateBtn.innerText = 'Update';
+        updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
 
         const deleteBtn = document.createElement('button');
         deleteBtn.id = `delete-${task.id}`;
         deleteBtn.classList.add('delete-task-btn');
-        deleteBtn.innerText = 'Delete';
+        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
 
         const completeBtn = document.createElement('button');
         completeBtn.id = `completed-${task.id}`;
         completeBtn.classList.add('completed-task-btn');
-        completeBtn.innerText = 'Complete';
+        completeBtn.innerHTML = '<i class="fas fa-check"></i>';
 
         addDeleteFunction(deleteBtn);
         addUpdateFunction(updateBtn);
