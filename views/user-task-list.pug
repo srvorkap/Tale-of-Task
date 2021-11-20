@@ -32,8 +32,8 @@ block content
                 ul#task-list-render
                     if tasks.length
                         each task in tasks
-                            div(id=`task-container-${task.id}` class="entry pre-open")
-                                li(id=`task-list-${task.id}`) #{task.description}
+                            div(id=`task-container-${task.id}` class="search-list-container entry pre-open")
+                                li(id=`task-list-${task.id}` class="search-list") #{task.description}
                                 div
                                     button(id=`update-${task.id}` class="update-task-btn")
                                         i(class="fas fa-feather")
