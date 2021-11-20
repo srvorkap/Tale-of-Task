@@ -82,6 +82,7 @@ const addCreateFunction = () => {
             container.id = `task-container-${data.id}`;
             container.className = "search-list-container";
             container.classList.add('entry');
+            container.classList.add('pre-open');
             //add class
 
             const li = document.createElement('li');
@@ -89,6 +90,8 @@ const addCreateFunction = () => {
             li.className = "search-list"
             //add class
             li.innerText = data.description;
+
+            const buttons = document.createElement('div');
 
             const updateBtn = document.createElement('button');
             updateBtn.id = `update-${data.id}`;
@@ -106,9 +109,10 @@ const addCreateFunction = () => {
             completeBtn.classList.add('completed-task-btn');
 
             container.appendChild(li);
-            container.appendChild(updateBtn);
-            container.appendChild(deleteBtn);
-            container.appendChild(completeBtn)
+            buttons.appendChild(updateBtn);
+            buttons.appendChild(deleteBtn);
+            buttons.appendChild(completeBtn)
+            container.appendChild(buttons);
             ul.appendChild(container);
 
             // console.log(ul);
@@ -157,6 +161,9 @@ const addSaveFunction = (button, form) => {
 
         const taskId = button.id.split('-')[1]
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
+
+        taskListDiv.classList.add('pre-open');
+
         const updateForm = document.getElementById(`update-form-${taskId}`);
         const dueDateInput = document.getElementById(`dueDate-${taskId}`)
         const dateValue = dueDateInput.value
@@ -225,6 +232,8 @@ const addUpdateFunction = (button) => {
         const taskId = button.id.split('-')[1];
 
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
+        taskListDiv.classList.remove('pre-open');
+
         const divKids = taskListDiv.children;
         for (let el of divKids) {
             el.style.display = 'none';
@@ -377,10 +386,13 @@ const searchTask = () => {
 
                 const ul = document.getElementById('task-list-render');
 
+                const buttons = document.createElement('div');
+
                 const container = document.createElement('div');
                 container.id = `task-container-${data[i].id}`;
                 container.className = 'search-list-container'
                 container.classList.add('entry');
+                container.classList.add('pre-open');
                 const li = document.createElement('li');
                 li.id = `task-list-${data[i].id}`;
                 li.innerText = data[i].description;
@@ -405,10 +417,10 @@ const searchTask = () => {
                 markCompletedFunction(completeBtn);
 
                 container.appendChild(li);
-                container.appendChild(updateBtn);
-                container.appendChild(deleteBtn);
-                container.appendChild(completeBtn);
-
+                buttons.appendChild(updateBtn);
+                buttons.appendChild(deleteBtn);
+                buttons.appendChild(completeBtn);
+                container.appendChild(buttons);
                 ul.appendChild(container)
             } else if (!searchInput.value) {
                 createTaskList(originalTasks);
@@ -429,9 +441,12 @@ const createTaskList = (tasks) => {
         container.id = `task-container-${task.id}`;
         container.className = 'search-list-container'
         container.classList.add('entry');
+        container.classList.add('pre-open');
         const li = document.createElement('li');
         li.id = `task-list-${task.id}`;
         li.innerText = task.description;
+
+        const buttons = document.createElement('div');
 
         const updateBtn = document.createElement('button');
         updateBtn.id = `update-${task.id}`;
@@ -453,10 +468,10 @@ const createTaskList = (tasks) => {
         markCompletedFunction(completeBtn);
 
         container.appendChild(li)
-        container.appendChild(updateBtn)
-        container.appendChild(deleteBtn)
-        container.appendChild(completeBtn)
-
+        buttons.appendChild(updateBtn)
+        buttons.appendChild(deleteBtn)
+        buttons.appendChild(completeBtn)
+        container.appendChild(buttons);
         newUl.appendChild(container)
     })
 

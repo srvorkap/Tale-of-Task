@@ -32,13 +32,14 @@ block content
                 ul#task-list-render
                     if tasks.length
                         each task in tasks
-                            div(id=`task-container-${task.id}` class="entry")
+                            div(id=`task-container-${task.id}` class="entry pre-open")
                                 li(id=`task-list-${task.id}`) #{task.description}
-                                button(id=`update-${task.id}` class="update-task-btn")
-                                    i(class="fas fa-feather")
-                                button(id=`delete-${task.id}` class="delete-task-btn")
-                                    i(class="fas fa-trash-alt")
-                                button(id=`completed-${task.id}` class="completed-task-btn")
-                                    i(class="fas fa-check")
+                                div
+                                    button(id=`update-${task.id}` class="update-task-btn")
+                                        i(class="fas fa-feather")
+                                    button(id=`delete-${task.id}` class="delete-task-btn")
+                                        i(class="fas fa-trash-alt")
+                                    button(id=`completed-${task.id}` class="completed-task-btn")
+                                        i(class="fas fa-check")
 
     script(src='/javascripts/api-task.js' type='module')
