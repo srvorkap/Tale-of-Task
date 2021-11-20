@@ -7,11 +7,12 @@ div#sidebar
         a(href=`/lists/${list.id}`)=list.name
         div.list-button-div
           button(class='update-list-buttons' id=`update-list-${list.id}`)
-            i(class="fas fa-feather-alt")
+            i(class="fas fa-feather")
           button(class='delete-list-buttons' id=`delete-list-${list.id}`)
-            i(class="fas fa-skull")
+            i(class="fas fa-trash-alt")
   div#add-list-div
-    button#add-list-button Add List
+    button#add-list-button
+      <i class="fas fa-plus"></i>
 
   #tasks-completed
     span Recently Completed

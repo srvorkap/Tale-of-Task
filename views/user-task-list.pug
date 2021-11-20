@@ -26,15 +26,19 @@ block content
                         option(value="3") High
                         option(value="2") Medium
                         option(value="1") Low
-                    button#new-button Add Task
+                    button#new-button
+                        <i class="fas fa-plus"></i>
             #task-list-display
                 ul#task-list-render
                     if tasks.length
                         each task in tasks
                             div(id=`task-container-${task.id}` class="entry")
                                 li(id=`task-list-${task.id}`) #{task.description}
-                                button(id=`update-${task.id}` class="update-task-btn") Update
-                                button(id=`delete-${task.id}` class="delete-task-btn") Delete
-                                button(id=`completed-${task.id}` class="completed-task-btn") Complete
+                                button(id=`update-${task.id}` class="update-task-btn")
+                                    i(class="fas fa-feather")
+                                button(id=`delete-${task.id}` class="delete-task-btn")
+                                    i(class="fas fa-trash-alt")
+                                button(id=`completed-${task.id}` class="completed-task-btn")
+                                    i(class="fas fa-check")
 
     script(src='/javascripts/api-task.js' type='module')

@@ -135,7 +135,7 @@ const addCreateFunction = () => {
 
 const addDeleteFunction = (button) => {
     button.addEventListener('click', async (ev) => {
-        const taskId = ev.target.id.split('-')[1]
+        const taskId = button.id.split('-')[1]
 
         const res = await fetch(`/tasks/${taskId}`, {
             method: "DELETE"
@@ -154,7 +154,7 @@ const addSaveFunction = (button, form) => {
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
 
-        const taskId = ev.target.id.split('-')[1]
+        const taskId = button.id.split('-')[1]
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
         const updateForm = document.getElementById(`update-form-${taskId}`);
         const dueDateInput = document.getElementById(`dueDate-${taskId}`)
@@ -222,7 +222,7 @@ const addUpdateFunction = (button) => {
     button.addEventListener('click', async (ev) => {
         ev.preventDefault();
 
-        const taskId = ev.target.id.split('-')[1];
+        const taskId = button.id.split('-')[1];
 
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
         const divKids = taskListDiv.children;
@@ -384,17 +384,17 @@ const searchTask = () => {
                 const updateBtn = document.createElement('button');
                 updateBtn.id = `update-${data[i].id}`;
                 updateBtn.classList.add('update-task-btn');
-                updateBtn.innerText = 'Update';
+                updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.id = `delete-${data[i].id}`;
                 deleteBtn.classList.add('delete-task-btn');
-                deleteBtn.innerText = 'Delete';
+                deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
 
                 const completeBtn = document.createElement('button');
                 completeBtn.id = `completed-${data[i].id}`;
                 completeBtn.classList.add('completed-task-btn');
-                completeBtn.innerText = 'Complete';
+                completeBtn.innerHTML = '<i class="fas fa-check"></i>';
 
                 addDeleteFunction(deleteBtn);
                 addUpdateFunction(updateBtn);
@@ -465,7 +465,7 @@ const markCompletedFunction = (button) => {
         ev.preventDefault();
 
 
-        const taskId = ev.target.id.split('-')[1]
+        const taskId = button.id.split('-')[1]
 
         const res = await fetch(`/tasks/${taskId}/completed`, {
             method: "POST",
