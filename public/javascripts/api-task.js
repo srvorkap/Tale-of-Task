@@ -82,13 +82,16 @@ const addCreateFunction = () => {
             container.id = `task-container-${data.id}`;
             container.className = "search-list-container";
             container.classList.add('entry');
-            container.classList.add('pre-open');
+            // container.classList.add('pre-open');
             //add class
+
+            const secondContainer = document.createElement('div');
+            secondContainer.classList.add("pre-open");
 
             const li = document.createElement('li');
             li.id = `task-list-${data.id}`;
             li.className = "search-list"
-            //add class
+            // add class
             li.innerText = data.description;
 
             const buttons = document.createElement('div');
@@ -108,11 +111,27 @@ const addCreateFunction = () => {
             completeBtn.innerHTML = '<i class="fas fa-check"></i>';
             completeBtn.classList.add('completed-task-btn');
 
-            container.appendChild(li);
+            const infoDiv = document.createElement('div');
+            infoDiv.id = `task-info-${data.id}`;
+            infoDiv.classList.add('task-info-div');
+
+            const timeSpan = document.createElement('span');
+            timeSpan.id = `task-time-${data.id}`;
+            timeSpan.innerText = data.estimatedTime ? `${data.estimatedTime} Minutes` : null;
+
+            const imptSpan = document.createElement('span');
+            imptSpan.id = `task-impt-${data.id}`;
+            imptSpan.innerText = data.importance === 1 ? 'Priority: Low' : data.importance === 2 ? "Priority: Medium" : data.importance === 3 ? "Priority: High" : null
+
+            container.appendChild(secondContainer);
+            secondContainer.appendChild(li);
             buttons.appendChild(updateBtn);
             buttons.appendChild(deleteBtn);
             buttons.appendChild(completeBtn)
-            container.appendChild(buttons);
+            secondContainer.appendChild(buttons);
+            infoDiv.appendChild(timeSpan);
+            infoDiv.appendChild(imptSpan);
+            container.appendChild(infoDiv);
             ul.appendChild(container);
 
             // console.log(ul);
@@ -401,7 +420,7 @@ const searchTask = () => {
                 container.id = `task-container-${data[i].id}`;
                 container.className = 'search-list-container'
                 container.classList.add('entry');
-                container.classList.add('pre-open');
+                // container.classList.add('pre-open');
                 const li = document.createElement('li');
                 li.id = `task-list-${data[i].id}`;
                 li.innerText = data[i].description;
@@ -450,7 +469,7 @@ const createTaskList = (tasks) => {
         container.id = `task-container-${task.id}`;
         container.className = 'search-list-container'
         container.classList.add('entry');
-        container.classList.add('pre-open');
+        // container.classList.add('pre-open');
         const li = document.createElement('li');
         li.id = `task-list-${task.id}`;
         li.innerText = task.description;
@@ -527,7 +546,7 @@ const markCompletedFunction = (button) => {
 
         userExp.style.width = `${data.user.exp / 10}%`;
 
-        div.appendChild(ul)
+        // div.appendChild(ul)
         const removeDiv = document.getElementById(`task-container-${taskId}`)
         removeDiv.remove()
     })
