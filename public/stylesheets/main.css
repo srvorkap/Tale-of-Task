@@ -84,7 +84,7 @@ select {
 .entry {
     padding: 10px 0px;
     border-bottom: 1px solid rgb(209, 208, 204);
-    min-height: 80px;
+    min-height: 85px;
 }
 
 .entry li {
