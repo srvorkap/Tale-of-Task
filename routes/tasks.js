@@ -30,7 +30,7 @@ const expCalc = (time, importance) => {
         exp *= 1.5;
     }
 
-    return exp;
+    return Math.round(exp);
 }
 
 const taskValidator = [
@@ -144,7 +144,22 @@ router.post('/:id(\\d+)/completed', asyncHandler(async (req, res) => {
     const task = await Task.findByPk(taskId)
     const user = await User.findByPk(userId)
 
-    await task.update({ completed })
+    const exp = expCalc(task.estimatedTime, task.importance);
+
+    const currExp = user.exp;
+    const remainder = 1000 - currExp;
+
+    if (exp > remainder) {
+        const diff = exp - remainder;
+        await user.update({ level: user.level + 1 });
+        await user.update({ exp: diff });
+    }
+
+    else {
+        await user.update({ exp: user.exp + exp });
+    }
+
+    await task.update({ completed });
 
     const completedTasks = await Task.findAll({
         where: {
