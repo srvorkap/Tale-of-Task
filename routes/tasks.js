@@ -164,8 +164,9 @@ router.post('/:id(\\d+)/completed', asyncHandler(async (req, res) => {
     const completedTasks = await Task.findAll({
         where: {
             userId: userId,
-            completed: true
-        }
+            completed: true,
+        },
+        // limit: 15,
     })
 
     res.json({ 'completedTasks': completedTasks, 'user': user })
