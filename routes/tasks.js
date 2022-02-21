@@ -167,7 +167,8 @@ router.post('/:id(\\d+)/completed', asyncHandler(async (req, res) => {
             completed: true
         }
     })
-    res.json(completedTasks)
+
+    res.json({ 'completedTasks': completedTasks, 'user': user })
     // console.log(completedTasks)
 }))
 

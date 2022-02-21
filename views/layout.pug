@@ -22,7 +22,8 @@ html
             br
             span.class-info Astrologian
             br
-            span.class-info Level #{user.level}
+            span.class-info Level
+              span#user-level  #{user.level}
         #navright
           div
             if locals.authenticated
@@ -33,5 +34,5 @@ html
                 a(href='/users/login') Login
                 a(href='/users/signup') Sign Up
       #exp-bar
-        #exp-progress
+        #exp-progress(style=`width: ${user.exp / 10}%`)
       block content

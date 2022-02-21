@@ -496,12 +496,11 @@ const markCompletedFunction = (button) => {
 
         const data = await res.json()
 
-
         const div = document.getElementById('tasks-completed')
         const ul = document.getElementById('tasks-completed-list')
         const li = document.createElement('li')
 
-        data.forEach((task, i) => {
+        data.completedTasks.forEach((task, i) => {
             const valueLi = document.getElementById(`task-list-${taskId}`).innerText
 
             if (task.description === valueLi) {
@@ -509,6 +508,16 @@ const markCompletedFunction = (button) => {
                 ul.prepend(li)
             }
         })
+
+        const userLvl = document.getElementById('user-level');
+        const userExp = document.getElementById('exp-progress');
+
+        if (parseInt(userLvl.innerText, 10) !== data.user.level) {
+            userLvl.innerText = ` ${data.user.level}`;
+        }
+
+        userExp.style.width = `${data.user.exp / 10}%`;
+
         div.appendChild(ul)
         const removeDiv = document.getElementById(`task-container-${taskId}`)
         removeDiv.remove()

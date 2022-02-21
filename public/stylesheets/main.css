@@ -241,7 +241,6 @@ select {
 #exp-progress {
     height: 24px;
     background: linear-gradient(to right top, #be6924, #ffd51c );
-    width: 70%;
 }
 
 #hours, #minutes, .update-time-input {
