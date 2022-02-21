@@ -98,6 +98,15 @@ select {
     justify-content: space-between;
 }
 
+.task-info-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-info-div span {
+    color: rgb(120, 120, 120);
+}
+
 #main-window {
     margin: 0px 20%;
     height: 100%;

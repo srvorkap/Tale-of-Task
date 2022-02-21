@@ -162,7 +162,7 @@ const addSaveFunction = (button, form) => {
         const taskId = button.id.split('-')[1]
         const taskListDiv = document.getElementById(`task-container-${taskId}`);
 
-        taskListDiv.classList.add('pre-open');
+        // taskListDiv.classList.add('pre-open');
 
         const updateForm = document.getElementById(`update-form-${taskId}`);
         const dueDateInput = document.getElementById(`dueDate-${taskId}`)

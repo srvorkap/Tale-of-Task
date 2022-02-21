@@ -5,7 +5,7 @@ const addListButton = document.getElementById('add-list-button');
 const url = window.location.href.split('/');
 const currList = url[url.length - 1];
 
-const listLi = document.getElementById(`task-list-${currList}`);
+const listLi = document.getElementById(`list-li-${currList}`);
 const inboxLi = document.getElementById('inbox-li');
 
 if (listLi) {
