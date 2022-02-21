@@ -22,7 +22,6 @@ block content
                     input(type="number" name="minutes" min=0 id="minutes" value=minutes)
                     select(name="importance" id="importance")
                         option(value="0") Priority
-                        option(value="0") None
                         option(value="3") High
                         option(value="2") Medium
                         option(value="1") Low
@@ -43,7 +42,7 @@ block content
                                         button(id=`completed-${task.id}` class="completed-task-btn")
                                             i(class="fas fa-check")
                                 div(id=`task-info-${task.id}` class="task-info-div")
-                                    span(id=`task-time-${task.id}`) #{task.estimatedTime ? task.estimatedTime : null} Minutes
+                                    span(id=`task-time-${task.id}`) #{task.estimatedTime ? `${task.estimatedTime} Minutes` : null}
                                     span(id=`task-impt-${task.id}`) #{task.importance === 1 ? 'Priority: Low' : task.importance === 2 ? "Priority: Medium" : task.importance === 3 ? "Priority: High" : null}
 
     script(src='/javascripts/api-task.js' type='module')

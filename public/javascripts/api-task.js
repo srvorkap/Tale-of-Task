@@ -129,7 +129,6 @@ const addCreateFunction = () => {
         priorityBox.innerHTML = `
         <select name=importance id=importance>
             <option value=0>Priority</option>
-            <option value=0> None </option>
             <option value=3> High </option>
             <option value=2> Medium </option>
             <option value=1> Low </option>
@@ -213,8 +212,14 @@ const addSaveFunction = (button, form) => {
             console.log(dataObj);
 
             li.innerText = dataObj.description;
-            taskTime.innerText = dataObj.estimatedTime ? `${dataObj.estimatedTime} Minutes` : null;
-            taskImpt.innerText = dataObj.importance === '1' ? 'Priority: Low' : dataObj.importance === '2' ? "Priority: Medium" : dataObj.importance === '3' ? "Priority: High" : null;
+
+            if (taskTime) {
+                taskTime.innerText = dataObj.estimatedTime ? `${dataObj.estimatedTime} Minutes` : null;
+            }
+
+            if (taskImpt) {
+                taskImpt.innerText = dataObj.importance === '1' ? 'Priority: Low' : dataObj.importance === '2' ? "Priority: Medium" : dataObj.importance === '3' ? "Priority: High" : null;
+            }
 
             updateForm.remove();
         }
@@ -270,7 +275,6 @@ const addUpdateFunction = (button) => {
         const minutesInput = document.createElement('input');
         const select = document.createElement('select');
         const optionSelect = document.createElement('option');
-        const optionNone = addOption('None', 0, importance)
         const optionHigh = addOption('High', 3, importance)
         const optionMed = addOption('Med', 2, importance)
         const optionLow = addOption('Low', 1, importance)
@@ -331,7 +335,6 @@ const addUpdateFunction = (button) => {
         errorsDiv.appendChild(errorsDisplay);
 
         select.appendChild(optionSelect);
-        select.appendChild(optionNone);
         select.appendChild(optionHigh);
         select.appendChild(optionMed);
         select.appendChild(optionLow);
