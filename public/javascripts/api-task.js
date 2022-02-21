@@ -207,8 +207,14 @@ const addSaveFunction = (button, form) => {
                 el.style.display = '';
             }
             const li = document.getElementById(`task-list-${taskId}`);
+            const taskTime = document.getElementById(`task-time-${taskId}`);
+            const taskImpt = document.getElementById(`task-impt-${taskId}`);
+
+            console.log(dataObj);
 
             li.innerText = dataObj.description;
+            taskTime.innerText = dataObj.estimatedTime ? `${dataObj.estimatedTime} Minutes` : null;
+            taskImpt.innerText = dataObj.importance === '1' ? 'Priority: Low' : dataObj.importance === '2' ? "Priority: Medium" : dataObj.importance === '3' ? "Priority: High" : null;
 
             updateForm.remove();
         }

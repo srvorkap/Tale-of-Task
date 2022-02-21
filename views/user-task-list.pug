@@ -43,7 +43,7 @@ block content
                                         button(id=`completed-${task.id}` class="completed-task-btn")
                                             i(class="fas fa-check")
                                 div(id=`task-info-${task.id}` class="task-info-div")
-                                    span #{task.estimatedTime ? task.estimatedTime : null} Minutes
-                                    span #{task.importance === 1 ? 'Priority: Low' : task.importance === 2 ? "Priority: Medium" : task.importance === 3 ? "Priority: High" : null}
+                                    span(id=`task-time-${task.id}`) #{task.estimatedTime ? task.estimatedTime : null} Minutes
+                                    span(id=`task-impt-${task.id}`) #{task.importance === 1 ? 'Priority: Low' : task.importance === 2 ? "Priority: Medium" : task.importance === 3 ? "Priority: High" : null}
 
     script(src='/javascripts/api-task.js' type='module')
