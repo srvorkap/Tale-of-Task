@@ -1,9 +1,9 @@
 div#sidebar
   ul
     li#inbox-li
-      a(href= `/lists/${inbox.id}`)=inbox.name
+      a(href=`/lists/${inbox.id}`)=inbox.name
     each list in lists
-      li.list-item
+      li.list-item(id=`task-list-${list.id}`)
         a(href=`/lists/${list.id}`)=list.name
         div.list-button-div
           button(class='update-list-buttons' id=`update-list-${list.id}`)

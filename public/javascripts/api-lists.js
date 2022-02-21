@@ -2,6 +2,18 @@
 const addListForm = document.getElementById("add-list-form");
 const addListButton = document.getElementById('add-list-button');
 
+const url = window.location.href.split('/');
+const currList = url[url.length - 1];
+
+const listLi = document.getElementById(`task-list-${currList}`);
+const inboxLi = document.getElementById('inbox-li');
+
+if (listLi) {
+    listLi.style.textDecoration = 'underline';
+} else {
+    inboxLi.style.textDecoration = 'underline';
+}
+
 addListButton.addEventListener("click", e => {
     e.preventDefault();
     const addListPopup = document.getElementById('add-list-popup')
