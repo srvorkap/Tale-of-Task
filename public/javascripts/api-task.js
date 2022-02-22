@@ -167,8 +167,6 @@ const addSaveFunction = (button, form) => {
             const taskTime = document.getElementById(`task-time-${taskId}`);
             const taskImpt = document.getElementById(`task-impt-${taskId}`);
 
-            console.log(dataObj);
-
             li.innerText = dataObj.description;
 
             if (taskTime) {
