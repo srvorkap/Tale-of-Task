@@ -9,6 +9,30 @@ const { requireAuth } = require('../auth');
 
 router.use(requireAuth);
 
+const expCalc = (time, importance) => {
+
+    let exp = 100;
+
+    if (time >= 30 && time < 60) {
+        exp += 25;
+    } else if (time >= 60 && time < 120) {
+        exp += 100;
+    } else if (time >= 120 && time < 240) {
+        exp += 225;
+    } else if (time >= 240)
+        exp += 400;
+
+    if (importance === 1) {
+        exp *= 1.1;
+    } else if (importance === 2) {
+        exp *= 1.25;
+    } else if (importance === 3) {
+        exp *= 1.5;
+    }
+
+    return Math.round(exp);
+}
+
 const taskValidator = [
     check('description')
         .exists({ checkFalsy: true })
@@ -115,19 +139,37 @@ router.post('/:id(\\d+)/completed', asyncHandler(async (req, res) => {
     const userId = req.session.auth.userId
 
     const { completed } = req.body;
-    console.log("in route", completed)
+    // console.log("in route", completed)
 
     const task = await Task.findByPk(taskId)
+    const user = await User.findByPk(userId)
 
-    await task.update({ completed })
+    const exp = expCalc(task.estimatedTime, task.importance);
+
+    const currExp = user.exp;
+    const remainder = 1000 - currExp;
+
+    if (exp > remainder) {
+        const diff = exp - remainder;
+        await user.update({ level: user.level + 1 });
+        await user.update({ exp: diff });
+    }
+
+    else {
+        await user.update({ exp: user.exp + exp });
+    }
+
+    await task.update({ completed });
 
     const completedTasks = await Task.findAll({
         where: {
             userId: userId,
-            completed: true
-        }
+            completed: true,
+        },
+        // limit: 15,
     })
-    res.json(completedTasks)
+
+    res.json({ 'completedTasks': completedTasks, 'user': user })
     // console.log(completedTasks)
 }))
 

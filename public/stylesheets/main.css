@@ -84,7 +84,7 @@ select {
 .entry {
     padding: 10px 0px;
     border-bottom: 1px solid rgb(209, 208, 204);
-    min-height: 80px;
+    min-height: 85px;
 }
 
 .entry li {
@@ -96,6 +96,15 @@ select {
 .task-options-div {
     display: flex;
     justify-content: space-between;
+}
+
+.task-info-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-info-div span {
+    color: rgb(120, 120, 120);
 }
 
 #main-window {
@@ -241,7 +250,6 @@ select {
 #exp-progress {
     height: 24px;
     background: linear-gradient(to right top, #be6924, #ffd51c );
-    width: 70%;
 }
 
 #hours, #minutes, .update-time-input {
