@@ -76,69 +76,8 @@ const addCreateFunction = () => {
 
         } else {
 
-            const ul = document.getElementById('task-list-render');
+            createTaskDiv(data);
 
-            const container = document.createElement('div');
-            container.id = `task-container-${data.id}`;
-            container.className = "search-list-container";
-            container.classList.add('entry');
-            // container.classList.add('pre-open');
-            //add class
-
-            const secondContainer = document.createElement('div');
-            secondContainer.classList.add("pre-open");
-
-            const li = document.createElement('li');
-            li.id = `task-list-${data.id}`;
-            li.className = "search-list"
-            // add class
-            li.innerText = data.description;
-
-            const buttons = document.createElement('div');
-
-            const updateBtn = document.createElement('button');
-            updateBtn.id = `update-${data.id}`;
-            updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
-            updateBtn.classList.add('update-task-btn');
-
-            const deleteBtn = document.createElement('button');
-            deleteBtn.id = `delete-${data.id}`;
-            deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-            deleteBtn.classList.add('delete-task-btn');
-
-            const completeBtn = document.createElement('button');
-            completeBtn.id = `completed-${data.id}`
-            completeBtn.innerHTML = '<i class="fas fa-check"></i>';
-            completeBtn.classList.add('completed-task-btn');
-
-            const infoDiv = document.createElement('div');
-            infoDiv.id = `task-info-${data.id}`;
-            infoDiv.classList.add('task-info-div');
-
-            const timeSpan = document.createElement('span');
-            timeSpan.id = `task-time-${data.id}`;
-            timeSpan.innerText = data.estimatedTime ? `${data.estimatedTime} Minutes` : null;
-
-            const imptSpan = document.createElement('span');
-            imptSpan.id = `task-impt-${data.id}`;
-            imptSpan.innerText = data.importance === 1 ? 'Priority: Low' : data.importance === 2 ? "Priority: Medium" : data.importance === 3 ? "Priority: High" : null
-
-            container.appendChild(secondContainer);
-            secondContainer.appendChild(li);
-            buttons.appendChild(updateBtn);
-            buttons.appendChild(deleteBtn);
-            buttons.appendChild(completeBtn)
-            secondContainer.appendChild(buttons);
-            infoDiv.appendChild(timeSpan);
-            infoDiv.appendChild(imptSpan);
-            container.appendChild(infoDiv);
-            ul.appendChild(container);
-
-            // console.log(ul);
-
-            addDeleteFunction(deleteBtn);
-            addUpdateFunction(updateBtn)
-            markCompletedFunction(completeBtn)
         }
 
         textBox.value = null;
@@ -147,7 +86,7 @@ const addCreateFunction = () => {
         hoursBox.value = null;
         priorityBox.innerHTML = `
         <select name=importance id=importance>
-            <option value=0>Priority</option>
+            <option value=0> Priority </option>
             <option value=3> High </option>
             <option value=2> Medium </option>
             <option value=1> Low </option>
@@ -379,7 +318,6 @@ const addUpdateFunction = (button) => {
 
         taskListDiv.appendChild(form);
     })
-
 }
 
 const searchTask = () => {
@@ -412,46 +350,12 @@ const searchTask = () => {
 
             if (searchInput.value && data[i].description.toLowerCase().includes(searchInput.value.toLowerCase())) {
 
-                const ul = document.getElementById('task-list-render');
+                createTaskDiv(data[i]);
 
-                const buttons = document.createElement('div');
-
-                const container = document.createElement('div');
-                container.id = `task-container-${data[i].id}`;
-                container.className = 'search-list-container'
-                container.classList.add('entry');
-                // container.classList.add('pre-open');
-                const li = document.createElement('li');
-                li.id = `task-list-${data[i].id}`;
-                li.innerText = data[i].description;
-
-                const updateBtn = document.createElement('button');
-                updateBtn.id = `update-${data[i].id}`;
-                updateBtn.classList.add('update-task-btn');
-                updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.id = `delete-${data[i].id}`;
-                deleteBtn.classList.add('delete-task-btn');
-                deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-
-                const completeBtn = document.createElement('button');
-                completeBtn.id = `completed-${data[i].id}`;
-                completeBtn.classList.add('completed-task-btn');
-                completeBtn.innerHTML = '<i class="fas fa-check"></i>';
-
-                addDeleteFunction(deleteBtn);
-                addUpdateFunction(updateBtn);
-                markCompletedFunction(completeBtn);
-
-                container.appendChild(li);
-                buttons.appendChild(updateBtn);
-                buttons.appendChild(deleteBtn);
-                buttons.appendChild(completeBtn);
-                container.appendChild(buttons);
-                ul.appendChild(container)
             } else if (!searchInput.value) {
+
                 createTaskList(originalTasks);
+
             }
         }
     })
@@ -464,46 +368,11 @@ const createTaskList = (tasks) => {
     const newUl = document.createElement('ul');
     newUl.id = 'task-list-render';
 
-    tasks.forEach(task => {
-        const container = document.createElement('div');
-        container.id = `task-container-${task.id}`;
-        container.className = 'search-list-container'
-        container.classList.add('entry');
-        // container.classList.add('pre-open');
-        const li = document.createElement('li');
-        li.id = `task-list-${task.id}`;
-        li.innerText = task.description;
-
-        const buttons = document.createElement('div');
-
-        const updateBtn = document.createElement('button');
-        updateBtn.id = `update-${task.id}`;
-        updateBtn.classList.add('update-task-btn');
-        updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.id = `delete-${task.id}`;
-        deleteBtn.classList.add('delete-task-btn');
-        deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-
-        const completeBtn = document.createElement('button');
-        completeBtn.id = `completed-${task.id}`;
-        completeBtn.classList.add('completed-task-btn');
-        completeBtn.innerHTML = '<i class="fas fa-check"></i>';
-
-        addDeleteFunction(deleteBtn);
-        addUpdateFunction(updateBtn);
-        markCompletedFunction(completeBtn);
-
-        container.appendChild(li)
-        buttons.appendChild(updateBtn)
-        buttons.appendChild(deleteBtn)
-        buttons.appendChild(completeBtn)
-        container.appendChild(buttons);
-        newUl.appendChild(container)
-    })
-
     disp.appendChild(newUl);
+
+    tasks.forEach(task => {
+        createTaskDiv(task);
+    })
 }
 
 const markCompletedFunction = (button) => {
@@ -524,7 +393,7 @@ const markCompletedFunction = (button) => {
 
         const data = await res.json()
 
-        const div = document.getElementById('tasks-completed')
+        // const div = document.getElementById('tasks-completed')
         const ul = document.getElementById('tasks-completed-list')
         const li = document.createElement('li')
 
@@ -550,4 +419,71 @@ const markCompletedFunction = (button) => {
         const removeDiv = document.getElementById(`task-container-${taskId}`)
         removeDiv.remove()
     })
+}
+
+
+const createTaskDiv = (data) => {
+    const ul = document.getElementById('task-list-render');
+
+    const container = document.createElement('div');
+    container.id = `task-container-${data.id}`;
+    container.className = "search-list-container";
+    container.classList.add('entry');
+    // container.classList.add('pre-open');
+    //add class
+
+    const secondContainer = document.createElement('div');
+    secondContainer.classList.add("pre-open");
+
+    const li = document.createElement('li');
+    li.id = `task-list-${data.id}`;
+    li.className = "search-list"
+    // add class
+    li.innerText = data.description;
+
+    const buttons = document.createElement('div');
+
+    const updateBtn = document.createElement('button');
+    updateBtn.id = `update-${data.id}`;
+    updateBtn.innerHTML = '<i class="fas fa-feather"></i>';
+    updateBtn.classList.add('update-task-btn');
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.id = `delete-${data.id}`;
+    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+    deleteBtn.classList.add('delete-task-btn');
+
+    const completeBtn = document.createElement('button');
+    completeBtn.id = `completed-${data.id}`
+    completeBtn.innerHTML = '<i class="fas fa-check"></i>';
+    completeBtn.classList.add('completed-task-btn');
+
+    const infoDiv = document.createElement('div');
+    infoDiv.id = `task-info-${data.id}`;
+    infoDiv.classList.add('task-info-div');
+
+    const timeSpan = document.createElement('span');
+    timeSpan.id = `task-time-${data.id}`;
+    timeSpan.innerText = data.estimatedTime ? `${data.estimatedTime} Minutes` : null;
+
+    const imptSpan = document.createElement('span');
+    imptSpan.id = `task-impt-${data.id}`;
+    imptSpan.innerText = data.importance === 1 ? 'Priority: Low' : data.importance === 2 ? "Priority: Medium" : data.importance === 3 ? "Priority: High" : null
+
+    container.appendChild(secondContainer);
+    secondContainer.appendChild(li);
+    buttons.appendChild(updateBtn);
+    buttons.appendChild(deleteBtn);
+    buttons.appendChild(completeBtn)
+    secondContainer.appendChild(buttons);
+    infoDiv.appendChild(timeSpan);
+    infoDiv.appendChild(imptSpan);
+    container.appendChild(infoDiv);
+    ul.appendChild(container);
+
+    // console.log(ul);
+
+    addDeleteFunction(deleteBtn);
+    addUpdateFunction(updateBtn)
+    markCompletedFunction(completeBtn)
 }
