@@ -555,3 +555,20 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d4fffd",endCo
     background: linear-gradient(162deg, rgba(255,255,234,1) 0%, rgba(0,0,0,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffea",endColorstr="#000000",GradientType=1);
 }
+
+#moogle-info-container {
+    display: flex;
+    position: absolute;
+    height: 400px;
+    width: 300px;
+    bottom: 180px;
+    right: 100px;
+    z-index: 2;
+    background-color: rgb(180, 129, 51);
+    border-radius: 5px;
+}
+
+#moogle-image img{
+    width: 93px;
+    height: 167px;
+}
