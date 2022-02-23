@@ -4,11 +4,28 @@ function storeClass(className) {
 
 function restoreClass() {
     const prevClass = window.localStorage.getItem("class")
-    if (prevClass) {
-        setClass(prevClass)
-    } else {
-        setClass("Paladin")
-    }
+
+    let classElement = document.getElementById('current-class-name');
+        if (prevClass === 'WhiteMage') {
+            classElement.innerText = 'White Mage';
+        } else if (prevClass === 'BlackMage') {
+            classElement.innerText = 'Black Mage';
+        } else if (prevClass === 'RedMage') {
+            classElement.innerText = 'Red Mage';
+        } else if (prevClass === 'DarkKnight') {
+            classElement.innerText = 'Dark Knight';
+        } else {
+            classElement.innerText = prevClass;
+        }
+
+        let profileClassImage = document.getElementById('profile-sprite');
+        profileClassImage.src = `../images/${prevClass}.png`
+
+
+        let selectedClassIcon = document.getElementById(prevClass);
+        selectedClassIcon.classList.add('class-selected');
+        let sidebar = document.getElementById('sidebar');
+        sidebar.classList.add(prevClass)
 }
 
 
@@ -90,7 +107,6 @@ function checkLockedClasses() {
 function initializePage() {
     restoreClass();
     const unlocked = checkLockedClasses();
-    console.log(unlocked)
     addClassEventListeners(unlocked);
 }
 
