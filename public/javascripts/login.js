@@ -88,7 +88,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     const nums = [];
     while (nums.length < 4) {
-        const r = Math.floor(Math.random() * 18);
+        const r = Math.floor(Math.random() * 19);
         if (nums.indexOf(r) === -1) nums.push(r);
     }
 
@@ -112,9 +112,11 @@ spriteDisplay.addEventListener('click', (e) => {
 
     const nums = [];
     while (nums.length < 4) {
-        const r = Math.floor(Math.random() * 18);
+        const r = Math.floor(Math.random() * 19);
         if (nums.indexOf(r) === -1) nums.push(r);
     }
+
+    console.log(nums);
 
     const html = nums.map(n => {
         return `<img class="sprite" src="${data[n][1]}" alt="Pixel sprite of ${data[n][0]}">`;
