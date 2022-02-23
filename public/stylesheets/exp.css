@@ -1,32 +1,51 @@
 #exp-bar {
     box-sizing: content-box;
-    height: 10px;
-    background-color: #57b6b0;
-    border: 2px solid #bd9a62;
-    border-radius: 5px;
+    height: 15px;
+    background: rgb(72,105,85);
+    background: -moz-linear-gradient(0deg, rgba(72,105,85,1) 0%, rgba(97,161,149,1) 33%, rgba(66,146,143,1) 66%, rgba(50,101,101,1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(72,105,85,1) 0%, rgba(97,161,149,1) 33%, rgba(66,146,143,1) 66%, rgba(50,101,101,1) 100%);
+    background: linear-gradient(0deg, rgba(72,105,85,1) 0%, rgba(97,161,149,1) 33%, rgba(66,146,143,1) 66%, rgba(50,101,101,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#486955",endColorstr="#326565",GradientType=1);
+    border-top: 3px solid dimgrey;
+    border-left: 3px solid dimgrey;
+    border-bottom: 3px solid silver;
+    border-right: 3px solid silver;
+    /* border: 2px solid #bd9a62; */
+    /* border-radius: 5px; */
     /* margin: 5px 0px; */
     /* filter: drop-shadow(0px 0px 5px rgb(255, 230, 120)); */
-    filter: drop-shadow(2.5px 2.5px 3px rgba(211, 211, 211, 0.534));
-    margin: 20px 20px 0px 20px;
+    /* filter: drop-shadow(2.5px 2.5px 3px rgba(211, 211, 211, 0.534)); */
+    /* margin: 20px 20px 0px 20px; */
 }
 
 #exp-progress {
-    height: 10px;
-    background-color: rgba(250,238,210,255);
+    height: 15px;
+    background: rgb(102,54,2);
+    background: -moz-linear-gradient(0deg, rgba(102,54,2,1) 0%, rgba(223,190,113,1) 33%, rgba(253,244,183,1) 66%, rgba(156,134,106,1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(102,54,2,1) 0%, rgba(223,190,113,1) 33%, rgba(253,244,183,1) 66%, rgba(156,134,106,1) 100%);
+    background: linear-gradient(0deg, rgba(102,54,2,1) 0%, rgba(223,190,113,1) 33%, rgba(253,244,183,1) 66%, rgba(156,134,106,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#663602",endColorstr="#9c866a",GradientType=1);
     /* background: linear-gradient(to right top, #be6924, #ffd51c ); */
+    transition: width .35s ease-in-out;
 }
 
 #exp-count {
-    margin: 5px 40px 5px 0px;
+    /* margin: 2.5px 20px 5px 0px; */
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 #user-exp-label {
-    color: white;
-    padding-right: 10px;
+    color: whitesmoke;
+    padding-right: 7.5px;
 }
 
 #user-exp-num {
-    color: white;
+    color: whitesmoke;
+}
+
+#exp-container {
+    width: 100%;
 }
