@@ -336,11 +336,6 @@ select {
     width: 15%;
     flex-direction: column;
     /* background-color: rgb(209, 208, 204); */
-    background: rgb(186,152,110);
-background: -moz-linear-gradient(350deg, rgba(186,152,110,1) 26%, rgba(249,226,188,1) 100%);
-background: -webkit-linear-gradient(350deg, rgba(186,152,110,1) 26%, rgba(249,226,188,1) 100%);
-background: linear-gradient(350deg, rgba(186,152,110,1) 26%, rgba(249,226,188,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endColorstr="#f9e2bc",GradientType=1);
     padding: 10px;
     /* border-radius: 10px; */
 }
@@ -451,3 +446,19 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endCo
 ::-webkit-scrollbar {
     width: 0px;
   }
+
+.Paladin {
+    background: rgb(186,152,110);
+    background: -moz-linear-gradient(350deg, rgba(186,152,110,1) 26%, rgba(249,226,188,1) 100%);
+    background: -webkit-linear-gradient(350deg, rgba(186,152,110,1) 26%, rgba(249,226,188,1) 100%);
+    background: linear-gradient(350deg, rgba(186,152,110,1) 26%, rgba(249,226,188,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endColorstr="#f9e2bc",GradientType=1);
+}
+
+.Warrior {
+    background: rgb(226,95,95);
+background: -moz-linear-gradient(186deg, rgba(226,95,95,1) 23%, rgba(73,0,1,1) 100%);
+background: -webkit-linear-gradient(186deg, rgba(226,95,95,1) 23%, rgba(73,0,1,1) 100%);
+background: linear-gradient(186deg, rgba(226,95,95,1) 23%, rgba(73,0,1,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#e25f5f",endColorstr="#490001",GradientType=1);
+}

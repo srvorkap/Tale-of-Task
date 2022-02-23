@@ -44,6 +44,10 @@ function setClass(className, unlocked) {
 
         selectedClassIcon.classList.add('class-selected');
 
+        let sidebar = document.getElementById('sidebar');
+        sidebar.classList.remove(prevClass)
+        sidebar.classList.add(className)
+
         let profileClassImage = document.getElementById('profile-sprite');
         profileClassImage.src = `../images/${className}.png`
     }
