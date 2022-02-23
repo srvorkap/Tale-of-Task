@@ -393,6 +393,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endCo
     height: 80px;
     padding: 0 5px;
     transition: 0.3s;
+    z-index: 2;
 }
 
 .class-select-sprite:hover {
@@ -401,13 +402,11 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endCo
 }
 
 .class-selected {
-    opacity: 1;
     filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.842));
-
 }
 
 .class-unlocked {
-    opacity: 0.8
+    opacity: 1;
 }
 
 .class-container {
@@ -442,7 +441,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endCo
     top: 40px;
     height: 0px;
     width: 0px;
-    z-index: 1;
+    z-index: 0;
     text-align: center;
     flex-wrap: wrap;
     width: 60px;
