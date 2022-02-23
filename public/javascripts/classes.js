@@ -13,7 +13,6 @@ function restoreClass() {
 
 
 function setClass(className, unlocked) {
-    console.log(unlocked);
     let selectedClassIcon = document.getElementById(className);
 
     if (unlocked && !unlocked.includes(className)) {
@@ -31,7 +30,17 @@ function setClass(className, unlocked) {
 
         storeClass(className);
         let classElement = document.getElementById('current-class-name');
-        classElement.innerText = className;
+        if (className === 'WhiteMage') {
+            classElement.innerText = 'White Mage';
+        } else if (className === 'BlackMage') {
+            classElement.innerText = 'Black Mage';
+        } else if (className === 'RedMage') {
+            classElement.innerText = 'Red Mage';
+        } else if (className === 'DarkKnight') {
+            classElement.innerText = 'Dark Knight';
+        } else {
+            classElement.innerText = className;
+        }
 
         selectedClassIcon.classList.add('class-selected');
 
