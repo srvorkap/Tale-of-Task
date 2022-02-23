@@ -1,13 +1,15 @@
 div#character
     #user-info
         div#character-contents
-            img(src="../images/Paladin.png" alt="Home" class="sprite" id='profile-sprite')
-            div#character-info
-                span#username= user.firstName
-                span#current-class-name.class-info Paladin
-                div
-                    span.class-info Level
-                    span#user-level #{user.level}
+            div#sprite-and-details
+                img(src="../images/Paladin.png" alt="Home" class="sprite" id='profile-sprite')
+                div#character-info
+                    span#username= user.firstName
+                    span#current-class-name.class-info Paladin
+                    div
+                        span.class-info Level
+                        span#user-level #{user.level}
+            img(src='../images/PaladinIcon.png' alt='job-icon' class='profile-job-icon' id='profile-job-icon')
         div#classes
             #select-class-title-div
                 span#select-class-title Select a Class:

@@ -26,6 +26,8 @@ function restoreClass() {
         selectedClassIcon.classList.add('class-selected');
         let sidebar = document.getElementById('sidebar');
         sidebar.classList.add(prevClass)
+        let profileClassIcon = document.getElementById('profile-job-icon');
+        profileClassIcon.src=`../images/${prevClass}Icon.png`
 }
 
 
@@ -68,7 +70,10 @@ function setClass(className, unlocked) {
         sidebar.classList.add(className)
 
         let profileClassImage = document.getElementById('profile-sprite');
-        profileClassImage.src = `../images/${className}.png`
+        profileClassImage.src = `../images/${className}.png`;
+
+        let profileClassIcon = document.getElementById('profile-job-icon');
+        profileClassIcon.src=`../images/${className}Icon.png`
     }
 }
 
