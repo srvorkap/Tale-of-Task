@@ -69,6 +69,7 @@ ul {
 #login-sprites {
     margin: 25px;
     display: flex;
+    cursor: pointer;
 }
 
 label {
@@ -134,4 +135,5 @@ input {
 .sprite {
     height: 100px;
     transition: opacity 1s;
+    margin: 0rem .15rem;
 }

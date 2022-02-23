@@ -1,56 +1,80 @@
 const sprites = {
     paladin: {
         name: 'Paladin',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05001.png'
+        url: '../images/Paladin.png'
     },
     monk: {
         name: 'Monk',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05002.png'
+        url: '../images/Monk.png'
     },
     warrior: {
         name: 'Warrior',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05003.png'
+        url: '../images/Warrior.png'
     },
     dragoon: {
         name: 'Dragoon',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05004.png'
+        url: '../images/Dragoon.png'
     },
     bard: {
         name: 'Bard',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05005.png'
+        url: '../images/Bard.png'
     },
     whiteMage: {
         name: 'White Mage',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05006.png'
+        url: '../images/WhiteMage.png'
     },
     blackMage: {
         name: 'Black Mage',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05007.png'
+        url: '../images/BlackMage.png'
     },
     summoner: {
         name: 'Summoner',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05008.png'
+        url: '../images/Summoner.png'
     },
     scholar: {
         name: 'Scholar',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05009.png'
+        url: '../images/Scholar.png'
     },
     ninja: {
         name: 'Ninja',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05010.png'
+        url: '../images/Ninja.png'
     },
     machinist: {
         name: 'Machinist',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05011.png'
+        url: '../images/Machinist.png'
     },
     darkKnight: {
         name: 'Dark Knight',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05012.png'
+        url: '../images/DarkKnight.png'
     },
     astrologian: {
         name: 'Astrologian',
-        url: 'http://www.finalfantasyxiv.com/fankit_patch335/51Dyfvhz/ffxiv_twi05013.png'
-    }
+        url: '../images/Astrologian.png'
+    },
+    dancer: {
+        name: 'Dancer',
+        url: '../images/Dancer.png'
+    },
+    gunbreaker: {
+        name: 'Gunbreaker',
+        url: '../images/Gunbreaker.png'
+    },
+    reaper: {
+        name: 'Reaper',
+        url: '../images/Reaper.png'
+    },
+    sage: {
+        name: 'Sage',
+        url: '../images/Sage.png'
+    },
+    samurai: {
+        name: 'Samurai',
+        url: '../images/Samurai.png'
+    },
+    redMage: {
+        name: 'Red Mage',
+        url: '../images/RedMage.png'
+    },
 }
 
 const data = [];
@@ -64,7 +88,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 
     const nums = [];
     while (nums.length < 4) {
-        const r = Math.floor(Math.random() * 12);
+        const r = Math.floor(Math.random() * 18);
         if (nums.indexOf(r) === -1) nums.push(r);
     }
 
@@ -88,7 +112,7 @@ spriteDisplay.addEventListener('click', (e) => {
 
     const nums = [];
     while (nums.length < 4) {
-        const r = Math.floor(Math.random() * 12);
+        const r = Math.floor(Math.random() * 18);
         if (nums.indexOf(r) === -1) nums.push(r);
     }
 
