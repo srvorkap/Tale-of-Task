@@ -334,7 +334,7 @@ select {
     height: 80px;
     padding: 0 5px;
     transition: 0.3s;
-    /* z-index: 2; */
+    /* z-index: 0; */
 }
 
 .class-select-sprite:hover {
@@ -383,13 +383,14 @@ select {
     top: 40px;
     height: 0px;
     width: 0px;
-    /* z-index: 0; */
+    /* z-index: 2; */
     /* text-align: center; */
     flex-wrap: wrap;
     width: 70px;
     color: rgb(255, 0, 0);
     opacity: 0;
     transition: 0.5s;
+    font-weight: bold;
 }
 
 ::-webkit-scrollbar {
