@@ -406,12 +406,14 @@ const markCompletedFunction = (button) => {
 
         const userLvl = document.getElementById('user-level');
         const userExp = document.getElementById('exp-progress');
+        const userExpNum = document.getElementById('user-exp-num');
 
         if (parseInt(userLvl.innerText, 10) !== data.user.level) {
             userLvl.innerText = ` ${data.user.level}`;
         }
 
         userExp.style.width = `${data.user.exp / 10}%`;
+        userExpNum.innerText = `${data.user.exp} / 1000`;
 
         // div.appendChild(ul)
         const removeDiv = document.getElementById(`task-container-${taskId}`)
