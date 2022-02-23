@@ -42,9 +42,8 @@ block content
                                         button(id=`completed-${task.id}` class="completed-task-btn")
                                             i(class="fas fa-check")
                                 div(id=`task-info-${task.id}` class="task-info-div")
-                                    span(id=`task-date-${task.id}`) #{task.dueDate ? `Due: ${task.dueDate}` : null}
-                                    div(class='time-impt-container')
-                                        span(id=`task-time-${task.id}`) #{task.estimatedTime ? `${task.estimatedTime} Minutes` : null}
-                                        span(id=`task-impt-${task.id}`) #{task.importance === 1 ? 'Priority: Low' : task.importance === 2 ? "Priority: Medium" : task.importance === 3 ? "Priority: High" : null}
+                                    span(id=`task-time-${task.id}` class="grid-c") #{task.estimatedTime ? `${task.estimatedTime} Minutes` : null}
+                                    span(id=`task-impt-${task.id}` class="grid-d") #{task.importance === 1 ? 'Priority: Low' : task.importance === 2 ? "Priority: Medium" : task.importance === 3 ? "Priority: High" : null}
+                                    span(id=`task-date-${task.id}` class="grid-a") #{task.dueDate ? `Due: ${task.dueDate}` : null}
 
     script(src='/javascripts/api-task.js' type='module')

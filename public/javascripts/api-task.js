@@ -471,17 +471,20 @@ const createTaskDiv = (data) => {
     infoDiv.classList.add('task-info-div');
 
     const dateSpan = document.createElement('span');
+    dateSpan.classList.add('grid-a');
     dateSpan.id = `task-date-${data.id}`;
     dateSpan.innerText = data.dueDate ? `Due: ${data.dueDate}` : null;
 
-    const timeImptDiv = document.createElement('div');
-    timeImptDiv.classList.add('time-impt-container');
+    // const timeImptDiv = document.createElement('div');
+    // timeImptDiv.classList.add('time-impt-container');
 
     const timeSpan = document.createElement('span');
+    timeSpan.classList.add('grid-c');
     timeSpan.id = `task-time-${data.id}`;
     timeSpan.innerText = data.estimatedTime ? `${data.estimatedTime} Minutes` : null;
 
     const imptSpan = document.createElement('span');
+    imptSpan.classList.add('grid-d');
     imptSpan.id = `task-impt-${data.id}`;
     imptSpan.innerText = data.importance === 1 ? 'Priority: Low' : data.importance === 2 ? "Priority: Medium" : data.importance === 3 ? "Priority: High" : null
 
@@ -492,9 +495,11 @@ const createTaskDiv = (data) => {
     buttons.appendChild(completeBtn)
     secondContainer.appendChild(buttons);
     infoDiv.appendChild(dateSpan);
-    timeImptDiv.appendChild(timeSpan);
-    timeImptDiv.appendChild(imptSpan);
-    infoDiv.appendChild(timeImptDiv)
+    // timeImptDiv.appendChild(timeSpan);
+    // timeImptDiv.appendChild(imptSpan);
+    infoDiv.appendChild(timeSpan);
+    infoDiv.appendChild(imptSpan);
+    // infoDiv.appendChild(timeImptDiv);
     container.appendChild(infoDiv);
     ul.appendChild(container);
 
