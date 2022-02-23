@@ -164,10 +164,15 @@ const addSaveFunction = (button, form) => {
                 el.style.display = '';
             }
             const li = document.getElementById(`task-list-${taskId}`);
+            const taskDate = document.getElementById(`task-date-${taskId}`);
             const taskTime = document.getElementById(`task-time-${taskId}`);
             const taskImpt = document.getElementById(`task-impt-${taskId}`);
 
             li.innerText = dataObj.description;
+
+            if (taskDate) {
+                taskDate.innerText = dataObj.dueDate ? `Due: ${dataObj.dueDate}` : null;
+            }
 
             if (taskTime) {
                 taskTime.innerText = dataObj.estimatedTime ? `${dataObj.estimatedTime} Minutes` : null;
@@ -465,6 +470,13 @@ const createTaskDiv = (data) => {
     infoDiv.id = `task-info-${data.id}`;
     infoDiv.classList.add('task-info-div');
 
+    const dateSpan = document.createElement('span');
+    dateSpan.id = `task-date-${data.id}`;
+    dateSpan.innerText = data.dueDate ? `Due: ${data.dueDate}` : null;
+
+    const timeImptDiv = document.createElement('div');
+    timeImptDiv.classList.add('time-impt-container');
+
     const timeSpan = document.createElement('span');
     timeSpan.id = `task-time-${data.id}`;
     timeSpan.innerText = data.estimatedTime ? `${data.estimatedTime} Minutes` : null;
@@ -479,8 +491,10 @@ const createTaskDiv = (data) => {
     buttons.appendChild(deleteBtn);
     buttons.appendChild(completeBtn)
     secondContainer.appendChild(buttons);
-    infoDiv.appendChild(timeSpan);
-    infoDiv.appendChild(imptSpan);
+    infoDiv.appendChild(dateSpan);
+    timeImptDiv.appendChild(timeSpan);
+    timeImptDiv.appendChild(imptSpan);
+    infoDiv.appendChild(timeImptDiv)
     container.appendChild(infoDiv);
     ul.appendChild(container);
 
