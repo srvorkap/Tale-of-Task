@@ -410,6 +410,7 @@ const markCompletedFunction = (button) => {
 
         if (parseInt(userLvl.innerText, 10) !== data.user.level) {
             userLvl.innerText = ` ${data.user.level}`;
+            window.alert('Level up!')
         }
 
         userExp.style.width = `${data.user.exp / 10}%`;
