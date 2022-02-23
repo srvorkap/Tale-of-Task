@@ -383,7 +383,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endCo
     padding: 5% 10%;
     display: flex;
     flex-wrap: wrap;
-    overflow-y: hidden;
+    overflow-y: scroll;
     overflow-x: hidden;
     justify-content: center;
 }
@@ -412,10 +412,20 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endCo
 
 .class-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80px;
+    height: 100px;
     width: 80px;
+    margin: 10px 10px;
+}
+
+.class-sprite-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+    padding-top: 10px;
 }
 
 .class-locked {
@@ -428,10 +438,17 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endCo
 
 .class-locked-notice {
     display: flex;
-    position: absolute;
+    position: relative;
+    top: 40px;
+    height: 0px;
+    width: 0px;
+    z-index: 1;
     text-align: center;
     flex-wrap: wrap;
     width: 60px;
-    color: white;
-    margin-top: 40px;
+    color: rgb(255, 0, 0);
 }
+
+::-webkit-scrollbar {
+    width: 0px;
+  }
