@@ -34,8 +34,10 @@ function setClass(className, unlocked) {
 
     if (unlocked && !unlocked.includes(className)) {
         let lockedMessage = selectedClassIcon.previousElementSibling;
-        lockedMessage.classList.remove('class-locked-hidden')
-        lockedMessage.classList.add('class-locked-notice')
+        lockedMessage.style.opacity = 1;
+        setTimeout(() => {
+            lockedMessage.style.opacity = 0;
+        }, 2000)
     }
 
     if (unlocked && unlocked.includes(className)) {
