@@ -410,7 +410,28 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ba986e",endCo
     opacity: 0.8
 }
 
+.class-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 80px;
+}
 
 .class-locked {
     opacity: 0.3;
+}
+
+.class-locked-hidden {
+    display: none;
+}
+
+.class-locked-notice {
+    display: flex;
+    position: absolute;
+    text-align: center;
+    flex-wrap: wrap;
+    width: 60px;
+    color: white;
+    margin-top: 40px;
 }

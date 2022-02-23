@@ -12,28 +12,36 @@ function restoreClass() {
 }
 
 
-function setClass(className) {
-    console.log('IN EVENT LISTENER', className)
-    let prevClass = window.localStorage.getItem("class")
-    let prevSelectedClassIcon = document.getElementById(prevClass);
-    if (prevSelectedClassIcon) {
-        prevSelectedClassIcon.classList.remove('class-selected');
+function setClass(className, unlocked) {
+    console.log(unlocked);
+    let selectedClassIcon = document.getElementById(className);
+
+    if (unlocked && !unlocked.includes(className)) {
+        let lockedMessage = selectedClassIcon.previousElementSibling;
+        lockedMessage.classList.remove('class-locked-hidden')
+        lockedMessage.classList.add('class-locked-notice')
     }
 
-    storeClass(className);
-    let classElement = document.getElementById('current-class-name');
-    classElement.innerText = className;
+    if (unlocked && unlocked.includes(className)) {
+        let prevClass = window.localStorage.getItem("class")
+        let prevSelectedClassIcon = document.getElementById(prevClass);
+        if (prevSelectedClassIcon) {
+            prevSelectedClassIcon.classList.remove('class-selected');
+        }
 
-    let selectedClassIcon = document.getElementById(className);
-    selectedClassIcon.classList.add('class-selected');
+        storeClass(className);
+        let classElement = document.getElementById('current-class-name');
+        classElement.innerText = className;
 
-    let profileClassImage = document.getElementById('profile-sprite');
-    profileClassImage.src = `../images/${className}.png`
+        selectedClassIcon.classList.add('class-selected');
 
+        let profileClassImage = document.getElementById('profile-sprite');
+        profileClassImage.src = `../images/${className}.png`
+    }
 }
 
 
-function addClassEventListeners() {
+function addClassEventListeners(unlocked) {
     const classes = ['Paladin', 'Warrior', 'Dragoon', 'Monk', 'Bard',
                     'BlackMage', 'Summoner', 'Scholar', 'WhiteMage',
                     'Ninja', 'Machinist', 'DarkKnight', 'Astrologian',
@@ -41,15 +49,36 @@ function addClassEventListeners() {
                     'Reaper'];
     classes.forEach(className => {
         const toggleClass = document.getElementById(className);
-        console.log(className)
-        toggleClass.addEventListener('click', () => setClass(className))
+        toggleClass.addEventListener('click', () => setClass(className, unlocked))
     })
+}
+
+function checkLockedClasses() {
+    let currentLevel = parseInt(document.getElementById('user-level').innerText);
+    let unlocked = ['Paladin', 'Warrior', 'Dragoon', 'Monk', 'Bard',
+    'BlackMage', 'Summoner', 'Scholar', 'WhiteMage'];
+
+    if (currentLevel >= 5) unlocked.push('Ninja');
+    if (currentLevel >= 8) unlocked.push('Machinist', 'DarkKnight', 'Astrologian');
+    if (currentLevel >= 10) unlocked.push('RedMage', 'Samurai');
+    if (currentLevel >= 15) unlocked.push('Dancer', 'Gunbreaker');
+    if (currentLevel >= 20) unlocked.push('Sage', 'Reaper');
+
+    unlocked.forEach(className => {
+        let element = document.getElementById(className)
+        element.classList.remove('class-locked');
+        element.classList.add('class-unlocked')
+    })
+
+    return unlocked;
 }
 
 
 function initializePage() {
     restoreClass();
-    addClassEventListeners();
+    const unlocked = checkLockedClasses();
+    console.log(unlocked)
+    addClassEventListeners(unlocked);
 }
 
 
