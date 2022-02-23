@@ -116,8 +116,6 @@ spriteDisplay.addEventListener('click', (e) => {
         if (nums.indexOf(r) === -1) nums.push(r);
     }
 
-    console.log(nums);
-
     const html = nums.map(n => {
         return `<img class="sprite" src="${data[n][1]}" alt="Pixel sprite of ${data[n][0]}">`;
     })
