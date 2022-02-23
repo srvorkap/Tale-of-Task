@@ -558,7 +558,7 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d4fffd",endCo
 }
 
 #moogle-info-container {
-    display: flex;
+    display: none;
     position: absolute;
     height: 400px;
     width: 300px;

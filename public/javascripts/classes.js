@@ -2,6 +2,7 @@ function storeClass(className) {
     window.localStorage.setItem("class", className)
 }
 
+
 function restoreClass() {
     const prevClass = window.localStorage.getItem("class")
 
@@ -111,11 +112,34 @@ function checkLockedClasses() {
     return unlocked;
 }
 
+function addCancelMoogleEvent() {
+    const moogleDiv = document.getElementById('moogle-info-container');
+    const moogleButton = document.getElementById('close-button');
+    moogleButton.addEventListener('click', () => {
+        moogleDiv.style.display = 'none';
+        storeMooglePopup();
+    })
+}
+
+function storeMooglePopup() {
+    window.localStorage.setItem("moogle", false);
+}
+
+function restoreMooglePopup() {
+    const isOpen = window.localStorage.getItem("moogle");
+    const moogleDiv = document.getElementById('moogle-info-container');
+    if (!isOpen) {
+        moogleDiv.style.display = 'flex';
+    }
+}
+
 
 function initializePage() {
     restoreClass();
     const unlocked = checkLockedClasses();
     addClassEventListeners(unlocked);
+    restoreMooglePopup();
+    addCancelMoogleEvent();
 }
 
 
