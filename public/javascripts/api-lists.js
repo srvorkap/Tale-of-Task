@@ -128,7 +128,7 @@ blockerUpdate.addEventListener("click", e => {
     e.preventDefault();
     const updateErrorUl = document.getElementById('update-error-ul');
     if (updateErrorUl.firstChild) {
-        console.log(updateErrorUl.childNodes)
+        // console.log(updateErrorUl.childNodes)
         updateErrorUl.childNodes.forEach(c => c.remove());
     }
     const updateListPopup = document.getElementById('update-list-popup')
@@ -182,7 +182,7 @@ const cancelUpdateListButton = document.getElementById('cancel-update-list');
 cancelUpdateListButton.addEventListener("click", () => {
     const updateErrorUl = document.getElementById('update-error-ul');
     if (updateErrorUl.firstChild) {
-        console.log(updateErrorUl.childNodes)
+        // console.log(updateErrorUl.childNodes)
         updateErrorUl.childNodes.forEach(c => c.remove());
     }
     const updateListPopup = document.getElementById('update-list-popup');
