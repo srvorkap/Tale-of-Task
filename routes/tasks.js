@@ -149,7 +149,7 @@ router.post('/:id(\\d+)/completed', asyncHandler(async (req, res) => {
     const currExp = user.exp;
     const remainder = 1000 - currExp;
 
-    if (exp > remainder) {
+    if (exp >= remainder) {
         const diff = exp - remainder;
         await user.update({ level: user.level + 1 });
         await user.update({ exp: diff });
